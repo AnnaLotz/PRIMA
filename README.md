@@ -1,3 +1,3 @@
 # PRIMA
 
-Prototyping interaktiver Medien-Apps und Games
+Repository für das Modul "Prototyping interaktiver Medien-Apps und Games"
