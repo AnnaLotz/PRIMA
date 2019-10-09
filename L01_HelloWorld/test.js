@@ -6,4 +6,4 @@ function init() {
     document.getElementsByTagName("body")[0].innerHTML = "Hello World";
     document.body.innerHTML = "HelloWorld";
 }
-//# sourceMappingURL=test.js.map
+//# sourceMappingURL=Test.js.map
