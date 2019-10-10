@@ -5,8 +5,8 @@ namespace L02_FirstFudge {
     function handleLoad(_event: Event): void {
         const canvas: HTMLCanvasElement = document.querySelector("canvas");
         console.log(canvas);
-
-        let viewport: fudge.Viewport = new fudge.Viewport();
-        viewport.initialize("Viewport", null, null, canvas);
+        console.log(fudge);
+        // let viewport: fudge.Viewport = new fudge.Viewport();
+        // viewport.initialize("Viewport", null, null, canvas);
     }
 }
