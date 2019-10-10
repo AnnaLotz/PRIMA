@@ -1,8 +1,11 @@
-window.addEventListener("load", init);
+namespace L01 {
 
-function init(): void {
-    console.log("Hello World!");
-    //geht beides:
-    document.getElementsByTagName("body")[0].innerHTML = "Hello World";
-    document.body.innerHTML = "HelloWorld";
+    window.addEventListener("load", init);
+
+    function init(): void {
+        console.log("Hello World!");
+        //geht beides:
+        document.getElementsByTagName("body")[0].innerHTML = "Hello World";
+        document.body.innerHTML = "HelloWorld";
+    }
 }
