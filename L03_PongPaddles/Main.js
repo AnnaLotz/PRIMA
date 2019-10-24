@@ -4,11 +4,13 @@ var L03_FirstFudge;
 ///<reference types="../Fudge/FudgeCore.js"/> 
 (function (L03_FirstFudge) {
     var f = FudgeCore;
+    //EventHandler
+    window.addEventListener("load", handleLoad);
+    window.addEventListener("keydown", handleClick);
     //Nodes erstellen
     let ball = new f.Node("Ball");
     let paddleLeft = new f.Node("paddleLeft");
     let paddleRight = new f.Node("paddleRight");
-    window.addEventListener("load", handleLoad);
     function handleLoad(_event) {
         const canvas = document.querySelector("canvas");
         f.RenderManager.initialize();
@@ -19,13 +21,10 @@ var L03_FirstFudge;
         camera.addComponent(cmpCam);
         cmpCam.pivot.translateZ(45); //Camera bewegen (um x auf der Z-Achse)
         let pong = createPong();
-        //den transform-componenten vom paddle zugreifen
-        //let cmpTransform: f.ComponentTransform = paddleLeft.getComponent(f.ComponentTransform);
-        //console.log(cmpTransform);
         //paddle bewegen (translate der transform Componente)
         paddleLeft.cmpTransform.local.translateX(-20);
         paddleRight.cmpTransform.local.translateX(20);
-        // das hier würde das node verzerrt werden: paddleLeft.cmpTransform.local.scaleY(5);
+        // das hier würde das node verzerren: paddleLeft.cmpTransform.local.scaleY(5);
         paddleLeft.getComponent(f.ComponentMesh).pivot.scaleY(5);
         paddleRight.getComponent(f.ComponentMesh).pivot.scaleY(5);
         L03_FirstFudge.viewport = new f.Viewport();
@@ -57,5 +56,25 @@ var L03_FirstFudge;
         pong.appendChild(paddleRight);
         return pong;
     } //close createGame
+    function handleClick(_event) {
+        // console.log("handleClick");
+        // 38: arrowup  40: arrowndown
+        switch (_event.keyCode) {
+            case 38:
+                paddleRight.cmpTransform.local.translateY(+1);
+            case 40:
+                paddleRight.cmpTransform.local.translateY(-1);
+            default:
+                break;
+        }
+        // if (_event.keyCode == 38) {
+        //     //let currentPosZ: number = paddleRight.cmpTransform.local.translation.z;
+        //     paddleRight.cmpTransform.local.translateY(- 1);
+        //     console.log(paddleRight.cmpTransform.local.translation.z);
+        //     // console.log(paddleRight.cmpTransform.local.translation.z);
+        // }
+        L03_FirstFudge.viewport.draw();
+        f.RenderManager.update();
+    } // close handleClick
 })(L03_FirstFudge || (L03_FirstFudge = {})); //close Namespace
 //# sourceMappingURL=Main.js.map

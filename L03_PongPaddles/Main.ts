@@ -3,18 +3,21 @@ namespace L03_FirstFudge {
     import f = FudgeCore;
     export let viewport: f.Viewport;
 
+    //EventHandler
+    window.addEventListener("load", handleLoad);
+    window.addEventListener("keydown", handleClick);
+
     //Nodes erstellen
     let ball: f.Node = new f.Node("Ball");
     let paddleLeft: f.Node = new f.Node("paddleLeft");
     let paddleRight: f.Node = new f.Node("paddleRight");
 
 
-    window.addEventListener("load", handleLoad);
-
     function handleLoad(_event: Event): void {
         const canvas: HTMLCanvasElement = document.querySelector("canvas");
         f.RenderManager.initialize();
         f.Debug.log(canvas);
+
 
         //Camera
         let camera: f.Node = new f.Node("Camera");
@@ -23,18 +26,14 @@ namespace L03_FirstFudge {
         cmpCam.pivot.translateZ(45); //Camera bewegen (um x auf der Z-Achse)
 
         let pong: f.Node = createPong();
-        //den transform-componenten vom paddle zugreifen
-        //let cmpTransform: f.ComponentTransform = paddleLeft.getComponent(f.ComponentTransform);
-        //console.log(cmpTransform);
 
         //paddle bewegen (translate der transform Componente)
         paddleLeft.cmpTransform.local.translateX(-20);
         paddleRight.cmpTransform.local.translateX(20);
 
-        // das hier würde das node verzerrt werden: paddleLeft.cmpTransform.local.scaleY(5);
-        ( <f.ComponentMesh> paddleLeft.getComponent(f.ComponentMesh) ).pivot.scaleY(5);
-        ( <f.ComponentMesh> paddleRight.getComponent(f.ComponentMesh) ).pivot.scaleY(5);
-
+        // das hier würde das node verzerren: paddleLeft.cmpTransform.local.scaleY(5);
+        (<f.ComponentMesh>paddleLeft.getComponent(f.ComponentMesh)).pivot.scaleY(5);
+        (<f.ComponentMesh>paddleRight.getComponent(f.ComponentMesh)).pivot.scaleY(5);
 
         viewport = new f.Viewport();
         viewport.initialize("Viewport", pong, camera.getComponent(f.ComponentCamera), canvas); //was hier "pong" heißt: will einen branch 
@@ -43,7 +42,8 @@ namespace L03_FirstFudge {
         viewport.draw();
     } //close handleLoad
 
-    function createPong(): f.Node {        
+
+    function createPong(): f.Node {
 
         let pong: f.Node = new f.Node("Pong");
 
@@ -72,8 +72,37 @@ namespace L03_FirstFudge {
         pong.appendChild(paddleLeft);
         pong.appendChild(paddleRight);
 
-
         return pong;
 
     } //close createGame
+
+
+    function handleClick(_event: KeyboardEvent): void {
+        // console.log("handleClick");
+        // 38: arrowup  40: arrowndown
+        switch (_event.keyCode) {
+            case 38:
+                paddleRight.cmpTransform.local.translateY(+ 1);
+            case 40:
+                paddleRight.cmpTransform.local.translateY(- 1);
+            default:
+                break;
+        }
+
+        // if (_event.keyCode == 38) {
+        //     //let currentPosZ: number = paddleRight.cmpTransform.local.translation.z;
+        //     paddleRight.cmpTransform.local.translateY(- 1);
+
+           
+        //     console.log(paddleRight.cmpTransform.local.translation.z);
+
+        //     // console.log(paddleRight.cmpTransform.local.translation.z);
+        // }
+
+        viewport.draw();
+        f.RenderManager.update();
+
+
+    }// close handleClick
+
 } //close Namespace
