@@ -59,11 +59,20 @@ var L03_FirstFudge;
     function handleClick(_event) {
         // console.log("handleClick");
         // 38: arrowup  40: arrowndown
+        // 87: w        83:s
         switch (_event.keyCode) {
             case 38:
-                paddleRight.cmpTransform.local.translateY(+1);
+                paddleRight.cmpTransform.local.translateY(+0.5);
+                break;
             case 40:
-                paddleRight.cmpTransform.local.translateY(-1);
+                paddleRight.cmpTransform.local.translateY(-0.5);
+                break;
+            case 87:
+                paddleLeft.cmpTransform.local.translateY(+0.5);
+                break;
+            case 83:
+                paddleLeft.cmpTransform.local.translateY(-0.5);
+                break;
             default:
                 break;
         }
@@ -73,8 +82,8 @@ var L03_FirstFudge;
         //     console.log(paddleRight.cmpTransform.local.translation.z);
         //     // console.log(paddleRight.cmpTransform.local.translation.z);
         // }
-        L03_FirstFudge.viewport.draw();
         f.RenderManager.update();
+        L03_FirstFudge.viewport.draw();
     } // close handleClick
 })(L03_FirstFudge || (L03_FirstFudge = {})); //close Namespace
 //# sourceMappingURL=Main.js.map

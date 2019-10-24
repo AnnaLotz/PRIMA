@@ -80,11 +80,22 @@ namespace L03_FirstFudge {
     function handleClick(_event: KeyboardEvent): void {
         // console.log("handleClick");
         // 38: arrowup  40: arrowndown
+        // 87: w        83:s
+        
+
         switch (_event.keyCode) {
             case 38:
-                paddleRight.cmpTransform.local.translateY(+ 1);
+                paddleRight.cmpTransform.local.translateY(+ 0.5);
+                break;
             case 40:
-                paddleRight.cmpTransform.local.translateY(- 1);
+                paddleRight.cmpTransform.local.translateY(- 0.5);
+                break;
+            case 87:
+                paddleLeft.cmpTransform.local.translateY(+ 0.5);
+                break;
+            case 83: 
+                paddleLeft.cmpTransform.local.translateY(- 0.5);
+                break;
             default:
                 break;
         }
@@ -99,8 +110,8 @@ namespace L03_FirstFudge {
         //     // console.log(paddleRight.cmpTransform.local.translation.z);
         // }
 
-        viewport.draw();
         f.RenderManager.update();
+        viewport.draw();
 
 
     }// close handleClick
