@@ -134,8 +134,8 @@ namespace L04_MovingBall {
     function initializeVariables(): void {
 
         //ball Richtung und Geschwindigkeit geben
-        ballMoveX = Math.random() * 0.16 - 0.08;
-        ballMoveY = Math.random() * 0.16 - 0.08;
+        ballMoveX = Math.random() * 0.2 - 0.08;
+        ballMoveY = Math.random() * 0.2 - 0.08;
 
         if (ballMoveX <= 0.03 && ballMoveX >= -0.03) 
             initializeVariables();

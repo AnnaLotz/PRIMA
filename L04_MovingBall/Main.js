@@ -98,8 +98,8 @@ var L04_MovingBall;
     } //close createGame
     function initializeVariables() {
         //ball Richtung und Geschwindigkeit geben
-        ballMoveX = Math.random() * 0.16 - 0.08;
-        ballMoveY = Math.random() * 0.16 - 0.08;
+        ballMoveX = Math.random() * 0.2 - 0.08;
+        ballMoveY = Math.random() * 0.2 - 0.08;
         if (ballMoveX <= 0.03 && ballMoveX >= -0.03)
             initializeVariables();
         else if (ballMoveY <= 0.03 && ballMoveY >= -0.03)
