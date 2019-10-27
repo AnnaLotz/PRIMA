@@ -4,13 +4,16 @@ var L03_FirstFudge;
 ///<reference types="../Fudge/FudgeCore.js"/> 
 (function (L03_FirstFudge) {
     var f = FudgeCore;
+    let viewport;
     //EventHandler
     window.addEventListener("load", handleLoad);
-    window.addEventListener("keydown", handleClick);
+    window.addEventListener("keydown", handleKeydown);
+    window.addEventListener("keyup", handleKeyup);
     //Nodes erstellen
     let ball = new f.Node("Ball");
     let paddleLeft = new f.Node("paddleLeft");
     let paddleRight = new f.Node("paddleRight");
+    let keysPressed = {};
     function handleLoad(_event) {
         const canvas = document.querySelector("canvas");
         f.RenderManager.initialize();
@@ -20,6 +23,7 @@ var L03_FirstFudge;
         let cmpCam = new f.ComponentCamera();
         camera.addComponent(cmpCam);
         cmpCam.pivot.translateZ(45); //Camera bewegen (um x auf der Z-Achse)
+        //create Pong Node
         let pong = createPong();
         //paddle bewegen (translate der transform Componente)
         paddleLeft.cmpTransform.local.translateX(-20);
@@ -27,11 +31,30 @@ var L03_FirstFudge;
         // das hier würde das node verzerren: paddleLeft.cmpTransform.local.scaleY(5);
         paddleLeft.getComponent(f.ComponentMesh).pivot.scaleY(5);
         paddleRight.getComponent(f.ComponentMesh).pivot.scaleY(5);
-        L03_FirstFudge.viewport = new f.Viewport();
-        L03_FirstFudge.viewport.initialize("Viewport", pong, camera.getComponent(f.ComponentCamera), canvas); //was hier "pong" heißt: will einen branch 
-        f.Debug.log(L03_FirstFudge.viewport);
-        L03_FirstFudge.viewport.draw();
+        viewport = new f.Viewport();
+        viewport.initialize("Viewport", pong, camera.getComponent(f.ComponentCamera), canvas); //was hier "pong" heißt: will einen branch 
+        f.Debug.log(viewport);
+        viewport.draw();
+        //to start a game Loop
+        f.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, update);
+        f.Loop.start();
     } //close handleLoad
+    function update(_event) {
+        if (keysPressed[f.KEYBOARD_CODE.ARROW_UP]) {
+            paddleRight.cmpTransform.local.translate(f.Vector3.Y(+0.2));
+        }
+        else if (keysPressed[f.KEYBOARD_CODE.ARROW_DOWN]) {
+            paddleRight.cmpTransform.local.translate(f.Vector3.Y(-0.2));
+        }
+        if (keysPressed[f.KEYBOARD_CODE.W]) {
+            paddleLeft.cmpTransform.local.translateY(+0.2);
+        }
+        else if (keysPressed[f.KEYBOARD_CODE.S]) {
+            paddleLeft.cmpTransform.local.translateY(-0.2);
+        }
+        f.RenderManager.update();
+        viewport.draw();
+    }
     function createPong() {
         let pong = new f.Node("Pong");
         //Material und ein Mesh erstellen, welches mehrmals als Blaupause genutzt werden kann
@@ -56,34 +79,11 @@ var L03_FirstFudge;
         pong.appendChild(paddleRight);
         return pong;
     } //close createGame
-    function handleClick(_event) {
-        // console.log("handleClick");
-        // 38: arrowup  40: arrowndown
-        // 87: w        83:s
-        switch (_event.keyCode) {
-            case 38:
-                paddleRight.cmpTransform.local.translateY(+0.5);
-                break;
-            case 40:
-                paddleRight.cmpTransform.local.translateY(-0.5);
-                break;
-            case 87:
-                paddleLeft.cmpTransform.local.translateY(+0.5);
-                break;
-            case 83:
-                paddleLeft.cmpTransform.local.translateY(-0.5);
-                break;
-            default:
-                break;
-        }
-        // if (_event.keyCode == 38) {
-        //     //let currentPosZ: number = paddleRight.cmpTransform.local.translation.z;
-        //     paddleRight.cmpTransform.local.translateY(- 1);
-        //     console.log(paddleRight.cmpTransform.local.translation.z);
-        //     // console.log(paddleRight.cmpTransform.local.translation.z);
-        // }
-        f.RenderManager.update();
-        L03_FirstFudge.viewport.draw();
+    function handleKeydown(_event) {
+        keysPressed[_event.code] = true;
     } // close handleClick
+    function handleKeyup(_event) {
+        keysPressed[_event.code] = false;
+    } //clode handleKeyup
 })(L03_FirstFudge || (L03_FirstFudge = {})); //close Namespace
 //# sourceMappingURL=Main.js.map

@@ -1,23 +1,27 @@
 ///<reference types="../Fudge/FudgeCore.js"/> 
 namespace L03_FirstFudge {
     import f = FudgeCore;
-    export let viewport: f.Viewport;
+    let viewport: f.Viewport;
 
     //EventHandler
     window.addEventListener("load", handleLoad);
-    window.addEventListener("keydown", handleClick);
+    window.addEventListener("keydown", handleKeydown);
+    window.addEventListener("keyup", handleKeyup);
 
     //Nodes erstellen
     let ball: f.Node = new f.Node("Ball");
     let paddleLeft: f.Node = new f.Node("paddleLeft");
     let paddleRight: f.Node = new f.Node("paddleRight");
 
+    interface KeyPressed {
+        [code: string]: boolean;
+    }
+    let keysPressed: KeyPressed = {};
 
     function handleLoad(_event: Event): void {
         const canvas: HTMLCanvasElement = document.querySelector("canvas");
         f.RenderManager.initialize();
         f.Debug.log(canvas);
-
 
         //Camera
         let camera: f.Node = new f.Node("Camera");
@@ -25,6 +29,7 @@ namespace L03_FirstFudge {
         camera.addComponent(cmpCam);
         cmpCam.pivot.translateZ(45); //Camera bewegen (um x auf der Z-Achse)
 
+        //create Pong Node
         let pong: f.Node = createPong();
 
         //paddle bewegen (translate der transform Componente)
@@ -40,7 +45,30 @@ namespace L03_FirstFudge {
         f.Debug.log(viewport);
 
         viewport.draw();
+
+        //to start a game Loop
+        f.Loop.addEventListener(f.EVENT.LOOP_FRAME, update);
+        f.Loop.start();
+
     } //close handleLoad
+
+
+    function update(_event: Event): void {
+
+        if (keysPressed[f.KEYBOARD_CODE.ARROW_UP]) {
+            paddleRight.cmpTransform.local.translate(f.Vector3.Y(+ 0.2));
+        } else if (keysPressed[f.KEYBOARD_CODE.ARROW_DOWN]) {
+            paddleRight.cmpTransform.local.translate(f.Vector3.Y(- 0.2));
+        }
+        if (keysPressed[f.KEYBOARD_CODE.W]) {
+            paddleLeft.cmpTransform.local.translateY(+ 0.2);
+        } else if (keysPressed[f.KEYBOARD_CODE.S]) {
+            paddleLeft.cmpTransform.local.translateY(- 0.2);
+        }
+
+        f.RenderManager.update();
+        viewport.draw();
+    }
 
 
     function createPong(): f.Node {
@@ -77,43 +105,12 @@ namespace L03_FirstFudge {
     } //close createGame
 
 
-    function handleClick(_event: KeyboardEvent): void {
-        // console.log("handleClick");
-        // 38: arrowup  40: arrowndown
-        // 87: w        83:s
-        
-
-        switch (_event.keyCode) {
-            case 38:
-                paddleRight.cmpTransform.local.translateY(+ 0.5);
-                break;
-            case 40:
-                paddleRight.cmpTransform.local.translateY(- 0.5);
-                break;
-            case 87:
-                paddleLeft.cmpTransform.local.translateY(+ 0.5);
-                break;
-            case 83: 
-                paddleLeft.cmpTransform.local.translateY(- 0.5);
-                break;
-            default:
-                break;
-        }
-
-        // if (_event.keyCode == 38) {
-        //     //let currentPosZ: number = paddleRight.cmpTransform.local.translation.z;
-        //     paddleRight.cmpTransform.local.translateY(- 1);
-
-           
-        //     console.log(paddleRight.cmpTransform.local.translation.z);
-
-        //     // console.log(paddleRight.cmpTransform.local.translation.z);
-        // }
-
-        f.RenderManager.update();
-        viewport.draw();
-
-
+    function handleKeydown(_event: KeyboardEvent): void {
+        keysPressed[_event.code] = true;
     }// close handleClick
+
+    function handleKeyup(_event: KeyboardEvent): void {
+        keysPressed[_event.code] = false;
+    }//clode handleKeyup
 
 } //close Namespace
