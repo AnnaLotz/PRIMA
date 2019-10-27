@@ -88,6 +88,7 @@ namespace L04_MovingBall {
 
     } //close moveBall
 
+
     function createPong(): f.Node {
 
         let pong: f.Node = new f.Node("Pong");
@@ -131,6 +132,7 @@ namespace L04_MovingBall {
 
     } //close createGame
 
+
     function initializeVariables(): void {
 
         //ball Richtung und Geschwindigkeit geben
@@ -144,8 +146,9 @@ namespace L04_MovingBall {
         
         ballMovement = new f.Vector3(ballMoveX, ballMoveY, 0);
 
-    }
+    } //close initializeVariables
 
+    
     function handleKeydown(_event: KeyboardEvent): void {
         keysPressed[_event.code] = true;
     }// close handleClick

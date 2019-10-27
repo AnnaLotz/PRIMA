@@ -105,7 +105,7 @@ var L04_MovingBall;
         else if (ballMoveY <= 0.03 && ballMoveY >= -0.03)
             initializeVariables();
         ballMovement = new f.Vector3(ballMoveX, ballMoveY, 0);
-    }
+    } //close initializeVariables
     function handleKeydown(_event) {
         keysPressed[_event.code] = true;
     } // close handleClick
