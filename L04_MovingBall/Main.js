@@ -58,11 +58,12 @@ var L04_MovingBall;
         ball.cmpTransform.local.translate(ballMovement);
         if (ball.cmpTransform.local.translation.y >= 15 || ball.cmpTransform.local.translation.y <= -15) {
             ballMoveY = -ballMoveY;
+            ballMovement = new f.Vector3(ballMoveX, ballMoveY, 0);
         }
         else if (ball.cmpTransform.local.translation.x >= 22.5 || ball.cmpTransform.local.translation.x <= -22.5) {
             ballMoveX = -ballMoveX;
+            ballMovement = new f.Vector3(ballMoveX, ballMoveY, 0);
         }
-        ballMovement = new f.Vector3(ballMoveX, ballMoveY, 0);
     } //close moveBall
     function createPong() {
         let pong = new f.Node("Pong");
@@ -98,8 +99,8 @@ var L04_MovingBall;
     } //close createGame
     function initializeVariables() {
         //ball Richtung und Geschwindigkeit geben
-        ballMoveX = Math.random() * 0.2 - 0.08;
-        ballMoveY = Math.random() * 0.2 - 0.08;
+        ballMoveX = Math.random() * 0.4 - 0.08;
+        ballMoveY = Math.random() * 0.4 - 0.08;
         if (ballMoveX <= 0.03 && ballMoveX >= -0.03)
             initializeVariables();
         else if (ballMoveY <= 0.03 && ballMoveY >= -0.03)

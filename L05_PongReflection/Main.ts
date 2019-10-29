@@ -1,5 +1,5 @@
 ///<reference types="../Fudge/FudgeCore.js"/> 
-namespace L04_MovingBall {
+namespace L05_PongReflection {
     import f = FudgeCore;
     let viewport: f.Viewport;
 
@@ -69,25 +69,44 @@ namespace L04_MovingBall {
         }
 
         moveBall();
+        console.log(detectHit(ball.cmpTransform.local.translation, ));
 
         f.RenderManager.update();
         viewport.draw();
     } //close update
 
 
+    function detectHit(_position: f.Vector3, _posRect: f.Vector3, _sclRect: f.Vector3): boolean {
+        let posBox: f.Vector3 = _posRect.trans// _mtrBox.translation;
+        let sclBox: f.Vector3 = _mtrBox.scaling.copy;
+        sclBox.z = 0;
+        sclBox.x *= -1;
+        let topleft: f.Vector3 = f.Vector3.SUM(posBox, sclBox);
+        let bottomright: f.Vector3 = f.Vector3.DIFFERENCE(posBox, sclBox);
+        
+        if (_position.x > topleft.x && _position.x < bottomright.x) 
+            if (_position.y < topleft.y && _position.y > bottomright.y) 
+                return true;
+            
+        return false;
+        
+
+
+    } //close detectHit
+
+
     function moveBall(): void {
 
         ball.cmpTransform.local.translate(ballMovement);
 
+        //Zahlen noch als variablen festlegen
+
         if (ball.cmpTransform.local.translation.y >= 15 || ball.cmpTransform.local.translation.y <= -15) {
-            ballMoveY = -ballMoveY;
-            ballMovement = new f.Vector3(ballMoveX, ballMoveY, 0);
+            ballMovement.y = -ballMovement.y;
         } else if (ball.cmpTransform.local.translation.x >= 22.5 || ball.cmpTransform.local.translation.x <= -22.5) {
-            ballMoveX = -ballMoveX;
-            ballMovement = new f.Vector3(ballMoveX, ballMoveY, 0);
+            ballMovement.x = -ballMovement.x;
         }
-        
- 
+
     } //close moveBall
 
 
