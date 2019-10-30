@@ -235,9 +235,9 @@ namespace L05_PongReflection {
         ballMoveX = Math.random() * 0.3 - 0.08;
         ballMoveY = Math.random() * 0.3 - 0.08;
 
-        if (ballMoveX <= 0.03 && ballMoveX >= -0.03)
+        if (ballMoveX <= 0.04 && ballMoveX >= -0.1)
             initializeVariables();
-        else if (ballMoveY <= 0.03 && ballMoveY >= -0.03)
+        else if (ballMoveY <= 0.04 && ballMoveY >= -0.1)
             initializeVariables();
 
         ballMovement = new f.Vector3(ballMoveX, ballMoveY, 0);
