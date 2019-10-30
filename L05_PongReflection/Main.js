@@ -10,7 +10,8 @@ var L05_PongReflection;
     window.addEventListener("keydown", handleKeydown);
     window.addEventListener("keyup", handleKeyup);
     //Nodes erstellen
-    let ball = new f.Node("Ball");
+    let pong;
+    let ball = new f.Node("ball");
     let paddleLeft = new f.Node("paddleLeft");
     let paddleRight = new f.Node("paddleRight");
     let ballMoveX;
@@ -18,7 +19,11 @@ var L05_PongReflection;
     let ballMovement;
     let boundaries = [];
     let keysPressed = {};
+    let playerOnePoints = 0;
+    let playerTwoPoints = 0;
     function handleLoad(_event) {
+        document.getElementById("points").innerHTML = "Player 1: " + playerOnePoints.toString() + "<br>";
+        document.getElementById("points").innerHTML += "Player 2: " + playerTwoPoints.toString();
         const canvas = document.querySelector("canvas");
         f.RenderManager.initialize();
         f.Debug.log(canvas);
@@ -28,7 +33,7 @@ var L05_PongReflection;
         camera.addComponent(cmpCam);
         cmpCam.pivot.translateZ(45); //Camera bewegen (um x auf der Z-Achse)
         //create Pong Node
-        let pong = createPong();
+        pong = createPong();
         viewport = new f.Viewport();
         viewport.initialize("Viewport", pong, camera.getComponent(f.ComponentCamera), canvas); //was hier "pong" heißt: will einen branch 
         f.Debug.log(viewport);
@@ -40,40 +45,89 @@ var L05_PongReflection;
     } //close handleLoad
     function update(_event) {
         if (keysPressed[f.KEYBOARD_CODE.ARROW_UP]) {
-            paddleRight.cmpTransform.local.translate(f.Vector3.Y(+0.2));
+            if (paddleRight.cmpTransform.local.translation.y >= 12.6) {
+                paddleRight.cmpTransform.local.translation.y = 12.5;
+            }
+            else {
+                paddleRight.cmpTransform.local.translate(f.Vector3.Y(+0.2));
+            }
         }
         else if (keysPressed[f.KEYBOARD_CODE.ARROW_DOWN]) {
-            paddleRight.cmpTransform.local.translate(f.Vector3.Y(-0.2));
+            if (paddleRight.cmpTransform.local.translation.y <= -12.6) {
+                paddleRight.cmpTransform.local.translation.y = -12.5;
+            }
+            else {
+                paddleRight.cmpTransform.local.translate(f.Vector3.Y(-0.2));
+            }
         }
         if (keysPressed[f.KEYBOARD_CODE.W]) {
-            paddleLeft.cmpTransform.local.translateY(+0.2);
+            if (paddleLeft.cmpTransform.local.translation.y >= 12.6) {
+                paddleLeft.cmpTransform.local.translation.y = 12.5;
+            }
+            else {
+                paddleLeft.cmpTransform.local.translate(f.Vector3.Y(+0.2));
+            }
         }
         else if (keysPressed[f.KEYBOARD_CODE.S]) {
-            paddleLeft.cmpTransform.local.translateY(-0.2);
+            if (paddleLeft.cmpTransform.local.translation.y <= -12.6) {
+                paddleLeft.cmpTransform.local.translation.y = -12.5;
+            }
+            else {
+                paddleLeft.cmpTransform.local.translate(f.Vector3.Y(-0.2));
+            }
         }
-        let sclRect = paddleRight.getComponent(f.ComponentMesh).pivot.scaling.copy;
-        let posRect = paddleRight.cmpTransform.local.translation.copy;
-        let hit = detectHit(ball.cmpTransform.local.translation, posRect, sclRect);
-        console.log(hit);
-        if (!hit)
-            moveBall();
+        for (let i of pong.getChildren()) {
+            if (i.name !== "ball") {
+                //console.log(i);
+                let sclRect = i.getComponent(f.ComponentMesh).pivot.scaling.copy;
+                let posRect = i.cmpTransform.local.translation.copy;
+                let hit = detectHit(ball.cmpTransform.local.translation, posRect, sclRect);
+                console.log(hit);
+                if (hit) {
+                    handleHit(i.name);
+                    break;
+                }
+            }
+        }
         moveBall();
         f.RenderManager.update();
         viewport.draw();
     } //close update
+    function handleHit(_pongNode) {
+        switch (_pongNode) {
+            case "topBoundary":
+            case "bottomBoundary":
+                ballMovement.y = -ballMovement.y;
+                break;
+            case "leftBoundary":
+                playerTwoPoints += 1;
+                document.getElementById("points").innerHTML = "Player 1: " + playerOnePoints.toString() + "<br>";
+                document.getElementById("points").innerHTML += "Player 2: " + playerTwoPoints.toString();
+                break;
+            case "rightBoundary":
+                playerOnePoints += 1;
+                document.getElementById("points").innerHTML = "Player 1: " + playerOnePoints.toString() + "<br>";
+                document.getElementById("points").innerHTML += "Player 2: " + playerTwoPoints.toString();
+                break;
+            case "paddleLeft":
+            case "paddleRight":
+                ballMovement.x = -ballMovement.x;
+                break;
+            default:
+                break;
+        }
+    }
     function detectHit(_position, _posRect, _sclRect) {
         let rect = new f.Rectangle(_posRect.x, _posRect.y, _sclRect.x, _sclRect.y, f.ORIGIN2D.CENTER);
         return rect.isInside(_position.toVector2());
     } //close detectHit
     function moveBall() {
         ball.cmpTransform.local.translate(ballMovement);
-        //Zahlen noch als variablen festlegen
-        if (ball.cmpTransform.local.translation.y >= 15 || ball.cmpTransform.local.translation.y <= -15) {
-            ballMovement.y = -ballMovement.y;
-        }
-        else if (ball.cmpTransform.local.translation.x >= 22.5 || ball.cmpTransform.local.translation.x <= -22.5) {
-            ballMovement.x = -ballMovement.x;
-        }
+        // if (ball.cmpTransform.local.translation.y >= 15 || ball.cmpTransform.local.translation.y <= -15) {
+        //     ballMovement.y = -ballMovement.y;
+        // } else if (ball.cmpTransform.local.translation.x >= 22.5 || ball.cmpTransform.local.translation.x <= -22.5) {
+        //     ballMovement.x = -ballMovement.x;
+        // }
     } //close moveBall
     function createPong() {
         let pong = new f.Node("Pong");
