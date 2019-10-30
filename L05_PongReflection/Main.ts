@@ -13,10 +13,11 @@ namespace L05_PongReflection {
     let paddleLeft: f.Node = new f.Node("paddleLeft");
     let paddleRight: f.Node = new f.Node("paddleRight");
 
-
     let ballMoveX: number;
     let ballMoveY: number;
     let ballMovement: f.Vector3;
+
+    let boundaries: f.Node[] = [];
 
     //Array, in dem alle aktuell gedrückten Tasten gepeichert werden
     interface KeyPressed {
@@ -68,8 +69,14 @@ namespace L05_PongReflection {
             paddleLeft.cmpTransform.local.translateY(- 0.2);
         }
 
+        let sclRect: f.Vector3 = paddleRight.getComponent(f.ComponentMesh).pivot.scaling.copy;
+        let posRect: f.Vector3 = paddleRight.cmpTransform.local.translation.copy;
+        let hit: boolean = detectHit(ball.cmpTransform.local.translation, posRect, sclRect);
+        console.log(hit);
+        if (!hit) moveBall();
+
         moveBall();
-        console.log(detectHit(ball.cmpTransform.local.translation, ));
+        
 
         f.RenderManager.update();
         viewport.draw();
@@ -77,21 +84,8 @@ namespace L05_PongReflection {
 
 
     function detectHit(_position: f.Vector3, _posRect: f.Vector3, _sclRect: f.Vector3): boolean {
-        let posBox: f.Vector3 = _posRect.trans// _mtrBox.translation;
-        let sclBox: f.Vector3 = _mtrBox.scaling.copy;
-        sclBox.z = 0;
-        sclBox.x *= -1;
-        let topleft: f.Vector3 = f.Vector3.SUM(posBox, sclBox);
-        let bottomright: f.Vector3 = f.Vector3.DIFFERENCE(posBox, sclBox);
-        
-        if (_position.x > topleft.x && _position.x < bottomright.x) 
-            if (_position.y < topleft.y && _position.y > bottomright.y) 
-                return true;
-            
-        return false;
-        
-
-
+        let rect: f.Rectangle = new f.Rectangle(_posRect.x, _posRect.y, _sclRect.x, _sclRect.y, f.ORIGIN2D.CENTER);
+        return rect.isInside(_position.toVector2());
     } //close detectHit
 
 
@@ -142,7 +136,33 @@ namespace L05_PongReflection {
         (<f.ComponentMesh>paddleLeft.getComponent(f.ComponentMesh)).pivot.scaleY(5);
         (<f.ComponentMesh>paddleRight.getComponent(f.ComponentMesh)).pivot.scaleY(5);
 
-        //alle Nodes an das Spielnode "pong" anhängen
+
+        //Nodes für die boundaries erstellen
+        let topBoundary: f.Node = new f.Node("topBoundary");
+        let bottomBoundary: f.Node = new f.Node("bottomBoundary");
+        let leftBoundary: f.Node = new f.Node("leftBoundary");
+        let rightBoundary: f.Node = new f.Node("rightBoundary");
+
+        boundaries = [topBoundary, bottomBoundary, leftBoundary, rightBoundary];
+
+        for (let i: number = 0; i < boundaries.length; i++) {
+            boundaries[i].addComponent(new f.ComponentMesh(meshQuad));
+            boundaries[i].addComponent(new f.ComponentTransform);
+            //boundaries[i].addComponent(new f.ComponentMaterial(mtrSolidWhite));  
+            pong.appendChild(boundaries[i]);          
+        }
+
+        topBoundary.cmpTransform.local.translateY(15);
+        topBoundary.getComponent(f.ComponentMesh).pivot.scaleX(50);
+        bottomBoundary.cmpTransform.local.translateY(-15);
+        bottomBoundary.getComponent(f.ComponentMesh).pivot.scaleX(50);
+
+        leftBoundary.cmpTransform.local.translateX(23);
+        leftBoundary.getComponent(f.ComponentMesh).pivot.scaleY(31);
+        rightBoundary.cmpTransform.local.translateX(-23);
+        rightBoundary.getComponent(f.ComponentMesh).pivot.scaleY(31);
+
+        //alle restlichen Nodes an das Spielnode "pong" anhängen
         pong.appendChild(ball);
         pong.appendChild(paddleLeft);
         pong.appendChild(paddleRight);
@@ -157,8 +177,8 @@ namespace L05_PongReflection {
     function initializeVariables(): void {
 
         //ball Richtung und Geschwindigkeit geben
-        ballMoveX = Math.random() * 0.4 - 0.08;
-        ballMoveY = Math.random() * 0.4 - 0.08;
+        ballMoveX = Math.random() * 0.3 - 0.08;
+        ballMoveY = Math.random() * 0.3 - 0.08;
 
         if (ballMoveX <= 0.03 && ballMoveX >= -0.03)
             initializeVariables();
