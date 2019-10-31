@@ -116,7 +116,7 @@ var L05_PongReflection;
             default:
                 break;
         }
-    }
+    } //close handleHit
     function detectHit(_position, _posRect, _sclRect) {
         let rect = new f.Rectangle(_posRect.x, _posRect.y, _sclRect.x, _sclRect.y, f.ORIGIN2D.CENTER);
         return rect.isInside(_position.toVector2());

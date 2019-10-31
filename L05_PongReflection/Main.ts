@@ -63,6 +63,7 @@ namespace L05_PongReflection {
     } //close handleLoad
 
 
+
     function update(_event: Event): void {
 
         if (keysPressed[f.KEYBOARD_CODE.ARROW_UP]) {
@@ -93,7 +94,6 @@ namespace L05_PongReflection {
             }    
         }
 
-
         for (let i of pong.getChildren()) {
             if (i.name !== "ball") {
                 //console.log(i);
@@ -113,6 +113,8 @@ namespace L05_PongReflection {
         f.RenderManager.update();
         viewport.draw();
     } //close update
+
+
 
     function handleHit(_pongNode: string): void {
         switch (_pongNode) {
@@ -137,7 +139,7 @@ namespace L05_PongReflection {
             default:
                 break;
         }
-    }
+    } //close handleHit
 
 
     function detectHit(_position: f.Vector3, _posRect: f.Vector3, _sclRect: f.Vector3): boolean {
@@ -158,6 +160,10 @@ namespace L05_PongReflection {
 
     } //close moveBall
 
+
+
+
+    
 
     function createPong(): f.Node {
 
