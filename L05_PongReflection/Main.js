@@ -11,13 +11,12 @@ var L05_PongReflection;
     window.addEventListener("keyup", handleKeyup);
     //Nodes erstellen
     let pong;
-    let ball = new f.Node("ball");
-    let paddleLeft = new f.Node("paddleLeft");
-    let paddleRight = new f.Node("paddleRight");
+    let ball;
+    let paddleLeft;
+    let paddleRight;
     let ballMoveX;
     let ballMoveY;
     let ballMovement;
-    let boundaries = [];
     let keysPressed = {};
     let playerOnePoints = 0;
     let playerTwoPoints = 0;
@@ -76,15 +75,14 @@ var L05_PongReflection;
                 paddleLeft.cmpTransform.local.translate(f.Vector3.Y(-0.2));
             }
         }
-        for (let i of pong.getChildren()) {
-            if (i.name !== "ball") {
+        let hit = false;
+        for (let node of pong.getChildren()) {
+            if (node.name != "ball") {
                 //console.log(i);
-                let sclRect = i.getComponent(f.ComponentMesh).pivot.scaling.copy;
-                let posRect = i.cmpTransform.local.translation.copy;
-                let hit = detectHit(ball.cmpTransform.local.translation, posRect, sclRect);
+                hit = hit || detectHit(ball.cmpTransform.local.translation, node);
                 console.log(hit);
                 if (hit) {
-                    handleHit(i.name);
+                    processHit(node.name);
                     break;
                 }
             }
@@ -93,11 +91,12 @@ var L05_PongReflection;
         f.RenderManager.update();
         viewport.draw();
     } //close update
-    function handleHit(_pongNode) {
+    function processHit(_pongNode) {
         switch (_pongNode) {
             case "topBoundary":
             case "bottomBoundary":
                 ballMovement.y = -ballMovement.y;
+                console.log("hit wall");
                 break;
             case "leftBoundary":
                 playerTwoPoints += 1;
@@ -112,13 +111,16 @@ var L05_PongReflection;
             case "paddleLeft":
             case "paddleRight":
                 ballMovement.x = -ballMovement.x;
+                console.log("paddle touch");
                 break;
             default:
                 break;
         }
     } //close handleHit
-    function detectHit(_position, _posRect, _sclRect) {
-        let rect = new f.Rectangle(_posRect.x, _posRect.y, _sclRect.x, _sclRect.y, f.ORIGIN2D.CENTER);
+    function detectHit(_position, _node) {
+        let sclRect = _node.getComponent(f.ComponentMesh).pivot.scaling.copy;
+        let posRect = _node.cmpTransform.local.translation.copy;
+        let rect = new f.Rectangle(posRect.x, posRect.y, sclRect.x, sclRect.y, f.ORIGIN2D.CENTER);
         return rect.isInside(_position.toVector2());
     } //close detectHit
     function moveBall() {
@@ -135,45 +137,52 @@ var L05_PongReflection;
         let mtrSolidWhite = new f.Material("SolidWhite", f.ShaderUniColor, new f.CoatColored(new f.Color(1, 1, 1, 1)));
         let mtrSolidGreen = new f.Material("SolidGreen", f.ShaderUniColor, new f.CoatColored(new f.Color(0, 1, 0, 1)));
         let meshQuad = new f.MeshQuad();
-        //den Nodes ein Mesh anhängen
-        ball.addComponent(new f.ComponentMesh(meshQuad));
-        paddleLeft.addComponent(new f.ComponentMesh(meshQuad));
-        paddleRight.addComponent(new f.ComponentMesh(meshQuad));
-        //den Nodes die Farbe anhängen
-        ball.addComponent(new f.ComponentMaterial(mtrSolidWhite));
-        paddleLeft.addComponent(new f.ComponentMaterial(mtrSolidGreen));
-        paddleRight.addComponent(new f.ComponentMaterial(mtrSolidGreen));
-        //Component hinzufügen zum transformieren
-        ball.addComponent(new f.ComponentTransform);
-        paddleLeft.addComponent(new f.ComponentTransform);
-        paddleRight.addComponent(new f.ComponentTransform);
-        //paddle bewegen (translate der transform Componente)
-        paddleLeft.cmpTransform.local.translateX(-20);
-        paddleRight.cmpTransform.local.translateX(20);
-        //Paddle skalieren:
-        // das hier würde das node verzerren: paddleLeft.cmpTransform.local.scaleY(5);
-        paddleLeft.getComponent(f.ComponentMesh).pivot.scaleY(5);
-        paddleRight.getComponent(f.ComponentMesh).pivot.scaleY(5);
+        // //den Nodes ein Mesh anhängen
+        // ball.addComponent(new f.ComponentMesh(meshQuad));
+        // paddleLeft.addComponent(new f.ComponentMesh(meshQuad));
+        // paddleRight.addComponent(new f.ComponentMesh(meshQuad));
+        // //den Nodes die Farbe anhängen
+        // ball.addComponent(new f.ComponentMaterial(mtrSolidWhite));
+        // paddleLeft.addComponent(new f.ComponentMaterial(mtrSolidGreen));
+        // paddleRight.addComponent(new f.ComponentMaterial(mtrSolidGreen));
+        // //Component hinzufügen zum transformieren
+        // ball.addComponent(new f.ComponentTransform);
+        // paddleLeft.addComponent(new f.ComponentTransform);
+        // paddleRight.addComponent(new f.ComponentTransform);
+        // //paddle bewegen (translate der transform Componente)
+        // paddleLeft.cmpTransform.local.translateX(-20);
+        // paddleRight.cmpTransform.local.translateX(20);
+        // //Paddle skalieren:
+        // // das hier würde das node verzerren: paddleLeft.cmpTransform.local.scaleY(5);
+        // (<f.ComponentMesh>paddleLeft.getComponent(f.ComponentMesh)).pivot.scaleY(5);
+        // (<f.ComponentMesh>paddleRight.getComponent(f.ComponentMesh)).pivot.scaleY(5);
         //Nodes für die boundaries erstellen
-        let topBoundary = new f.Node("topBoundary");
-        let bottomBoundary = new f.Node("bottomBoundary");
-        let leftBoundary = new f.Node("leftBoundary");
-        let rightBoundary = new f.Node("rightBoundary");
-        boundaries = [topBoundary, bottomBoundary, leftBoundary, rightBoundary];
-        for (let i = 0; i < boundaries.length; i++) {
-            boundaries[i].addComponent(new f.ComponentMesh(meshQuad));
-            boundaries[i].addComponent(new f.ComponentTransform);
-            //boundaries[i].addComponent(new f.ComponentMaterial(mtrSolidWhite));  
-            pong.appendChild(boundaries[i]);
-        }
-        topBoundary.cmpTransform.local.translateY(15);
-        topBoundary.getComponent(f.ComponentMesh).pivot.scaleX(50);
-        bottomBoundary.cmpTransform.local.translateY(-15);
-        bottomBoundary.getComponent(f.ComponentMesh).pivot.scaleX(50);
-        leftBoundary.cmpTransform.local.translateX(23);
-        leftBoundary.getComponent(f.ComponentMesh).pivot.scaleY(31);
-        rightBoundary.cmpTransform.local.translateX(-23);
-        rightBoundary.getComponent(f.ComponentMesh).pivot.scaleY(31);
+        // let topBoundary: f.Node;
+        // let bottomBoundary: f.Node;
+        // let leftBoundary: f.Node;
+        // let rightBoundary: f.Node;
+        // boundaries = [topBoundary, bottomBoundary, leftBoundary, rightBoundary];
+        // for (let i: number = 0; i < boundaries.length; i++) {
+        //     boundaries[i].addComponent(new f.ComponentMesh(meshQuad));
+        //     boundaries[i].addComponent(new f.ComponentTransform);
+        //     //boundaries[i].addComponent(new f.ComponentMaterial(mtrSolidWhite));  
+        //     pong.appendChild(boundaries[i]);
+        // }
+        // topBoundary.cmpTransform.local.translateY(15);
+        // topBoundary.getComponent(f.ComponentMesh).pivot.scaleX(50);
+        // bottomBoundary.cmpTransform.local.translateY(-15);
+        // bottomBoundary.getComponent(f.ComponentMesh).pivot.scaleX(50);
+        // leftBoundary.cmpTransform.local.translateX(23);
+        // leftBoundary.getComponent(f.ComponentMesh).pivot.scaleY(31);
+        // rightBoundary.cmpTransform.local.translateX(-23);
+        // rightBoundary.getComponent(f.ComponentMesh).pivot.scaleY(31);
+        ball = createNode("ball", meshQuad, mtrSolidWhite, f.Vector2.ZERO, new f.Vector2(1, 1));
+        paddleLeft = createNode("paddleLeft", meshQuad, mtrSolidGreen, new f.Vector2(-20, 0), new f.Vector2(1, 5));
+        paddleRight = createNode("paddleRight", meshQuad, mtrSolidGreen, new f.Vector2(20, 0), new f.Vector2(1, 5));
+        pong.appendChild(createNode("topBoundary", meshQuad, null, new f.Vector2(0, 15), new f.Vector2(50, 1)));
+        pong.appendChild(createNode("bottomBoundary", meshQuad, null, new f.Vector2(0, -15), new f.Vector2(50, 1)));
+        pong.appendChild(createNode("leftBoundary", meshQuad, null, new f.Vector2(-22, 0), new f.Vector2(1, 31)));
+        pong.appendChild(createNode("rightBoundary", meshQuad, null, new f.Vector2(22, 0), new f.Vector2(1, 31)));
         //alle restlichen Nodes an das Spielnode "pong" anhängen
         pong.appendChild(ball);
         pong.appendChild(paddleLeft);
@@ -181,6 +190,15 @@ var L05_PongReflection;
         initializeVariables();
         return pong;
     } //close createGame
+    function createNode(_name, _mesh, _material, _translation, _scaling) {
+        let node = new f.Node(_name);
+        node.addComponent(new f.ComponentTransform);
+        node.addComponent(new f.ComponentMaterial(_material));
+        node.addComponent(new f.ComponentMesh(_mesh));
+        node.cmpTransform.local.translate(_translation.toVector3());
+        node.getComponent(f.ComponentMesh).pivot.scale(_scaling.toVector3());
+        return node;
+    } //close createNode
     function initializeVariables() {
         //ball Richtung und Geschwindigkeit geben
         ballMoveX = Math.random() * 0.3 - 0.08;
