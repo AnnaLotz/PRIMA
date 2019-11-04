@@ -14,8 +14,6 @@ namespace L05_PongReflection {
     let paddleLeft: f.Node;
     let paddleRight: f.Node;
 
-    let ballMoveX: number;
-    let ballMoveY: number;
     let ballMovement: f.Vector3;
 
     //Array, in dem alle aktuell gedrückten Tasten gepeichert werden
@@ -26,6 +24,9 @@ namespace L05_PongReflection {
 
     let playerOnePoints: number = 0;
     let playerTwoPoints: number = 0;
+
+    //#######################################################################################################################
+    //start:
 
     function handleLoad(_event: Event): void {
 
@@ -61,6 +62,61 @@ namespace L05_PongReflection {
     } //close handleLoad
 
 
+    function createPong(): f.Node {
+
+        let pong: f.Node = new f.Node("Pong");
+
+        //Material und ein Mesh erstellen, welches mehrmals als Blaupause genutzt werden kann
+        let mtrSolidWhite: f.Material = new f.Material("SolidWhite", f.ShaderUniColor, new f.CoatColored(new f.Color(1, 1, 1, 1)));
+        let mtrSolidGreen: f.Material = new f.Material("SolidGreen", f.ShaderUniColor, new f.CoatColored(new f.Color(0, 1, 0, 1)));
+        let meshQuad: f.MeshQuad = new f.MeshQuad();
+
+        ball = createNode("ball", meshQuad, mtrSolidWhite, f.Vector2.ZERO, new f.Vector2(1, 1));
+        paddleLeft = createNode("paddleLeft", meshQuad, mtrSolidGreen, new f.Vector2(-20, 0), new f.Vector2(1, 5));
+        paddleRight = createNode("paddleRight", meshQuad, mtrSolidGreen, new f.Vector2(20, 0), new f.Vector2(1, 5));
+
+        pong.appendChild(createNode("topBoundary", meshQuad, null, new f.Vector2(0, 15), new f.Vector2(50, 1)));
+        pong.appendChild(createNode("bottomBoundary", meshQuad, null, new f.Vector2(0, -15), new f.Vector2(50, 1)));
+        pong.appendChild(createNode("leftBoundary", meshQuad, null, new f.Vector2(-22, 0), new f.Vector2(1, 31)));
+        pong.appendChild(createNode("rightBoundary", meshQuad, null, new f.Vector2(22, 0), new f.Vector2(1, 31)));
+
+        //alle restlichen Nodes an das Spielnode "pong" anhängen
+        pong.appendChild(ball);
+        pong.appendChild(paddleLeft);
+        pong.appendChild(paddleRight);
+
+        initializeMovement();
+
+        return pong;
+
+    } //close createGame
+
+
+    function createNode(_name: string, _mesh: f.Mesh, _material: f.Material, _translation: f.Vector2, _scaling: f.Vector2): f.Node {
+        let node: f.Node = new f.Node(_name);
+        node.addComponent(new f.ComponentTransform);
+        node.addComponent(new f.ComponentMaterial(_material));
+        node.addComponent(new f.ComponentMesh(_mesh));
+        node.cmpTransform.local.translate(_translation.toVector3());
+        node.getComponent(f.ComponentMesh).pivot.scale(_scaling.toVector3());
+        return node;
+    } //close createNode
+
+
+    function initializeMovement(): void {
+
+        ballMovement = new f.Vector3(Math.random() * 0.3 - 0.08, Math.random() * 0.3 - 0.08, 0);
+
+        if (ballMovement.x <= 0.04 && ballMovement.x >= -0.1)
+            initializeMovement();
+        else if (ballMovement.y <= 0.04 && ballMovement.y >= -0.1)
+            initializeMovement();
+
+    } //close initializeMovement
+
+
+    //#######################################################################################################################
+    //update-stuff:
 
     function update(_event: Event): void {
 
@@ -113,6 +169,21 @@ namespace L05_PongReflection {
 
 
 
+    function moveBall(): void {
+
+        ball.cmpTransform.local.translate(ballMovement);
+
+    } //close moveBall
+
+
+    function detectHit(_position: f.Vector3, _node: f.Node): boolean {
+        let sclRect: f.Vector3 = _node.getComponent(f.ComponentMesh).pivot.scaling.copy;
+        let posRect: f.Vector3 = _node.cmpTransform.local.translation.copy;
+        let rect: f.Rectangle = new f.Rectangle(posRect.x, posRect.y, sclRect.x, sclRect.y, f.ORIGIN2D.CENTER);
+        return rect.isInside(_position.toVector2());
+    } //close detectHit
+
+
     function processHit(_pongNode: string): void {
         switch (_pongNode) {
             case "topBoundary":
@@ -141,136 +212,6 @@ namespace L05_PongReflection {
     } //close handleHit
 
 
-    function detectHit(_position: f.Vector3, _node: f.Node): boolean {
-        let sclRect: f.Vector3 = _node.getComponent(f.ComponentMesh).pivot.scaling.copy;
-        let posRect: f.Vector3 = _node.cmpTransform.local.translation.copy;
-        let rect: f.Rectangle = new f.Rectangle(posRect.x, posRect.y, sclRect.x, sclRect.y, f.ORIGIN2D.CENTER);
-        return rect.isInside(_position.toVector2());
-    } //close detectHit
-
-
-    function moveBall(): void {
-
-        ball.cmpTransform.local.translate(ballMovement);
-
-        // if (ball.cmpTransform.local.translation.y >= 15 || ball.cmpTransform.local.translation.y <= -15) {
-        //     ballMovement.y = -ballMovement.y;
-        // } else if (ball.cmpTransform.local.translation.x >= 22.5 || ball.cmpTransform.local.translation.x <= -22.5) {
-        //     ballMovement.x = -ballMovement.x;
-        // }
-
-    } //close moveBall
-
-
-
-
-    function createPong(): f.Node {
-
-        let pong: f.Node = new f.Node("Pong");
-
-        //Material und ein Mesh erstellen, welches mehrmals als Blaupause genutzt werden kann
-        let mtrSolidWhite: f.Material = new f.Material("SolidWhite", f.ShaderUniColor, new f.CoatColored(new f.Color(1, 1, 1, 1)));
-        let mtrSolidGreen: f.Material = new f.Material("SolidGreen", f.ShaderUniColor, new f.CoatColored(new f.Color(0, 1, 0, 1)));
-        let meshQuad: f.MeshQuad = new f.MeshQuad();
-
-        // //den Nodes ein Mesh anhängen
-        // ball.addComponent(new f.ComponentMesh(meshQuad));
-        // paddleLeft.addComponent(new f.ComponentMesh(meshQuad));
-        // paddleRight.addComponent(new f.ComponentMesh(meshQuad));
-
-        // //den Nodes die Farbe anhängen
-        // ball.addComponent(new f.ComponentMaterial(mtrSolidWhite));
-        // paddleLeft.addComponent(new f.ComponentMaterial(mtrSolidGreen));
-        // paddleRight.addComponent(new f.ComponentMaterial(mtrSolidGreen));
-
-        // //Component hinzufügen zum transformieren
-        // ball.addComponent(new f.ComponentTransform);
-        // paddleLeft.addComponent(new f.ComponentTransform);
-        // paddleRight.addComponent(new f.ComponentTransform);
-
-        // //paddle bewegen (translate der transform Componente)
-        // paddleLeft.cmpTransform.local.translateX(-20);
-        // paddleRight.cmpTransform.local.translateX(20);
-        // //Paddle skalieren:
-        // // das hier würde das node verzerren: paddleLeft.cmpTransform.local.scaleY(5);
-        // (<f.ComponentMesh>paddleLeft.getComponent(f.ComponentMesh)).pivot.scaleY(5);
-        // (<f.ComponentMesh>paddleRight.getComponent(f.ComponentMesh)).pivot.scaleY(5);
-
-
-        //Nodes für die boundaries erstellen
-        // let topBoundary: f.Node;
-        // let bottomBoundary: f.Node;
-        // let leftBoundary: f.Node;
-        // let rightBoundary: f.Node;
-
-        // boundaries = [topBoundary, bottomBoundary, leftBoundary, rightBoundary];
-
-        // for (let i: number = 0; i < boundaries.length; i++) {
-        //     boundaries[i].addComponent(new f.ComponentMesh(meshQuad));
-        //     boundaries[i].addComponent(new f.ComponentTransform);
-        //     //boundaries[i].addComponent(new f.ComponentMaterial(mtrSolidWhite));  
-        //     pong.appendChild(boundaries[i]);
-        // }
-
-        // topBoundary.cmpTransform.local.translateY(15);
-        // topBoundary.getComponent(f.ComponentMesh).pivot.scaleX(50);
-        // bottomBoundary.cmpTransform.local.translateY(-15);
-        // bottomBoundary.getComponent(f.ComponentMesh).pivot.scaleX(50);
-
-        // leftBoundary.cmpTransform.local.translateX(23);
-        // leftBoundary.getComponent(f.ComponentMesh).pivot.scaleY(31);
-        // rightBoundary.cmpTransform.local.translateX(-23);
-        // rightBoundary.getComponent(f.ComponentMesh).pivot.scaleY(31);
-
-
-        ball = createNode("ball", meshQuad, mtrSolidWhite, f.Vector2.ZERO, new f.Vector2(1, 1));
-        paddleLeft = createNode("paddleLeft", meshQuad, mtrSolidGreen, new f.Vector2(-20, 0), new f.Vector2(1, 5));
-        paddleRight = createNode("paddleRight", meshQuad, mtrSolidGreen, new f.Vector2(20, 0), new f.Vector2(1, 5));
-
-        pong.appendChild(createNode("topBoundary", meshQuad, null, new f.Vector2(0, 15), new f.Vector2(50, 1)));
-        pong.appendChild(createNode("bottomBoundary", meshQuad, null, new f.Vector2(0, -15), new f.Vector2(50, 1)));
-        pong.appendChild(createNode("leftBoundary", meshQuad, null, new f.Vector2(-22, 0), new f.Vector2(1, 31)));
-        pong.appendChild(createNode("rightBoundary", meshQuad, null, new f.Vector2(22, 0), new f.Vector2(1, 31)));
-
-        //alle restlichen Nodes an das Spielnode "pong" anhängen
-        pong.appendChild(ball);
-        pong.appendChild(paddleLeft);
-        pong.appendChild(paddleRight);
-
-        initializeVariables();
-
-        return pong;
-
-    } //close createGame
-
-
-    function createNode(_name: string, _mesh: f.Mesh, _material: f.Material, _translation: f.Vector2, _scaling: f.Vector2): f.Node {
-        let node: f.Node = new f.Node(_name);
-        node.addComponent(new f.ComponentTransform);
-        node.addComponent(new f.ComponentMaterial(_material));
-        node.addComponent(new f.ComponentMesh(_mesh));
-        node.cmpTransform.local.translate(_translation.toVector3());
-        node.getComponent(f.ComponentMesh).pivot.scale(_scaling.toVector3());
-        return node;
-    } //close createNode
-
-
-    function initializeVariables(): void {
-
-        //ball Richtung und Geschwindigkeit geben
-        ballMoveX = Math.random() * 0.3 - 0.08;
-        ballMoveY = Math.random() * 0.3 - 0.08;
-
-        if (ballMoveX <= 0.04 && ballMoveX >= -0.1)
-            initializeVariables();
-        else if (ballMoveY <= 0.04 && ballMoveY >= -0.1)
-            initializeVariables();
-
-        ballMovement = new f.Vector3(ballMoveX, ballMoveY, 0);
-
-    } //close initializeVariables
-
-
     function handleKeydown(_event: KeyboardEvent): void {
         keysPressed[_event.code] = true;
     }// close handleClick
@@ -278,5 +219,6 @@ namespace L05_PongReflection {
     function handleKeyup(_event: KeyboardEvent): void {
         keysPressed[_event.code] = false;
     }//clode handleKeyup
+
 
 } //close Namespace
