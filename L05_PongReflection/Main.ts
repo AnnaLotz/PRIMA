@@ -26,7 +26,8 @@ namespace L05_PongReflection {
     let playerTwoPoints: number = 0;
 
     //#######################################################################################################################
-    //start:
+    //#######################################################################################################################
+    //starting functions:
 
     function handleLoad(_event: Event): void {
 
@@ -116,37 +117,12 @@ namespace L05_PongReflection {
 
 
     //#######################################################################################################################
-    //update-stuff:
+    //#######################################################################################################################
+    //runtime-functions:
 
     function update(_event: Event): void {
 
-        if (keysPressed[f.KEYBOARD_CODE.ARROW_UP]) {
-            if (paddleRight.cmpTransform.local.translation.y >= 12.6) {
-                paddleRight.cmpTransform.local.translation.y = 12.5;
-            } else {
-                paddleRight.cmpTransform.local.translate(f.Vector3.Y(+ 0.2));
-            }
-        } else if (keysPressed[f.KEYBOARD_CODE.ARROW_DOWN]) {
-            if (paddleRight.cmpTransform.local.translation.y <= -12.6) {
-                paddleRight.cmpTransform.local.translation.y = -12.5;
-            } else {
-                paddleRight.cmpTransform.local.translate(f.Vector3.Y(- 0.2));
-            }
-        }
-
-        if (keysPressed[f.KEYBOARD_CODE.W]) {
-            if (paddleLeft.cmpTransform.local.translation.y >= 12.6) {
-                paddleLeft.cmpTransform.local.translation.y = 12.5;
-            } else {
-                paddleLeft.cmpTransform.local.translate(f.Vector3.Y(+ 0.2));
-            }
-        } else if (keysPressed[f.KEYBOARD_CODE.S]) {
-            if (paddleLeft.cmpTransform.local.translation.y <= -12.6) {
-                paddleLeft.cmpTransform.local.translation.y = -12.5;
-            } else {
-                paddleLeft.cmpTransform.local.translate(f.Vector3.Y(- 0.2));
-            }
-        }
+        processInput();
 
         let hit: boolean = false;
         for (let node of pong.getChildren()) {
@@ -168,10 +144,41 @@ namespace L05_PongReflection {
     } //close update
 
 
+    function processInput(): void {
+        //bewegung der Paddles:
+        if (keysPressed[f.KEYBOARD_CODE.ARROW_UP]) {
+            if (paddleRight.cmpTransform.local.translation.y >= 12.6) {
+                paddleRight.cmpTransform.local.translation.y = 12.5;
+            } else {
+                paddleRight.cmpTransform.local.translate(f.Vector3.Y(+ 0.2));
+            }
+        } else if (keysPressed[f.KEYBOARD_CODE.ARROW_DOWN]) {
+            if (paddleRight.cmpTransform.local.translation.y <= -12.6) {
+                paddleRight.cmpTransform.local.translation.y = -12.5;
+            } else {
+                paddleRight.cmpTransform.local.translate(f.Vector3.Y(- 0.2));
+            }
+        }
+        if (keysPressed[f.KEYBOARD_CODE.W]) {
+            if (paddleLeft.cmpTransform.local.translation.y >= 12.6) {
+                paddleLeft.cmpTransform.local.translation.y = 12.5;
+            } else {
+                paddleLeft.cmpTransform.local.translate(f.Vector3.Y(+ 0.2));
+            }
+        } else if (keysPressed[f.KEYBOARD_CODE.S]) {
+            if (paddleLeft.cmpTransform.local.translation.y <= -12.6) {
+                paddleLeft.cmpTransform.local.translation.y = -12.5;
+            } else {
+                paddleLeft.cmpTransform.local.translate(f.Vector3.Y(- 0.2));
+            }
+        }
+    } //close processInput
+
 
     function moveBall(): void {
 
         ball.cmpTransform.local.translate(ballMovement);
+
 
     } //close moveBall
 

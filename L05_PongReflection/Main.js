@@ -19,7 +19,8 @@ var L05_PongReflection;
     let playerOnePoints = 0;
     let playerTwoPoints = 0;
     //#######################################################################################################################
-    //start:
+    //#######################################################################################################################
+    //starting functions:
     function handleLoad(_event) {
         document.getElementById("points").innerHTML = "Player 1: " + playerOnePoints.toString() + "<br>";
         document.getElementById("points").innerHTML += "Player 2: " + playerTwoPoints.toString();
@@ -79,8 +80,28 @@ var L05_PongReflection;
             initializeMovement();
     } //close initializeMovement
     //#######################################################################################################################
-    //update-stuff:
+    //#######################################################################################################################
+    //runtime-functions:
     function update(_event) {
+        processInput();
+        let hit = false;
+        for (let node of pong.getChildren()) {
+            if (node.name != "ball") {
+                //console.log(i);
+                hit = hit || detectHit(ball.cmpTransform.local.translation, node);
+                console.log(hit);
+                if (hit) {
+                    processHit(node.name);
+                    break;
+                }
+            }
+        }
+        moveBall();
+        f.RenderManager.update();
+        viewport.draw();
+    } //close update
+    function processInput() {
+        //bewegung der Paddles:
         if (keysPressed[f.KEYBOARD_CODE.ARROW_UP]) {
             if (paddleRight.cmpTransform.local.translation.y >= 12.6) {
                 paddleRight.cmpTransform.local.translation.y = 12.5;
@@ -113,22 +134,7 @@ var L05_PongReflection;
                 paddleLeft.cmpTransform.local.translate(f.Vector3.Y(-0.2));
             }
         }
-        let hit = false;
-        for (let node of pong.getChildren()) {
-            if (node.name != "ball") {
-                //console.log(i);
-                hit = hit || detectHit(ball.cmpTransform.local.translation, node);
-                console.log(hit);
-                if (hit) {
-                    processHit(node.name);
-                    break;
-                }
-            }
-        }
-        moveBall();
-        f.RenderManager.update();
-        viewport.draw();
-    } //close update
+    } //close processInput
     function moveBall() {
         ball.cmpTransform.local.translate(ballMovement);
     } //close moveBall
