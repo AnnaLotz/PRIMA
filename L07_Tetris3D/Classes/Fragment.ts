@@ -1,4 +1,49 @@
 namespace L07 {
+
+    export class Row {
+
+        row: number[];
+
+        constructor() {
+            //
+        }
+    }
+
+    export class Level {
+
+        level: number[][];
+
+
+        constructor() {
+            // 
+        }
+        
+    }
+
+
+    export class Fragment extends Level {
+
+        fragment: Level[];
+        level0: Level;
+        level1: Level;
+        level2: Level;
+        
+
+        constructor() {
+            super();
+            // this.level0 = new Level;
+            // this.level0 = [0, 0, 1];
+            // this.rows = [0, 0, 1];
+            // this.rows = [[0, 0, 1], [0, 0, 1], [0, 0, 1]];
+            // this.level0 = [[0, 0, 1], [0, 0, 1], [0, 0, 1]];
+            // this.levels
+        }
+    }
+
+    
+
+
+    /*
     export interface Level {
         //0 = no Cube, 1 = Cube
         row0: number[];

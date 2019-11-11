@@ -1,13 +1,53 @@
 "use strict";
 var L07;
 (function (L07) {
-    class Fragment {
+    class Row {
         constructor() {
-            // level0: Level;
-            // level1: Level;
-            // level2: Level;
-            this.levels = new Array(3);
-            this.rows = new Array(3);
+            //
+        }
+    }
+    L07.Row = Row;
+    class Level {
+        constructor() {
+            // 
+        }
+    }
+    L07.Level = Level;
+    class Fragment extends Level {
+        constructor() {
+            super();
+            // this.level0 = new Level;
+            // this.level0 = [0, 0, 1];
+            // this.rows = [0, 0, 1];
+            // this.rows = [[0, 0, 1], [0, 0, 1], [0, 0, 1]];
+            // this.level0 = [[0, 0, 1], [0, 0, 1], [0, 0, 1]];
+            // this.levels
+        }
+    }
+    L07.Fragment = Fragment;
+    /*
+    export interface Level {
+        //0 = no Cube, 1 = Cube
+        row0: number[];
+        row1: number[];
+        row2: number[];
+    }
+    export interface Row {
+        0: number;
+        1: number;
+        2: number;
+    }
+
+    export class Fragment {
+
+        // level0: Level;
+        // level1: Level;
+        // level2: Level;
+        levels: Level[] = new Array(3);
+        rows: Row[] = new Array(3);
+        
+
+        constructor() {
             this.levels[0] = {
                 row0: [1, 1, 1],
                 row1: [1, 0, 1],
@@ -25,20 +65,25 @@ var L07;
             };
             console.log(this);
         } //close constructor
-        createMesh() {
+
+        createMesh(): void {
             // for (let i: number = 0; i < this.levels.length; i++) {
             //     console.log(this.levels[i]);
             //     this.levels[i];
+                
             // }
+
             for (let level of this.levels) {
                 console.log(level);
-                for (let i = 0; i < 3; i++) {
+                for (let i: number = 0; i < 3; i++) {
                     console.log("row" + [i]);
                 }
             }
         } //close createMesh
+
+
     }
-    L07.Fragment = Fragment;
+
     /*
     // let rows: number[][] = [new Array(3), new Array(3), new Array(3)];
     // rows = [[0, 0, 1], [0, 0, 1], [0, 0, 1]];
