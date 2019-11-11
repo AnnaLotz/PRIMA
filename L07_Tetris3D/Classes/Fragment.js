@@ -1,8 +1,61 @@
 "use strict";
 var L07;
 (function (L07) {
+    class Fragment {
+        constructor() {
+            // level0: Level;
+            // level1: Level;
+            // level2: Level;
+            this.levels = new Array(3);
+            this.rows = new Array(3);
+            this.levels[0] = {
+                row0: [1, 1, 1],
+                row1: [1, 0, 1],
+                row2: [1, 0, 1]
+            };
+            this.levels[1] = {
+                row0: [1, 0, 1],
+                row1: [0, 0, 0],
+                row2: [0, 0, 0]
+            };
+            this.levels[2] = {
+                row0: [1, 0, 1],
+                row1: [0, 0, 0],
+                row2: [0, 0, 0]
+            };
+            console.log(this);
+        } //close constructor
+        createMesh() {
+            // for (let i: number = 0; i < this.levels.length; i++) {
+            //     console.log(this.levels[i]);
+            //     this.levels[i];
+            // }
+            for (let level of this.levels) {
+                console.log(level);
+                for (let i = 0; i < 3; i++) {
+                    console.log("row" + [i]);
+                }
+            }
+        } //close createMesh
+    }
+    L07.Fragment = Fragment;
+    /*
     // let rows: number[][] = [new Array(3), new Array(3), new Array(3)];
     // rows = [[0, 0, 1], [0, 0, 1], [0, 0, 1]];
+
+    export interface FragmentDef {
+        level0: Level;
+        level1: Level;
+        level2: Level;
+    }
+
+    export interface Level {
+        //0 = no Cube, 1 = Cube
+        row0: number[];
+        row1: number[];
+        row2: number[];
+    }
+
     // let startFragment: FragmentDef = {
     //     level1: {
     //         row1: [1, 1, 1],
@@ -20,24 +73,30 @@ var L07;
     //         row3: [0, 0, 0]
     //     }
     // };
+
+
     //##############################################################################
-    class Fragment {
+    export class Fragment implements FragmentDef {
+
+        definition: FragmentDef;
+
+        level0: Level = {
+            row0: [1, 1, 1],
+            row1: [1, 0, 1],
+            row2: [1, 0, 1]
+        };
+        level1: Level = {
+            row0: [1, 0, 1],
+            row1: [0, 0, 0],
+            row2: [0, 0, 0]
+        };
+        level2: Level = {
+            row0: [1, 0, 1],
+            row1: [0, 0, 0],
+            row2: [0, 0, 0]
+        };
+
         constructor() {
-            this.level0 = {
-                row0: [1, 1, 1],
-                row1: [1, 0, 1],
-                row2: [1, 0, 1]
-            };
-            this.level1 = {
-                row0: [1, 0, 1],
-                row1: [0, 0, 0],
-                row2: [0, 0, 0]
-            };
-            this.level2 = {
-                row0: [1, 0, 1],
-                row1: [0, 0, 0],
-                row2: [0, 0, 0]
-            };
             console.log(this);
             // this.definition.level1 = {
             //     row1: [1, 1, 1],
@@ -55,22 +114,29 @@ var L07;
             //     row3: [0, 0, 0]
             // };
         } //close constructor
-        createMesh() {
+
+        createMesh(): void {
             // for (let key in this.level1) {
             //     console.log(key);
             //     for (let i: number = 0; i < key.length; i++) {
             //         console.log(key[i]);
+
+                    
             //     }
+                
             // }
             // for (let i: number = 0; i < 3; i++) {
             //     let currentLevel: string = "level" + i;
             //     console.log(currentLevel);
             //     for (let iterator in currentLevel) {
             //         console.log(iterator);
+                    
             //     }
             // }
         }
+
     } //close class
-    L07.Fragment = Fragment;
+
+    */
 })(L07 || (L07 = {})); //namespace zu
 //# sourceMappingURL=Fragment.js.map
