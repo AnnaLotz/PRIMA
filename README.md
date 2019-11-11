@@ -12,4 +12,4 @@ Repository für das Modul "Prototyping interaktiver Medien-Apps und Games"
 
 [L05_PongReflection](https://annalotz.github.io/PRIMA/L05_PongReflection/Main.html)
 
-[L07_Tertris3DStart](https://annalotz.github.io/PRIMA/L07_Tertris3D/Main.html)
+[L07_Tetris3DStart](https://annalotz.github.io/PRIMA/L07_Tetris3D/Main.html)
