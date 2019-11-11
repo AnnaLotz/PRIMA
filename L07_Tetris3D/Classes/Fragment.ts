@@ -4,36 +4,35 @@ namespace L07 {
     // rows = [[0, 0, 1], [0, 0, 1], [0, 0, 1]];
 
     export interface FragmentDef {
+        level0: Level;
         level1: Level;
         level2: Level;
-        level3: Level;
     }
 
     export interface Level {
         //0 = no Cube, 1 = Cube
+        row0: number[];
         row1: number[];
         row2: number[];
-        row3: number[];
     }
 
-    let startFragment: FragmentDef = {
-        level1: {
-            row1: [1, 1, 1],
-            row2: [1, 0, 1],
-            row3: [1, 0, 1]
-        },
-        level2: {
-            row1: [1, 0, 1],
-            row2: [0, 0, 0],
-            row3: [0, 0, 0]
-        },
-        level3: {
-            row1: [1, 0, 1],
-            row2: [0, 0, 0],
-            row3: [0, 0, 0]
-        }
-    };
-
+    // let startFragment: FragmentDef = {
+    //     level1: {
+    //         row1: [1, 1, 1],
+    //         row2: [1, 0, 1],
+    //         row3: [1, 0, 1]
+    //     },
+    //     level2: {
+    //         row1: [1, 0, 1],
+    //         row2: [0, 0, 0],
+    //         row3: [0, 0, 0]
+    //     },
+    //     level3: {
+    //         row1: [1, 0, 1],
+    //         row2: [0, 0, 0],
+    //         row3: [0, 0, 0]
+    //     }
+    // };
 
 
     //##############################################################################
@@ -41,20 +40,20 @@ namespace L07 {
 
         definition: FragmentDef;
 
+        level0: Level = {
+            row0: [1, 1, 1],
+            row1: [1, 0, 1],
+            row2: [1, 0, 1]
+        };
         level1: Level = {
-            row1: [1, 1, 1],
-            row2: [1, 0, 1],
-            row3: [1, 0, 1]
+            row0: [1, 0, 1],
+            row1: [0, 0, 0],
+            row2: [0, 0, 0]
         };
         level2: Level = {
-            row1: [1, 0, 1],
-            row2: [0, 0, 0],
-            row3: [0, 0, 0]
-        };
-        level3: Level = {
-            row1: [1, 0, 1],
-            row2: [0, 0, 0],
-            row3: [0, 0, 0]
+            row0: [1, 0, 1],
+            row1: [0, 0, 0],
+            row2: [0, 0, 0]
         };
 
         constructor() {
@@ -77,8 +76,23 @@ namespace L07 {
         } //close constructor
 
         createMesh(): void {
-            // 
+            // for (let key in this.level1) {
+            //     console.log(key);
+            //     for (let i: number = 0; i < key.length; i++) {
+            //         console.log(key[i]);
 
+                    
+            //     }
+                
+            // }
+            // for (let i: number = 0; i < 3; i++) {
+            //     let currentLevel: string = "level" + i;
+            //     console.log(currentLevel);
+            //     for (let iterator in currentLevel) {
+            //         console.log(iterator);
+                    
+            //     }
+            // }
         }
 
     } //close class

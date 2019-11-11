@@ -24,6 +24,7 @@ var L07;
     function createGame() {
         let game = new f.Node("Game");
         let fragment = new L07.Fragment();
+        fragment.createMesh();
         return game;
     } //close createGame
 })(L07 || (L07 = {})); //close Namespace
