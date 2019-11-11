@@ -1,5 +1,8 @@
 namespace L07 {
 
+    // let rows: number[][] = [new Array(3), new Array(3), new Array(3)];
+    // rows = [[0, 0, 1], [0, 0, 1], [0, 0, 1]];
+
     export interface FragmentDef {
         level1: Level;
         level2: Level;
@@ -13,16 +16,49 @@ namespace L07 {
         row3: number[];
     }
 
-    export class Fragment {
+    let startFragment: FragmentDef = {
+        level1: {
+            row1: [1, 1, 1],
+            row2: [1, 0, 1],
+            row3: [1, 0, 1]
+        },
+        level2: {
+            row1: [1, 0, 1],
+            row2: [0, 0, 0],
+            row3: [0, 0, 0]
+        },
+        level3: {
+            row1: [1, 0, 1],
+            row2: [0, 0, 0],
+            row3: [0, 0, 0]
+        }
+    };
+
+
+
+    //##############################################################################
+    export class Fragment implements FragmentDef {
+
+        definition: FragmentDef;
+
         level1: Level = {
             row1: [1, 1, 1],
             row2: [1, 0, 1],
             row3: [1, 0, 1]
         };
-        definition: FragmentDef;
+        level2: Level = {
+            row1: [1, 0, 1],
+            row2: [0, 0, 0],
+            row3: [0, 0, 0]
+        };
+        level3: Level = {
+            row1: [1, 0, 1],
+            row2: [0, 0, 0],
+            row3: [0, 0, 0]
+        };
 
         constructor() {
-            console.log(this.definition);
+            console.log(this);
             // this.definition.level1 = {
             //     row1: [1, 1, 1],
             //     row2: [1, 0, 1],
@@ -41,9 +77,7 @@ namespace L07 {
         } //close constructor
 
         createMesh(): void {
-            for (let key in this.definition) {
-                console.log("Schlüssel " + key + " mit Wert ");
-            }
+            // 
 
         }
 
