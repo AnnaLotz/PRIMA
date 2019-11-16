@@ -7,7 +7,7 @@ var L07_FudgeCraft;
         constructor(_position) {
             super("Cube"); //f.Node constructor vergibt einen simplen Namen
             this.mesh = new f.MeshCube();
-            this.material = new f.Material("SolidWhite", f.ShaderUniColor, new f.CoatColored(new f.Color(1, 1, 1, 1)));
+            this.material = new f.Material("SolidWhite", f.ShaderFlat, new f.CoatColored(new f.Color(1, 1, 1, 1)));
             //Dem Cube ein mesh- und Material-component anhängen
             let cmpMesh = new f.ComponentMesh(this.mesh);
             this.addComponent(cmpMesh);
@@ -15,7 +15,7 @@ var L07_FudgeCraft;
             this.addComponent(cmpMaterial);
             //Dem Cube die Position geben aus dem Übergabeparameter
             let cmpTransform = new f.ComponentTransform(f.Matrix4x4.TRANSLATION(_position));
-            cmpTransform.local.scale(f.Vector3.ONE(0.9)); // um den Würfel bissl zu verkleinern
+            cmpTransform.local.scale(f.Vector3.ONE(0.95)); // um den Würfel bissl zu verkleinern
             this.addComponent(cmpTransform);
         } //close constructor
     } //close class Cube

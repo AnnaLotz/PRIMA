@@ -24,6 +24,7 @@ namespace L07_FudgeCraft {
             //[Index der Form][Eine Form][Position eines Cubes]
             let shapeArray: number[][][] =
             [
+                [[0, 0, 0], [1, 0, 0], [0, 1, 0], [0, 0, 1]],
                 [[0, 0, 0], [1, 0, 0], [0, 1, 0], [0, 1, 1]],
                 [[0, 0, 0], [1, 0, 0], [0, 1, 0], [2, 0, 0]],
                 [[0, 0, 0], [1, 0, 0], [0, 1, 0], [-1, 0, 0]]

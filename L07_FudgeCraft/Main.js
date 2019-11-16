@@ -15,8 +15,7 @@ var L07_FudgeCraft;
         let camera = new f.Node("Camera");
         let cmpCam = new f.ComponentCamera();
         camera.addComponent(cmpCam);
-        cmpCam.pivot.translateZ(20); //Kamera auf Z-Achse verschieben
-        cmpCam.pivot.translate(new f.Vector3(5, 5, 5));
+        cmpCam.pivot.translate(new f.Vector3(12, 8, 15)); // kamera auf ort setzen
         cmpCam.pivot.lookAt(f.Vector3.ZERO()); // um auf 0|0|0 zu schauen
         //create Game Node
         let game = createGame();
@@ -28,6 +27,19 @@ var L07_FudgeCraft;
         game = new f.Node("Game");
         let fragment = new L07_FudgeCraft.Fragment(0);
         game.appendChild(fragment);
+        fragment = new L07_FudgeCraft.Fragment(1);
+        fragment.addComponent(new f.ComponentTransform(f.Matrix4x4.TRANSLATION(f.Vector3.X(3))));
+        game.appendChild(fragment);
+        fragment = new L07_FudgeCraft.Fragment(2);
+        fragment.addComponent(new f.ComponentTransform(f.Matrix4x4.TRANSLATION(f.Vector3.X(-5))));
+        game.appendChild(fragment);
+        fragment = new L07_FudgeCraft.Fragment(3);
+        fragment.addComponent(new f.ComponentTransform(f.Matrix4x4.TRANSLATION(f.Vector3.X(7))));
+        game.appendChild(fragment);
+        //Light
+        let cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
+        cmpLight.pivot.lookAt(new f.Vector3(0.5, 1, 0.8));
+        game.addComponent(cmpLight);
         return game;
     } //close createGame
 })(L07_FudgeCraft || (L07_FudgeCraft = {})); //close Namespace

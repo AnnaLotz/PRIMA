@@ -21,6 +21,7 @@ var L07_FudgeCraft;
         getShapeArray() {
             //[Index der Form][Eine Form][Position eines Cubes]
             let shapeArray = [
+                [[0, 0, 0], [1, 0, 0], [0, 1, 0], [0, 0, 1]],
                 [[0, 0, 0], [1, 0, 0], [0, 1, 0], [0, 1, 1]],
                 [[0, 0, 0], [1, 0, 0], [0, 1, 0], [2, 0, 0]],
                 [[0, 0, 0], [1, 0, 0], [0, 1, 0], [-1, 0, 0]]
