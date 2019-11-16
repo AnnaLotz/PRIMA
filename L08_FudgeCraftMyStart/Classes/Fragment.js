@@ -10,7 +10,6 @@ var L08_FudgeCraft;
             this.materials = this.createMaterials();
             let shape = this.fragmentDef[_shape];
             let mtr = this.getMaterial(_shape);
-            f.Debug.log(mtr);
             //schleife durch eine Form um die einzelnen Cubes zu setzen
             for (let position of shape) {
                 //einen Nullvektor erstellen an dessen Werte die Position gesetzt wird
@@ -46,11 +45,11 @@ var L08_FudgeCraft;
                 new f.Material("Cyan", f.ShaderFlat, new f.CoatColored(f.Color.CYAN))
             ];
             return mtrArray;
-        }
+        } //close createMaterials
         getMaterial(_shape) {
             let mtr = this.materials[_shape];
             return mtr;
-        }
+        } //close getMaterial
     } //close class Fragment
     L08_FudgeCraft.Fragment = Fragment;
 })(L08_FudgeCraft || (L08_FudgeCraft = {})); //namespace zu

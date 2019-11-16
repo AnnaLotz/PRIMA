@@ -11,7 +11,6 @@ namespace L08_FudgeCraft {
             super("Fragment-Type" + _shape);
             let shape: number[][] = this.fragmentDef[_shape];
             let mtr: f.Material = this.getMaterial(_shape);
-            f.Debug.log(mtr);
             //schleife durch eine Form um die einzelnen Cubes zu setzen
             for (let position of shape) {
                 //einen Nullvektor erstellen an dessen Werte die Position gesetzt wird
@@ -22,6 +21,7 @@ namespace L08_FudgeCraft {
                 this.appendChild(cube);
             }
         } //close constructor
+
 
         getShapeArray(): number[][][] {
             //[Index der Form][Eine Form][Position eines Cubes]
@@ -38,6 +38,7 @@ namespace L08_FudgeCraft {
             return shapeArray;
         } //close getShapeArray
 
+
         createMaterials(): f.Material[] {
             let mtrArray: f.Material[] = [];
             mtrArray = [
@@ -50,14 +51,15 @@ namespace L08_FudgeCraft {
                 new f.Material("Cyan", f.ShaderFlat, new f.CoatColored(f.Color.CYAN))
             ];
             return mtrArray;
-        }
+        } //close createMaterials
+
 
         getMaterial(_shape: number): f.Material {
             let mtr: f.Material = this.materials[_shape];
             return mtr;
-        }
+        } //close getMaterial
 
-
+        
     } //close class Fragment
 
 } //namespace zu
