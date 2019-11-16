@@ -18,6 +18,7 @@ namespace L07_FudgeCraft {
 
             //Dem Cube die Position geben aus dem Übergabeparameter
             let cmpTransform: f.ComponentTransform = new f.ComponentTransform(f.Matrix4x4.TRANSLATION(_position));
+            cmpTransform.local.scale(f.Vector3.ONE(0.9)); // um den Würfel bissl zu verkleinern
             this.addComponent(cmpTransform);
 
         } //close constructor

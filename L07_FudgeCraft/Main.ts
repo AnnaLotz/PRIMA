@@ -8,7 +8,7 @@ namespace L07_FudgeCraft {
     function handleLoad(_event: Event): void {
         console.log("Hello World");
         const canvas: HTMLCanvasElement = document.querySelector("canvas");
-        f.RenderManager.initialize();
+        f.RenderManager.initialize(true); //true um Antialiasing zu vermeiden
         f.Debug.log(canvas);
 
         //Camera
@@ -16,7 +16,7 @@ namespace L07_FudgeCraft {
         let cmpCam: f.ComponentCamera = new f.ComponentCamera();
         camera.addComponent(cmpCam);
         cmpCam.pivot.translateZ(20); //Kamera auf Z-Achse verschieben
-        cmpCam.pivot.translate(new f.Vector3(2, 3, 10));
+        cmpCam.pivot.translate(new f.Vector3(5, 5, 5));
         cmpCam.pivot.lookAt(f.Vector3.ZERO()); // um auf 0|0|0 zu schauen
 
         //create Game Node
