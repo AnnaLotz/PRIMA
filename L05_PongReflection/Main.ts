@@ -72,7 +72,7 @@ namespace L05_PongReflection {
         let mtrSolidGreen: f.Material = new f.Material("SolidGreen", f.ShaderUniColor, new f.CoatColored(new f.Color(0, 1, 0, 1)));
         let meshQuad: f.MeshQuad = new f.MeshQuad();
 
-        ball = createNode("ball", meshQuad, mtrSolidWhite, f.Vector2.ZERO, new f.Vector2(1, 1));
+        ball = createNode("ball", meshQuad, mtrSolidWhite, f.Vector2.ZERO(), new f.Vector2(1, 1));
         paddleLeft = createNode("paddleLeft", meshQuad, mtrSolidGreen, new f.Vector2(-20, 0), new f.Vector2(1, 5));
         paddleRight = createNode("paddleRight", meshQuad, mtrSolidGreen, new f.Vector2(20, 0), new f.Vector2(1, 5));
 
