@@ -1,9 +1,10 @@
 "use strict";
 ///<reference types="../Fudge/FudgeCore.js"/> 
-var L07;
+var L07_FudgeCraft;
 ///<reference types="../Fudge/FudgeCore.js"/> 
-(function (L07) {
+(function (L07_FudgeCraft) {
     var f = FudgeCore;
+    let game;
     document.addEventListener("DOMContentLoaded", handleLoad);
     function handleLoad(_event) {
         console.log("Hello World");
@@ -14,18 +15,20 @@ var L07;
         let camera = new f.Node("Camera");
         let cmpCam = new f.ComponentCamera();
         camera.addComponent(cmpCam);
-        cmpCam.pivot.translateZ(5); //Kamera auf Z-Achse verschieben
+        cmpCam.pivot.translateZ(20); //Kamera auf Z-Achse verschieben
+        cmpCam.pivot.translate(new f.Vector3(2, 3, 10));
+        cmpCam.pivot.lookAt(f.Vector3.ZERO()); // um auf 0|0|0 zu schauen
         //create Game Node
         let game = createGame();
-        L07.viewport = new f.Viewport();
-        L07.viewport.initialize("Viewport", game, camera.getComponent(f.ComponentCamera), canvas);
-        L07.viewport.draw();
+        L07_FudgeCraft.viewport = new f.Viewport();
+        L07_FudgeCraft.viewport.initialize("Viewport", game, camera.getComponent(f.ComponentCamera), canvas);
+        L07_FudgeCraft.viewport.draw();
     } //close handleLoad
     function createGame() {
-        let game = new f.Node("Game");
-        // let fragment: Fragment = new Fragment();
-        // fragment.createMesh();
+        game = new f.Node("Game");
+        let fragment = new L07_FudgeCraft.Fragment(0);
+        game.appendChild(fragment);
         return game;
     } //close createGame
-})(L07 || (L07 = {})); //close Namespace
+})(L07_FudgeCraft || (L07_FudgeCraft = {})); //close Namespace
 //# sourceMappingURL=Main.js.map
