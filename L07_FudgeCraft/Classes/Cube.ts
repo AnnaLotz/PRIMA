@@ -4,16 +4,15 @@ namespace L07_FudgeCraft {
     export class Cube extends f.Node {
 
         mesh: f.MeshCube = new f.MeshCube();
-        material: f.Material = new f.Material("SolidWhite", f.ShaderFlat, new f.CoatColored(new f.Color(1, 1, 1, 1)));
-
+        
         //der constructor nimmt den Vektor von einem Cube entgegen
-        constructor(_position: f.Vector3) {
+        constructor(_position: f.Vector3, _mtr: f.Material) {
             super("Cube"); //f.Node constructor vergibt einen simplen Namen
 
             //Dem Cube ein mesh- und Material-component anhängen
             let cmpMesh: f.ComponentMesh = new f.ComponentMesh(this.mesh);
             this.addComponent(cmpMesh);
-            let cmpMaterial: f.ComponentMaterial = new f.ComponentMaterial(this.material);
+            let cmpMaterial: f.ComponentMaterial = new f.ComponentMaterial(_mtr);
             this.addComponent(cmpMaterial);
 
             //Dem Cube die Position geben aus dem Übergabeparameter
@@ -22,6 +21,8 @@ namespace L07_FudgeCraft {
             this.addComponent(cmpTransform);
 
         } //close constructor
+
+        
 
     } //close class Cube
 
