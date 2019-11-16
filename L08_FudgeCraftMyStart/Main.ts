@@ -91,11 +91,12 @@ namespace L08_FudgeCraft {
                 currentFragment.cmpTransform.local.rotateZ(-90);
                 break;
         }
+        console.log(currentFragment.cmpTransform);
         
         
         console.log(checkIfHit());
         if (checkIfHit) {
-            //set fragment there and create new fragment
+            //fragment fest setzen und neues erstellen
         }
 
         f.RenderManager.update();
@@ -104,8 +105,15 @@ namespace L08_FudgeCraft {
 
     function checkIfHit(): boolean {
 
+        for (let fragment of game.getChildren()) {
+            if (fragment != currentFragment) {
+                //hier die abfrage für hit hin
+                
+            }
+
+        }
         return false;
-    }
+    } //close checkIfHit
     
 
 } //close Namespace

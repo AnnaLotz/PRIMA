@@ -72,12 +72,21 @@ var L08_FudgeCraft;
                 currentFragment.cmpTransform.local.rotateZ(-90);
                 break;
         }
+        console.log(currentFragment.cmpTransform);
         console.log(checkIfHit());
+        if (checkIfHit) {
+            //fragment fest setzen und neues erstellen
+        }
         f.RenderManager.update();
         L08_FudgeCraft.viewport.draw();
     } //close handleKeyDown
     function checkIfHit() {
+        for (let fragment of game.getChildren()) {
+            if (fragment != currentFragment) {
+                //hier die abfrage für hit hin
+            }
+        }
         return false;
-    }
+    } //close checkIfHit
 })(L08_FudgeCraft || (L08_FudgeCraft = {})); //close Namespace
 //# sourceMappingURL=Main.js.map
