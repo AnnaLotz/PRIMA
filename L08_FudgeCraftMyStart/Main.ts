@@ -46,6 +46,19 @@ namespace L08_FudgeCraft {
         fragment.addComponent(new f.ComponentTransform(f.Matrix4x4.TRANSLATION(f.Vector3.X(7))));
         game.appendChild(fragment);
 
+        fragment = new Fragment(4);
+        fragment.addComponent(new f.ComponentTransform(f.Matrix4x4.TRANSLATION(new f.Vector3(0, 3, 0))));
+        game.appendChild(fragment);
+
+        fragment = new Fragment(5);
+        fragment.addComponent(new f.ComponentTransform(f.Matrix4x4.TRANSLATION(new f.Vector3(3, 3, 0))));
+        game.appendChild(fragment);
+
+        fragment = new Fragment(6);
+        fragment.addComponent(new f.ComponentTransform(f.Matrix4x4.TRANSLATION(new f.Vector3(-5, 3, 0))));
+        game.appendChild(fragment);
+
+
         //Light
         let cmpLight: f.ComponentLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
         cmpLight.pivot.lookAt(new f.Vector3(0.5, 1, 0.8));

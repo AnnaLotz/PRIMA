@@ -24,20 +24,26 @@ var L08_FudgeCraft;
         getShapeArray() {
             //[Index der Form][Eine Form][Position eines Cubes]
             let shapeArray = [
-                [[0, 0, 0], [1, 0, 0], [0, 1, 0], [0, 0, 1]],
-                [[0, 0, 0], [1, 0, 0], [0, 1, 0], [0, 1, 1]],
-                [[0, 0, 0], [1, 0, 0], [0, 1, 0], [2, 0, 0]],
-                [[0, 0, 0], [1, 0, 0], [0, 1, 0], [-1, 0, 0]]
+                [[-1, 0, 0], [0, 0, 0], [1, 0, 0], [1, 1, 0]],
+                [[-1, -1, 0], [-1, 0, 0], [0, 0, 0], [1, 0, 0]],
+                [[0, 0, 0], [0, 1, 0], [-1, 1, 0], [1, 0, 0]],
+                [[0, 0, 0], [0, 1, 0], [1, 1, 0], [-1, 0, 0]],
+                [[0, 0, 0], [0, 1, 0], [-1, 0, 0], [1, 0, 0]],
+                [[0, 0, 0], [0, 1, 0], [1, 0, 0], [1, 1, 0]],
+                [[0, 0, 0], [1, 0, 0], [2, 0, 0], [-1, 0, 0]] // I: Hero
             ];
             return shapeArray;
         } //close getShapeArray
         createMaterials() {
             let mtrArray = [];
             mtrArray = [
+                new f.Material("Orange", f.ShaderFlat, new f.CoatColored(new f.Color(1, 0.75, 0, 1))),
+                new f.Material("Blue", f.ShaderFlat, new f.CoatColored(f.Color.BLUE)),
                 new f.Material("Red", f.ShaderFlat, new f.CoatColored(f.Color.RED)),
                 new f.Material("Green", f.ShaderFlat, new f.CoatColored(f.Color.GREEN)),
-                new f.Material("Blue", f.ShaderFlat, new f.CoatColored(f.Color.BLUE)),
-                new f.Material("Yellow", f.ShaderFlat, new f.CoatColored(f.Color.YELLOW))
+                new f.Material("Magenta", f.ShaderFlat, new f.CoatColored(f.Color.MAGENTA)),
+                new f.Material("Yellow", f.ShaderFlat, new f.CoatColored(f.Color.YELLOW)),
+                new f.Material("Cyan", f.ShaderFlat, new f.CoatColored(f.Color.CYAN))
             ];
             return mtrArray;
         }
