@@ -38,6 +38,7 @@ namespace L08_FudgeCraft {
                         cube.mtxWorld.translation.z
                     ];
             }
+            // console.log(cubePositions);
             return cubePositions;
         } //close getCubesPositions
 

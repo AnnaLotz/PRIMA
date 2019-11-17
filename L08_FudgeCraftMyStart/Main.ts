@@ -8,6 +8,7 @@ namespace L08_FudgeCraft {
 
     let game: f.Node;
     let currentFragment: Fragment;
+    let firstFragment: Fragment;
 
 
     // ############################################################################################
@@ -45,9 +46,10 @@ namespace L08_FudgeCraft {
         game = new f.Node("Game");
 
         let fragment: Fragment = new Fragment(0);
+        firstFragment = fragment;
         game.appendChild(fragment);
 
-        fragment = new Fragment(2);
+        fragment = new Fragment(0);
         fragment.addComponent(new f.ComponentTransform(f.Matrix4x4.TRANSLATION(new f.Vector3(0, 5, 0))));
         game.appendChild(fragment);
         currentFragment = fragment;
@@ -67,13 +69,10 @@ namespace L08_FudgeCraft {
     function handleKeyDown(_event: KeyboardEvent): void {
 
         processInput(_event);
-        // !!!!!!! vvvvv
-        // console.log(currentFragment.mtxWorld.translation.x);
 
-        
-        console.log(currentFragment.getCubesPositions());
+        // console.log(currentFragment.getCubesPositions());
 
-        // console.log(checkIfHit());
+        checkIfHit();
         if (checkIfHit) {
             //fragment fest setzen und neues erstellen
         }
@@ -85,11 +84,32 @@ namespace L08_FudgeCraft {
 
     function checkIfHit(): boolean {
 
-        for (let fragment of game.getChildren()) {
-            if (fragment != currentFragment) {
-                //hier die abfrage für hit hin
-            }
-        }
+        console.log(firstFragment.getCubesPositions());
+        console.log(currentFragment.getCubesPositions());
+        
+
+        // for (let fragment of game.getChildren()) {
+        //     console.log("1. durch alle game.getChildren");
+        //     if (fragment != currentFragment && fragment instanceof Fragment) {
+        //         console.log("2. if fragment != currentFragment und Fragment instace");
+        //         for (let othersPosition of fragment.getCubesPositions()) {
+        //             console.log("3. for otherpositions of fragment.getCubesPositions");
+        //             for (let currentPosition of currentFragment.getCubesPositions()) {
+        //                 console.log("4. for currentPos of currentFrag.getCubesPositions");
+        //                 console.log("other: " + othersPosition);
+        //                 console.log("current: " + currentPosition);
+        //                 if (othersPosition == currentPosition) {
+        //                     console.log("5. If hit");
+                            
+        //                     return true;
+        //                 }
+        //             }
+
+        //         }
+
+                
+        //     }
+        // }
         return false;
     } //close checkIfHit
 
