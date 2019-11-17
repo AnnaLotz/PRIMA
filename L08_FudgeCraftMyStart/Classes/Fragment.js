@@ -8,20 +8,36 @@ var L08_FudgeCraft;
             this.fragmentDef = this.getShapeArray();
             this.position = new f.Vector3(0, 0, 0);
             this.materials = this.createMaterials();
-            let shape = this.fragmentDef[_shape];
+            this.cubes = [];
+            this.shape = this.fragmentDef[_shape];
             let mtr = this.getMaterial(_shape);
             //schleife durch eine Form um die einzelnen Cubes zu setzen
-            for (let position of shape) {
+            for (let position of this.shape) {
                 //einen Nullvektor erstellen an dessen Werte die Position gesetzt wird
                 let vctPosition = f.Vector3.ZERO();
                 vctPosition.set(position[0], position[1], position[2]);
                 //neuen Cube an der vectorPosition erstellen und anhängen
                 let cube = new L08_FudgeCraft.Cube(vctPosition, mtr);
+                this.cubes.push(cube);
                 this.appendChild(cube);
             }
+            // console.log(this.cubes);
         } //close constructor
+        getCubesPositions() {
+            let cubePositions = [];
+            for (let i = 0; i < this.cubes.length; i++) {
+                let cube = this.cubes[i];
+                cubePositions[i] =
+                    [
+                        cube.mtxWorld.translation.x,
+                        cube.mtxWorld.translation.y,
+                        cube.mtxWorld.translation.z
+                    ];
+            }
+            return cubePositions;
+        } //close getCubesPositions
         getShapeArray() {
-            //[Index der Form][Eine Form][Position eines Cubes]
+            //[Index der Form/shape][Eine Form][Position eines Cubes]
             let shapeArray = [
                 [[-1, 0, 0], [0, 0, 0], [1, 0, 0], [1, 1, 0]],
                 [[-1, -1, 0], [-1, 0, 0], [0, 0, 0], [1, 0, 0]],

@@ -48,9 +48,29 @@ var L08_FudgeCraft;
     // ############################################################################################
     // ############################################################################################
     function handleKeyDown(_event) {
+        processInput(_event);
+        // !!!!!!! vvvvv
+        // console.log(currentFragment.mtxWorld.translation.x);
+        console.log(currentFragment.getCubesPositions());
+        // console.log(checkIfHit());
+        if (checkIfHit) {
+            //fragment fest setzen und neues erstellen
+        }
+        f.RenderManager.update();
+        L08_FudgeCraft.viewport.draw();
+    } //close handleKeyDown
+    function checkIfHit() {
+        for (let fragment of game.getChildren()) {
+            if (fragment != currentFragment) {
+                //hier die abfrage für hit hin
+            }
+        }
+        return false;
+    } //close checkIfHit
+    function processInput(_event) {
         //bewegung
         switch (_event.code) {
-            case f.KEYBOARD_CODE.W: //später raus nehmen
+            case f.KEYBOARD_CODE.W: //W später raus nehmen
                 currentFragment.cmpTransform.local.translateY(1);
                 break;
             case f.KEYBOARD_CODE.A:
@@ -72,21 +92,6 @@ var L08_FudgeCraft;
                 currentFragment.cmpTransform.local.rotateZ(-90);
                 break;
         }
-        console.log(currentFragment.cmpTransform);
-        console.log(checkIfHit());
-        if (checkIfHit) {
-            //fragment fest setzen und neues erstellen
-        }
-        f.RenderManager.update();
-        L08_FudgeCraft.viewport.draw();
-    } //close handleKeyDown
-    function checkIfHit() {
-        for (let fragment of game.getChildren()) {
-            if (fragment != currentFragment) {
-                //hier die abfrage für hit hin
-            }
-        }
-        return false;
-    } //close checkIfHit
+    } //close process Input
 })(L08_FudgeCraft || (L08_FudgeCraft = {})); //close Namespace
 //# sourceMappingURL=Main.js.map

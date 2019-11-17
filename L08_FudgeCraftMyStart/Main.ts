@@ -8,8 +8,8 @@ namespace L08_FudgeCraft {
 
     let game: f.Node;
     let currentFragment: Fragment;
-    
-    
+
+
     // ############################################################################################
     // ############################################################################################
     function handleLoad(_event: Event): void {
@@ -57,7 +57,7 @@ namespace L08_FudgeCraft {
         //     fragment.addComponent(new f.ComponentTransform(f.Matrix4x4.TRANSLATION(new f.Vector3(i * 3, 0, 0))));
         //     game.appendChild(fragment);
         // }
-    
+
         return game;
     } //close createGame
 
@@ -66,9 +66,38 @@ namespace L08_FudgeCraft {
     // ############################################################################################
     function handleKeyDown(_event: KeyboardEvent): void {
 
+        processInput(_event);
+        // !!!!!!! vvvvv
+        // console.log(currentFragment.mtxWorld.translation.x);
+
+        
+        console.log(currentFragment.getCubesPositions());
+
+        // console.log(checkIfHit());
+        if (checkIfHit) {
+            //fragment fest setzen und neues erstellen
+        }
+
+        f.RenderManager.update();
+        viewport.draw();
+    } //close handleKeyDown
+
+
+    function checkIfHit(): boolean {
+
+        for (let fragment of game.getChildren()) {
+            if (fragment != currentFragment) {
+                //hier die abfrage für hit hin
+            }
+        }
+        return false;
+    } //close checkIfHit
+
+
+    function processInput(_event: KeyboardEvent): void {
         //bewegung
         switch (_event.code) {
-            case f.KEYBOARD_CODE.W: //später raus nehmen
+            case f.KEYBOARD_CODE.W: //W später raus nehmen
                 currentFragment.cmpTransform.local.translateY(1);
                 break;
             case f.KEYBOARD_CODE.A:
@@ -91,29 +120,7 @@ namespace L08_FudgeCraft {
                 currentFragment.cmpTransform.local.rotateZ(-90);
                 break;
         }
-        console.log(currentFragment.cmpTransform);
-        
-        
-        console.log(checkIfHit());
-        if (checkIfHit) {
-            //fragment fest setzen und neues erstellen
-        }
+    } //close process Input
 
-        f.RenderManager.update();
-        viewport.draw();
-    } //close handleKeyDown
-
-    function checkIfHit(): boolean {
-
-        for (let fragment of game.getChildren()) {
-            if (fragment != currentFragment) {
-                //hier die abfrage für hit hin
-                
-            }
-
-        }
-        return false;
-    } //close checkIfHit
-    
 
 } //close Namespace

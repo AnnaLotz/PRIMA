@@ -16,6 +16,7 @@ var L08_FudgeCraft;
             let cmpTransform = new f.ComponentTransform(f.Matrix4x4.TRANSLATION(_position));
             cmpTransform.local.scale(f.Vector3.ONE(0.8)); // um den Würfel bissl zu verkleinern
             this.addComponent(cmpTransform);
+            this.transformComp = cmpTransform;
         } //close constructor
     } //close class Cube
     L08_FudgeCraft.Cube = Cube;

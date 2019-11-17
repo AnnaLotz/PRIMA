@@ -4,6 +4,7 @@ namespace L08_FudgeCraft {
     export class Cube extends f.Node {
 
         mesh: f.MeshCube = new f.MeshCube();
+        transformComp: f.ComponentTransform;
         
         //der constructor nimmt den Vektor von einem Cube entgegen und das Material
         constructor(_position: f.Vector3, _mtr: f.Material) {
@@ -19,6 +20,7 @@ namespace L08_FudgeCraft {
             let cmpTransform: f.ComponentTransform = new f.ComponentTransform(f.Matrix4x4.TRANSLATION(_position));
             cmpTransform.local.scale(f.Vector3.ONE(0.8)); // um den Würfel bissl zu verkleinern
             this.addComponent(cmpTransform);
+            this.transformComp = cmpTransform;
 
         } //close constructor
 

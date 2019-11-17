@@ -4,27 +4,47 @@ namespace L08_FudgeCraft {
     export class Fragment extends f.Node {
 
         fragmentDef: number[][][] = this.getShapeArray();
+        shape: number[][];
         position: f.Vector3 = new f.Vector3(0, 0, 0);
         materials: f.Material[] = this.createMaterials();
+        cubes: Cube[] = [];
 
         constructor(_shape: number) {
             super("Fragment-Type" + _shape);
-            let shape: number[][] = this.fragmentDef[_shape];
+            this.shape = this.fragmentDef[_shape];
             let mtr: f.Material = this.getMaterial(_shape);
             //schleife durch eine Form um die einzelnen Cubes zu setzen
-            for (let position of shape) {
+            for (let position of this.shape) {
                 //einen Nullvektor erstellen an dessen Werte die Position gesetzt wird
                 let vctPosition: f.Vector3 = f.Vector3.ZERO();
                 vctPosition.set(position[0], position[1], position[2]);
                 //neuen Cube an der vectorPosition erstellen und anhängen
                 let cube: Cube = new Cube(vctPosition, mtr);
+                this.cubes.push(cube);
                 this.appendChild(cube);
             }
+            // console.log(this.cubes);
         } //close constructor
 
 
+        getCubesPositions(): number[][] {
+            let cubePositions: number[][] = [];
+            for (let i: number = 0; i < this.cubes.length; i++) {
+                let cube: Cube = this.cubes[i];
+                cubePositions[i] =
+                    [
+                        cube.mtxWorld.translation.x,
+                        cube.mtxWorld.translation.y,
+                        cube.mtxWorld.translation.z
+                    ];
+            }
+            return cubePositions;
+        } //close getCubesPositions
+
+
+
         getShapeArray(): number[][][] {
-            //[Index der Form][Eine Form][Position eines Cubes]
+            //[Index der Form/shape][Eine Form][Position eines Cubes]
             let shapeArray: number[][][] =
                 [
                     [[-1, 0, 0], [0, 0, 0], [1, 0, 0], [1, 1, 0]], //L: Orange Ricky
@@ -59,7 +79,7 @@ namespace L08_FudgeCraft {
             return mtr;
         } //close getMaterial
 
-        
+
     } //close class Fragment
 
 } //namespace zu
