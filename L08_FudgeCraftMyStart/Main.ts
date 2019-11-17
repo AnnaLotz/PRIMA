@@ -6,6 +6,7 @@ namespace L08_FudgeCraft {
     document.addEventListener("DOMContentLoaded", handleLoad);
 
     let game: f.Node;
+    let fragment: Fragment;
     let currentFragment: Fragment;
     let firstFragment: Fragment;
 
@@ -24,18 +25,19 @@ namespace L08_FudgeCraft {
         cmpCam.pivot.translate(new f.Vector3(0, 3, 30)); // kamera auf ort setzen
         // cmpCam.pivot.lookAt(f.Vector3.ZERO()); // um auf 0|0|0 zu schauen
 
-
         //create Game Node
-        let game: f.Node = createGame();
+        game = createGame();
 
+        //Light
         let cmpLight: f.ComponentLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
         cmpLight.pivot.lookAt(new f.Vector3(0.5, 0, 0.5));
         game.addComponent(cmpLight);
 
-        viewport = new f.Viewport();     
+        //Viewport
+        viewport = new f.Viewport();
         viewport.initialize("Viewport", game, camera.getComponent(f.ComponentCamera), canvas);
         viewport.draw();
-        console.log("after viewport.draw(): " + currentFragment.getCubesPositions()); //erst hier ist die position im raum richtig erfasst
+        console.log("currentFragment after viewport.draw(): " + currentFragment.getCubesPositions()); //erst hier ist die position im raum richtig erfasst
 
         window.addEventListener("keydown", handleKeyDown);
 
@@ -46,13 +48,12 @@ namespace L08_FudgeCraft {
     function createGame(): f.Node {
         game = new f.Node("Game");
 
-        let fragment: Fragment;
         fragment = new Fragment(0);
         firstFragment = fragment;
         game.appendChild(fragment);
 
-        fragment = new Fragment(1);
-        fragment.addComponent(new f.ComponentTransform);
+        fragment = new Fragment(3);
+        fragment.addComponent(new f.ComponentTransform(f.Matrix4x4.TRANSLATION(new f.Vector3(0, 3, 0))));
         currentFragment = fragment;
         game.appendChild(fragment);
 
@@ -63,16 +64,13 @@ namespace L08_FudgeCraft {
     // ############################################################################################
     // ############################################################################################
     function handleKeyDown(_event: KeyboardEvent): void {
-
-        processInput(_event, 1);
         
+        processInput(_event, 1);
 
         if (checkIfHit()) {
-            processInput(_event, -1);
-            //fragment fest setzen und neues erstellen
+            processInput(_event, -1); //die bewegung rückgängig machen
+            createNewFragment(); //neues Fragment erstellen und zum currentFrag machen
         }
-
-
     } //close handleKeyDown
 
 
@@ -92,16 +90,29 @@ namespace L08_FudgeCraft {
                         // console.log(othersPosition);
                         // console.log(currentPosition);
                         if (othersPosition[0] == currentPosition[0] && othersPosition[1] == currentPosition[1]) {
-                            console.log("5. HIT! ");
+                            console.log("HIT!");
                             return true;
+                            break;
                         }
                     }
                 }
             }
         }
-
         return false;
     } //close checkIfHit
+
+
+    function createNewFragment(): void {
+        //funktioniert noch nicht: das neue Fragment ist nicht sichtbar, hat aber werte
+        fragment = new Fragment(0);
+        fragment.addComponent(new f.ComponentTransform);
+        fragment.cmpTransform.local.translate(new f.Vector3(0, 5, 0));
+        currentFragment = fragment;
+        game.appendChild(fragment);
+        
+        f.RenderManager.update();
+        viewport.draw();
+    } //close createNewFragment
 
 
     function processInput(_event: KeyboardEvent, _moveOn: number): void {

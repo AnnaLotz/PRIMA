@@ -48,9 +48,9 @@ namespace L08_FudgeCraft {
             //[Index der Form/shape][Eine Form][Position eines Cubes]
             let shapeArray: number[][][] =
                 [
-                    [[0, 0, 0], [1, 0, 0]],
-                    [[0, 0, 0], [1, 0, 0]],
-                    // [[-1, 0, 0], [0, 0, 0], [1, 0, 0], [1, 1, 0]], //L: Orange Ricky
+                    // [[0, 0, 0], [1, 0, 0]],
+                    // [[0, 0, 0], [1, 0, 0]],
+                    [[-1, 0, 0], [0, 0, 0], [1, 0, 0], [1, 1, 0]], //L: Orange Ricky
                     [[-1, -1, 0], [-1, 0, 0], [0, 0, 0], [1, 0, 0]], //J: Blue Ricky
                     [[0, 0, 0], [0, 1, 0], [-1, 1, 0], [1, 0, 0]], //Z: Cleveland Z
                     [[0, 0, 0], [0, 1, 0], [1, 1, 0], [-1, 0, 0]], //S: Rhode Island Z
