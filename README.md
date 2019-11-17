@@ -12,4 +12,6 @@ Repository für das Modul "Prototyping interaktiver Medien-Apps und Games"
 
 [L05_PongReflection](https://annalotz.github.io/PRIMA/L05_PongReflection/Main.html)
 
-[L07_FudgeCraftStart](https://annalotz.github.io/PRIMA/L07_FudgeCraft/Main.html)
+[L07_FudgeCraftFundament](https://annalotz.github.io/PRIMA/L07_FudgeCraft/Main.html)
+
+[L08_FudgeCraftStart](https://annalotz.github.io/PRIMA/L08_FudgeCraftMyStart/Main.html)
