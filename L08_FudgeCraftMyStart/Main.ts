@@ -5,7 +5,6 @@ namespace L08_FudgeCraft {
 
     document.addEventListener("DOMContentLoaded", handleLoad);
 
-
     let game: f.Node;
     let currentFragment: Fragment;
     let firstFragment: Fragment;
@@ -17,7 +16,6 @@ namespace L08_FudgeCraft {
         console.log("Hello World");
         const canvas: HTMLCanvasElement = document.querySelector("canvas");
         f.RenderManager.initialize(true); //true um Antialiasing zu vermeiden
-        f.Debug.log(canvas);
 
         //Camera
         let camera: f.Node = new f.Node("Camera");
@@ -26,6 +24,7 @@ namespace L08_FudgeCraft {
         cmpCam.pivot.translate(new f.Vector3(0, 3, 30)); // kamera auf ort setzen
         // cmpCam.pivot.lookAt(f.Vector3.ZERO()); // um auf 0|0|0 zu schauen
 
+
         //create Game Node
         let game: f.Node = createGame();
 
@@ -33,32 +32,39 @@ namespace L08_FudgeCraft {
         cmpLight.pivot.lookAt(new f.Vector3(0.5, 0, 0.5));
         game.addComponent(cmpLight);
 
-        viewport = new f.Viewport();
+        
+
+        viewport = new f.Viewport();     
         viewport.initialize("Viewport", game, camera.getComponent(f.ComponentCamera), canvas);
 
+        console.log("before viewport.draw(): " + currentFragment.getCubesPositions());
         viewport.draw();
+        console.log("after viewport.draw(): " + currentFragment.getCubesPositions()); //erst hier ist die position im raum richtig erfasst
 
+        // currentFragment.cmpTransform.local.translateX(0);
+        // currentFragment.cmpTransform.local.translateY(0);
+        
         window.addEventListener("keydown", handleKeyDown);
 
     } //close handleLoad
 
+
     function createGame(): f.Node {
         game = new f.Node("Game");
 
-        let fragment: Fragment = new Fragment(0);
+        let fragment: Fragment;
+        fragment = new Fragment(0);
         firstFragment = fragment;
         game.appendChild(fragment);
 
-        fragment = new Fragment(0);
-        fragment.addComponent(new f.ComponentTransform(f.Matrix4x4.TRANSLATION(new f.Vector3(0, 5, 0))));
-        game.appendChild(fragment);
-        currentFragment = fragment;
 
-        // for (let i: number = 0; i < 7; i++) {
-        //     let fragment: Fragment = new Fragment(i);
-        //     fragment.addComponent(new f.ComponentTransform(f.Matrix4x4.TRANSLATION(new f.Vector3(i * 3, 0, 0))));
-        //     game.appendChild(fragment);
-        // }
+        fragment = new Fragment(1);
+        fragment.addComponent(new f.ComponentTransform);
+        currentFragment = fragment;
+        game.appendChild(fragment);
+
+        // console.log(firstFragment.getCubesPositions());
+        console.log("in create game: " + currentFragment.getCubesPositions());
 
         return game;
     } //close createGame
@@ -68,25 +74,26 @@ namespace L08_FudgeCraft {
     // ############################################################################################
     function handleKeyDown(_event: KeyboardEvent): void {
 
+
         processInput(_event);
-
-        // console.log(currentFragment.getCubesPositions());
-
-        checkIfHit();
-        if (checkIfHit) {
-            //fragment fest setzen und neues erstellen
-        }
-
         f.RenderManager.update();
         viewport.draw();
+
+        console.log("handleKeyDown after keypress transform: " + currentFragment.getCubesPositions());
+
+        // checkIfHit();
+        // if (checkIfHit) {
+        //     //fragment fest setzen und neues erstellen
+        // }
+
+
     } //close handleKeyDown
 
 
     function checkIfHit(): boolean {
 
-        console.log(firstFragment.getCubesPositions());
+        // console.log(firstFragment.getCubesPositions());
         console.log(currentFragment.getCubesPositions());
-        
 
         // for (let fragment of game.getChildren()) {
         //     console.log("1. durch alle game.getChildren");
@@ -100,14 +107,14 @@ namespace L08_FudgeCraft {
         //                 console.log("current: " + currentPosition);
         //                 if (othersPosition == currentPosition) {
         //                     console.log("5. If hit");
-                            
+
         //                     return true;
         //                 }
         //             }
 
         //         }
 
-                
+
         //     }
         // }
         return false;
@@ -130,7 +137,6 @@ namespace L08_FudgeCraft {
                 currentFragment.cmpTransform.local.translateY(-1);
                 break;
         }
-
         //Rotation
         switch (_event.code) {
             case f.KEYBOARD_CODE.Q:

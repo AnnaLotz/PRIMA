@@ -13,6 +13,7 @@ namespace L08_FudgeCraft {
             super("Fragment-Type" + _shape);
             this.shape = this.fragmentDef[_shape];
             let mtr: f.Material = this.getMaterial(_shape);
+
             //schleife durch eine Form um die einzelnen Cubes zu setzen
             for (let position of this.shape) {
                 //einen Nullvektor erstellen an dessen Werte die Position gesetzt wird
@@ -23,7 +24,6 @@ namespace L08_FudgeCraft {
                 this.cubes.push(cube);
                 this.appendChild(cube);
             }
-            // console.log(this.cubes);
         } //close constructor
 
 
@@ -48,7 +48,9 @@ namespace L08_FudgeCraft {
             //[Index der Form/shape][Eine Form][Position eines Cubes]
             let shapeArray: number[][][] =
                 [
-                    [[-1, 0, 0], [0, 0, 0], [1, 0, 0], [1, 1, 0]], //L: Orange Ricky
+                    [[0, 0, 0], [1, 0, 0]],
+                    [[0, 0, 0], [1, 0, 0]],
+                    // [[-1, 0, 0], [0, 0, 0], [1, 0, 0], [1, 1, 0]], //L: Orange Ricky
                     [[-1, -1, 0], [-1, 0, 0], [0, 0, 0], [1, 0, 0]], //J: Blue Ricky
                     [[0, 0, 0], [0, 1, 0], [-1, 1, 0], [1, 0, 0]], //Z: Cleveland Z
                     [[0, 0, 0], [0, 1, 0], [1, 1, 0], [-1, 0, 0]], //S: Rhode Island Z

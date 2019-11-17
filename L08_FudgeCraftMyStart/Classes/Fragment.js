@@ -21,7 +21,6 @@ var L08_FudgeCraft;
                 this.cubes.push(cube);
                 this.appendChild(cube);
             }
-            // console.log(this.cubes);
         } //close constructor
         getCubesPositions() {
             let cubePositions = [];
@@ -40,7 +39,9 @@ var L08_FudgeCraft;
         getShapeArray() {
             //[Index der Form/shape][Eine Form][Position eines Cubes]
             let shapeArray = [
-                [[-1, 0, 0], [0, 0, 0], [1, 0, 0], [1, 1, 0]],
+                [[0, 0, 0], [1, 0, 0]],
+                [[0, 0, 0], [1, 0, 0]],
+                // [[-1, 0, 0], [0, 0, 0], [1, 0, 0], [1, 1, 0]], //L: Orange Ricky
                 [[-1, -1, 0], [-1, 0, 0], [0, 0, 0], [1, 0, 0]],
                 [[0, 0, 0], [0, 1, 0], [-1, 1, 0], [1, 0, 0]],
                 [[0, 0, 0], [0, 1, 0], [1, 1, 0], [-1, 0, 0]],
