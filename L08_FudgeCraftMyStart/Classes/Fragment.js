@@ -28,12 +28,11 @@ var L08_FudgeCraft;
                 let cube = this.cubes[i];
                 cubePositions[i] =
                     [
-                        cube.mtxWorld.translation.x,
-                        cube.mtxWorld.translation.y,
-                        cube.mtxWorld.translation.z
+                        Math.round(cube.mtxWorld.translation.x),
+                        Math.round(cube.mtxWorld.translation.y),
+                        Math.round(cube.mtxWorld.translation.z)
                     ];
             }
-            // console.log(cubePositions);
             return cubePositions;
         } //close getCubesPositions
         getShapeArray() {

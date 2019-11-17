@@ -17,7 +17,7 @@ var L08_FudgeCraft;
             this.addComponent(cmpMesh);
             let cmpMaterial = new f.ComponentMaterial(_mtr);
             this.addComponent(cmpMaterial);
-        } //close constructor
+        } //close constructor        
     } //close class Cube
     L08_FudgeCraft.Cube = Cube;
 })(L08_FudgeCraft || (L08_FudgeCraft = {})); //namespace zu
