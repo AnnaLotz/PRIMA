@@ -23,7 +23,7 @@ var L07;
     } //close handleLoad
     function createGame() {
         let game = new f.Node("Game");
-        let fragment = new L07.Fragment();
+        // let fragment: Fragment = new Fragment();
         // fragment.createMesh();
         return game;
     } //close createGame
