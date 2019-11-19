@@ -28,7 +28,7 @@ namespace L07 {
 
     function createGame(): f.Node {
         let game: f.Node = new f.Node("Game");
-        let fragment: Fragment = new Fragment();
+        // let fragment: Fragment = new Fragment();
         // fragment.createMesh();
         return game;
     } //close createGame
