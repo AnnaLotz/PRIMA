@@ -8,7 +8,7 @@ namespace L08_FudgeCraft_Collision {
         
         //der constructor nimmt den Vektor von einem Cube entgegen und das Material
         constructor(_position: f.Vector3, _mtr: f.Material) {
-            super("Cube"); //f.Node constructor vergibt einen simplen Namen
+            super("Cube" + _mtr); //f.Node constructor vergibt einen simplen Namen
 
             //Dem Cube die Position geben aus dem Übergabeparameter
             let cmpTransform: f.ComponentTransform = new f.ComponentTransform(f.Matrix4x4.TRANSLATION(_position));

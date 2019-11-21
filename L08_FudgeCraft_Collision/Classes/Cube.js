@@ -5,7 +5,7 @@ var L08_FudgeCraft_Collision;
     class Cube extends f.Node {
         //der constructor nimmt den Vektor von einem Cube entgegen und das Material
         constructor(_position, _mtr) {
-            super("Cube"); //f.Node constructor vergibt einen simplen Namen
+            super("Cube" + _mtr); //f.Node constructor vergibt einen simplen Namen
             this.mesh = new f.MeshCube();
             //Dem Cube die Position geben aus dem Übergabeparameter
             let cmpTransform = new f.ComponentTransform(f.Matrix4x4.TRANSLATION(_position));

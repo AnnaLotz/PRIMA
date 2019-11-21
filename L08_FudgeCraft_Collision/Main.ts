@@ -10,10 +10,17 @@ namespace L08_FudgeCraft_Collision {
     let currentFragment: Fragment;
     let firstFragment: Fragment;
 
+    let grid: Grid = new Grid();
+
 
     // ############################################################################################
     // ############################################################################################
     function handleLoad(_event: Event): void {
+
+        grid.set("Jonas", new Cube(new f.Vector3(3, 3, 0), new f.Material("Cyan", f.ShaderFlat, new f.CoatColored(f.Color.CYAN))));
+        console.log(grid);
+
+
         console.log("Hello World");
         const canvas: HTMLCanvasElement = document.querySelector("canvas");
         f.RenderManager.initialize(true); //true um Antialiasing zu vermeiden
@@ -37,7 +44,7 @@ namespace L08_FudgeCraft_Collision {
         viewport = new f.Viewport();
         viewport.initialize("Viewport", game, camera.getComponent(f.ComponentCamera), canvas);
         viewport.draw();
-        console.log("currentFragment after viewport.draw(): " + currentFragment.getCubesPositions()); //erst hier ist die position im raum richtig erfasst
+        // console.log("currentFragment after viewport.draw(): " + currentFragment.getCubesPositions()); //erst hier ist die position im raum richtig erfasst
 
         window.addEventListener("keydown", handleKeyDown);
 

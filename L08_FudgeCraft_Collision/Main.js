@@ -9,9 +9,12 @@ var L08_FudgeCraft_Collision;
     let fragment;
     let currentFragment;
     let firstFragment;
+    let grid = new L08_FudgeCraft_Collision.Grid();
     // ############################################################################################
     // ############################################################################################
     function handleLoad(_event) {
+        grid.set("Jonas", new L08_FudgeCraft_Collision.Cube(new f.Vector3(3, 3, 0), new f.Material("Cyan", f.ShaderFlat, new f.CoatColored(f.Color.CYAN))));
+        console.log(grid);
         console.log("Hello World");
         const canvas = document.querySelector("canvas");
         f.RenderManager.initialize(true); //true um Antialiasing zu vermeiden
@@ -31,7 +34,7 @@ var L08_FudgeCraft_Collision;
         L08_FudgeCraft_Collision.viewport = new f.Viewport();
         L08_FudgeCraft_Collision.viewport.initialize("Viewport", game, camera.getComponent(f.ComponentCamera), canvas);
         L08_FudgeCraft_Collision.viewport.draw();
-        console.log("currentFragment after viewport.draw(): " + currentFragment.getCubesPositions()); //erst hier ist die position im raum richtig erfasst
+        // console.log("currentFragment after viewport.draw(): " + currentFragment.getCubesPositions()); //erst hier ist die position im raum richtig erfasst
         window.addEventListener("keydown", handleKeyDown);
         console.log("Setup done");
     } //close handleLoad
