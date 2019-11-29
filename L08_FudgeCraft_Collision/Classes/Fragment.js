@@ -9,6 +9,7 @@ var L08_FudgeCraft_Collision;
             this.position = new f.Vector3(0, 0, 0);
             this.materials = this.createMaterials();
             this.cubes = [];
+            console.log("Fragment-Type" + _shape);
             this.shape = this.fragmentDef[_shape];
             let mtr = this.getMaterial(_shape);
             //schleife durch eine Form um die einzelnen Cubes zu setzen
@@ -38,8 +39,6 @@ var L08_FudgeCraft_Collision;
         getShapeArray() {
             //[Index der Form/shape][Eine Form][Position eines Cubes]
             let shapeArray = [
-                // [[0, 0, 0], [1, 0, 0]],
-                // [[0, 0, 0], [1, 0, 0]],
                 [[-1, 0, 0], [0, 0, 0], [1, 0, 0], [1, 1, 0]],
                 [[-1, -1, 0], [-1, 0, 0], [0, 0, 0], [1, 0, 0]],
                 [[0, 0, 0], [0, 1, 0], [-1, 1, 0], [1, 0, 0]],

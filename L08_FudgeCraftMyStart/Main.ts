@@ -22,7 +22,7 @@ namespace L08_FudgeCraft {
         let camera: f.Node = new f.Node("Camera");
         let cmpCam: f.ComponentCamera = new f.ComponentCamera();
         camera.addComponent(cmpCam);
-        cmpCam.pivot.translate(new f.Vector3(0, 3, 30)); // kamera auf ort setzen
+        cmpCam.pivot.translate(new f.Vector3(0, 6, 30)); // kamera auf ort setzen
         // cmpCam.pivot.lookAt(f.Vector3.ZERO()); // um auf 0|0|0 zu schauen
 
         //create Game Node
@@ -103,10 +103,10 @@ namespace L08_FudgeCraft {
 
 
     function createNewFragment(): void {
-        //funktioniert noch nicht: das neue Fragment ist nicht sichtbar, hat aber werte
-        fragment = new Fragment(0);
+        let rndFragNum: number = Math.floor(Math.random() * fragment.fragmentDef.length);
+        fragment = new Fragment(rndFragNum);
         fragment.addComponent(new f.ComponentTransform);
-        fragment.cmpTransform.local.translate(new f.Vector3(0, 5, 0));
+        fragment.cmpTransform.local.translate(new f.Vector3(0, 7, 0));
         currentFragment = fragment;
         game.appendChild(fragment);
         

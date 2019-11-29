@@ -12,6 +12,7 @@ namespace L08_FudgeCraft_Collision {
 
         constructor(_shape: number) {
             super("Fragment-Type" + _shape);
+            console.log("Fragment-Type" + _shape);
             this.shape = this.fragmentDef[_shape];
             let mtr: f.Material = this.getMaterial(_shape);
 
@@ -48,8 +49,6 @@ namespace L08_FudgeCraft_Collision {
             //[Index der Form/shape][Eine Form][Position eines Cubes]
             let shapeArray: number[][][] =
                 [
-                    // [[0, 0, 0], [1, 0, 0]],
-                    // [[0, 0, 0], [1, 0, 0]],
                     [[-1, 0, 0], [0, 0, 0], [1, 0, 0], [1, 1, 0]], //L: Orange Ricky
                     [[-1, -1, 0], [-1, 0, 0], [0, 0, 0], [1, 0, 0]], //J: Blue Ricky
                     [[0, 0, 0], [0, 1, 0], [-1, 1, 0], [1, 0, 0]], //Z: Cleveland Z
