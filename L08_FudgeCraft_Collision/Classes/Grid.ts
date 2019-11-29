@@ -1,17 +1,44 @@
 namespace L08_FudgeCraft_Collision {
     import f = FudgeCore;
+    export class GridElement {
+        public cube: Cube;
 
-    export class Grid extends Map<string, Cube> {
-        //durch extend WIRD das Grid zur Map
-        // private grid:
+        constructor(_cube: Cube = null) {
+            this.cube = _cube;
+        }
+    }
 
-        //neues Fudge ziehen!!!
-        setCube(_cube: Cube): void {
-            // 
-            // console.log(_cube.mtxWorld.translation.toString());
+    export class Grid extends Map<string, GridElement> {
+        constructor() {
+            super();
+        }
 
-        } //close setCube
+        push(_position: f.Vector3, _element: GridElement = null): void {
+            let key: string = this.toKey(_position);
+            this.set(key, _element);
+            if (_element)
+                game.appendChild(_element.cube);
+        }
 
-    } //close class
+        pull(_position: f.Vector3): GridElement {
+            let key: string = this.toKey(_position);
+            let element: GridElement = this.get(key);
+            return element;
+        }
 
-} //close Namespace
+        pop(_position: f.Vector3): GridElement {
+            let key: string = this.toKey(_position);
+            let element: GridElement = this.get(key);
+            this.delete(key);
+            if (element)
+                game.removeChild(element.cube);
+            return element;
+        }
+
+        toKey(_position: f.Vector3): string {
+            let position: f.Vector3 = _position.map(Math.round);
+            let key: string = position.toString();
+            return key;
+        }
+    }
+}

@@ -5,16 +5,15 @@ var L08_FudgeCraft_Collision;
 (function (L08_FudgeCraft_Collision) {
     var f = FudgeCore;
     document.addEventListener("DOMContentLoaded", handleLoad);
-    let game;
+    L08_FudgeCraft_Collision.grid = new L08_FudgeCraft_Collision.Grid();
     let fragment;
     let currentFragment;
     let firstFragment;
-    let grid = new L08_FudgeCraft_Collision.Grid();
     // ############################################################################################
     // ############################################################################################
     function handleLoad(_event) {
-        grid.set("Jonas", new L08_FudgeCraft_Collision.Cube(new f.Vector3(3, 3, 0), new f.Material("Cyan", f.ShaderFlat, new f.CoatColored(f.Color.CYAN))));
-        console.log(grid);
+        // grid.set("Jonas", new Cube(new f.Vector3(3, 3, 0), new f.Material("Cyan", f.ShaderFlat, new f.CoatColored(f.Color.CYAN))));
+        // console.log(grid);
         console.log("Hello World");
         const canvas = document.querySelector("canvas");
         f.RenderManager.initialize(true); //true um Antialiasing zu vermeiden
@@ -23,31 +22,36 @@ var L08_FudgeCraft_Collision;
         let cmpCam = new f.ComponentCamera();
         camera.addComponent(cmpCam);
         cmpCam.pivot.translate(new f.Vector3(0, 6, 30)); // kamera auf ort setzen
+        cmpCam.backgroundColor = f.Color.DARK_GREY;
         // cmpCam.pivot.lookAt(f.Vector3.ZERO()); // um auf 0|0|0 zu schauen
         //create Game Node
-        game = createGame();
+        L08_FudgeCraft_Collision.game = createGame();
         //Light
         let cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
         cmpLight.pivot.lookAt(new f.Vector3(0.5, 0, 0.5));
-        game.addComponent(cmpLight);
+        L08_FudgeCraft_Collision.game.addComponent(cmpLight);
+        let cmpLightAmbient = new f.ComponentLight(new f.LightAmbient(f.Color.GREY));
+        L08_FudgeCraft_Collision.game.addComponent(cmpLightAmbient);
         //Viewport
         L08_FudgeCraft_Collision.viewport = new f.Viewport();
-        L08_FudgeCraft_Collision.viewport.initialize("Viewport", game, camera.getComponent(f.ComponentCamera), canvas);
+        L08_FudgeCraft_Collision.viewport.initialize("Viewport", L08_FudgeCraft_Collision.game, camera.getComponent(f.ComponentCamera), canvas);
         L08_FudgeCraft_Collision.viewport.draw();
         // console.log("currentFragment after viewport.draw(): " + currentFragment.getCubesPositions()); //erst hier ist die position im raum richtig erfasst
         window.addEventListener("keydown", handleKeyDown);
         console.log("Setup done");
     } //close handleLoad
     function createGame() {
-        game = new f.Node("Game");
-        fragment = new L08_FudgeCraft_Collision.Fragment(0);
+        L08_FudgeCraft_Collision.game = new f.Node("Game");
+        let rndFragNum = Math.floor(Math.random() * 7);
+        fragment = new L08_FudgeCraft_Collision.Fragment(rndFragNum);
         firstFragment = fragment;
-        game.appendChild(fragment);
-        fragment = new L08_FudgeCraft_Collision.Fragment(3);
-        fragment.addComponent(new f.ComponentTransform(f.Matrix4x4.TRANSLATION(new f.Vector3(0, 3, 0))));
+        L08_FudgeCraft_Collision.game.appendChild(fragment);
+        rndFragNum = Math.floor(Math.random() * fragment.fragmentDef.length);
+        fragment = new L08_FudgeCraft_Collision.Fragment(rndFragNum);
+        fragment.addComponent(new f.ComponentTransform(f.Matrix4x4.TRANSLATION(new f.Vector3(0, 7, 0))));
         currentFragment = fragment;
-        game.appendChild(fragment);
-        return game;
+        L08_FudgeCraft_Collision.game.appendChild(fragment);
+        return L08_FudgeCraft_Collision.game;
     } //close createGame
     // ############################################################################################
     // ############################################################################################
@@ -61,7 +65,7 @@ var L08_FudgeCraft_Collision;
     function checkIfHit() {
         console.log("firstFrag: " + firstFragment.getCubesPositions());
         console.log("currentFrag: " + currentFragment.getCubesPositions());
-        for (let fragment of game.getChildren()) {
+        for (let fragment of L08_FudgeCraft_Collision.game.getChildren()) {
             // console.log("1. durch alle game.getChildren");
             if (fragment != currentFragment && fragment instanceof L08_FudgeCraft_Collision.Fragment) {
                 // console.log("2. if fragment != currentFragment und Fragment instace");
@@ -88,7 +92,7 @@ var L08_FudgeCraft_Collision;
         fragment.addComponent(new f.ComponentTransform);
         fragment.cmpTransform.local.translate(new f.Vector3(0, 7, 0));
         currentFragment = fragment;
-        game.appendChild(fragment);
+        L08_FudgeCraft_Collision.game.appendChild(fragment);
         f.RenderManager.update();
         L08_FudgeCraft_Collision.viewport.draw();
     } //close createNewFragment

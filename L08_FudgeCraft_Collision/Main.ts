@@ -5,20 +5,20 @@ namespace L08_FudgeCraft_Collision {
 
     document.addEventListener("DOMContentLoaded", handleLoad);
 
-    let game: f.Node;
+    export let game: f.Node;
+    export let grid: Grid = new Grid();
     let fragment: Fragment;
     let currentFragment: Fragment;
     let firstFragment: Fragment;
 
-    let grid: Grid = new Grid();
 
 
     // ############################################################################################
     // ############################################################################################
     function handleLoad(_event: Event): void {
 
-        grid.set("Jonas", new Cube(new f.Vector3(3, 3, 0), new f.Material("Cyan", f.ShaderFlat, new f.CoatColored(f.Color.CYAN))));
-        console.log(grid);
+        // grid.set("Jonas", new Cube(new f.Vector3(3, 3, 0), new f.Material("Cyan", f.ShaderFlat, new f.CoatColored(f.Color.CYAN))));
+        // console.log(grid);
 
 
         console.log("Hello World");
@@ -30,6 +30,7 @@ namespace L08_FudgeCraft_Collision {
         let cmpCam: f.ComponentCamera = new f.ComponentCamera();
         camera.addComponent(cmpCam);
         cmpCam.pivot.translate(new f.Vector3(0, 6, 30)); // kamera auf ort setzen
+        cmpCam.backgroundColor = f.Color.DARK_GREY;
         // cmpCam.pivot.lookAt(f.Vector3.ZERO()); // um auf 0|0|0 zu schauen
 
         //create Game Node
@@ -39,6 +40,8 @@ namespace L08_FudgeCraft_Collision {
         let cmpLight: f.ComponentLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
         cmpLight.pivot.lookAt(new f.Vector3(0.5, 0, 0.5));
         game.addComponent(cmpLight);
+        let cmpLightAmbient: f.ComponentLight = new f.ComponentLight(new f.LightAmbient(f.Color.GREY));
+        game.addComponent(cmpLightAmbient);
 
         //Viewport
         viewport = new f.Viewport();
@@ -55,12 +58,14 @@ namespace L08_FudgeCraft_Collision {
     function createGame(): f.Node {
         game = new f.Node("Game");
 
-        fragment = new Fragment(0);
+        let rndFragNum: number = Math.floor(Math.random() * 7);
+        fragment = new Fragment(rndFragNum);
         firstFragment = fragment;
         game.appendChild(fragment);
 
-        fragment = new Fragment(3);
-        fragment.addComponent(new f.ComponentTransform(f.Matrix4x4.TRANSLATION(new f.Vector3(0, 3, 0))));
+        rndFragNum = Math.floor(Math.random() * fragment.fragmentDef.length);
+        fragment = new Fragment(rndFragNum);
+        fragment.addComponent(new f.ComponentTransform(f.Matrix4x4.TRANSLATION(new f.Vector3(0, 7, 0))));
         currentFragment = fragment;
         game.appendChild(fragment);
 

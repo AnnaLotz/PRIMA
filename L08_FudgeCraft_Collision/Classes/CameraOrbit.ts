@@ -6,7 +6,7 @@ namespace L08_FudgeCraft_Collision {
         // rotatorX: f.Node;
         maxRotX: number = 75;
         minDistance: number;
-        private camera: f.ComponentCamera;
+        /* private*/ camera: f.ComponentCamera;
 
         constructor(_maxRotX: number) {
             super("CameraOrbit");
