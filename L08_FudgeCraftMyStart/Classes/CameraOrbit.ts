@@ -1,4 +1,4 @@
-namespace L08_FudgeCraft_Collision {
+namespace L08_FudgeCraft {
     import f = FudgeCore;
 
     export class CameraOrbit extends f.Node {

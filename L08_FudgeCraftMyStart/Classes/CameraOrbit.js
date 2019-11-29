@@ -1,6 +1,6 @@
 "use strict";
-var L08_FudgeCraft_Collision;
-(function (L08_FudgeCraft_Collision) {
+var L08_FudgeCraft;
+(function (L08_FudgeCraft) {
     var f = FudgeCore;
     class CameraOrbit extends f.Node {
         constructor(_maxRotX) {
@@ -45,6 +45,6 @@ var L08_FudgeCraft_Collision;
             // 
         }
     } //close class Camera
-    L08_FudgeCraft_Collision.CameraOrbit = CameraOrbit;
-})(L08_FudgeCraft_Collision || (L08_FudgeCraft_Collision = {})); //namespace zu
+    L08_FudgeCraft.CameraOrbit = CameraOrbit;
+})(L08_FudgeCraft || (L08_FudgeCraft = {})); //namespace zu
 //# sourceMappingURL=CameraOrbit.js.map
