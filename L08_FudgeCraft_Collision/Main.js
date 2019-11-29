@@ -5,10 +5,13 @@ var L08_FudgeCraft_Collision;
 (function (L08_FudgeCraft_Collision) {
     var f = FudgeCore;
     document.addEventListener("DOMContentLoaded", handleLoad);
-    L08_FudgeCraft_Collision.grid = new L08_FudgeCraft_Collision.Grid();
     let fragment;
     let currentFragment;
     let firstFragment;
+    // interface Collision {
+    //     element: GridElement;
+    //     thisCube: Cube;
+    // }
     // ############################################################################################
     // ############################################################################################
     function handleLoad(_event) {
@@ -25,7 +28,9 @@ var L08_FudgeCraft_Collision;
         cmpCam.backgroundColor = f.Color.DARK_GREY;
         // cmpCam.pivot.lookAt(f.Vector3.ZERO()); // um auf 0|0|0 zu schauen
         //create Game Node
-        L08_FudgeCraft_Collision.game = createGame();
+        L08_FudgeCraft_Collision.game = new f.Node("Game");
+        L08_FudgeCraft_Collision.grid = new L08_FudgeCraft_Collision.Grid();
+        createStart();
         //Light
         let cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
         cmpLight.pivot.lookAt(new f.Vector3(0.5, 0, 0.5));
@@ -40,17 +45,23 @@ var L08_FudgeCraft_Collision;
         window.addEventListener("keydown", handleKeyDown);
         console.log("Setup done");
     } //close handleLoad
-    function createGame() {
-        L08_FudgeCraft_Collision.game = new f.Node("Game");
+    function createStart() {
         let rndFragNum = Math.floor(Math.random() * 7);
         fragment = new L08_FudgeCraft_Collision.Fragment(rndFragNum);
         firstFragment = fragment;
-        L08_FudgeCraft_Collision.game.appendChild(fragment);
-        rndFragNum = Math.floor(Math.random() * fragment.fragmentDef.length);
-        fragment = new L08_FudgeCraft_Collision.Fragment(rndFragNum);
-        fragment.addComponent(new f.ComponentTransform(f.Matrix4x4.TRANSLATION(new f.Vector3(0, 7, 0))));
-        currentFragment = fragment;
-        L08_FudgeCraft_Collision.game.appendChild(fragment);
+        L08_FudgeCraft_Collision.game.appendChild(firstFragment);
+        for (let cube of firstFragment.getChildren()) {
+            f.RenderManager.update();
+            let position = cube.mtxWorld.translation;
+            console.log(cube.mtxWorld.translation.toString());
+            // cube.cmpTransform.local.translation = position;
+            // grid.push(position, new GridElement(cube));
+        }
+        // rndFragNum = Math.floor(Math.random() * fragment.fragmentDef.length);
+        // fragment = new Fragment(rndFragNum);
+        // fragment.addComponent(new f.ComponentTransform(f.Matrix4x4.TRANSLATION(new f.Vector3(0, 7, 0))));
+        // currentFragment = fragment;
+        // game.appendChild(fragment);
         return L08_FudgeCraft_Collision.game;
     } //close createGame
     // ############################################################################################
@@ -59,32 +70,47 @@ var L08_FudgeCraft_Collision;
         processInput(_event, 1);
         if (checkIfHit()) {
             processInput(_event, -1); //die bewegung rückgängig machen
+            for (let cube of currentFragment.getChildren()) {
+                let position = cube.mtxWorld.translation;
+                cube.cmpTransform.local.translation = position;
+                L08_FudgeCraft_Collision.grid.push(position, new L08_FudgeCraft_Collision.GridElement());
+            }
             createNewFragment(); //neues Fragment erstellen und zum currentFrag machen
         }
     } //close handleKeyDown
     function checkIfHit() {
-        console.log("firstFrag: " + firstFragment.getCubesPositions());
-        console.log("currentFrag: " + currentFragment.getCubesPositions());
-        for (let fragment of L08_FudgeCraft_Collision.game.getChildren()) {
-            // console.log("1. durch alle game.getChildren");
-            if (fragment != currentFragment && fragment instanceof L08_FudgeCraft_Collision.Fragment) {
-                // console.log("2. if fragment != currentFragment und Fragment instace");
-                for (let othersPosition of fragment.getCubesPositions()) {
-                    // console.log("3. for otherpositions of fragment.getCubesPositions");
-                    for (let currentPosition of currentFragment.getCubesPositions()) {
-                        // console.log("4. for currentPos of currentFrag.getCubesPositions");
-                        // console.log(othersPosition);
-                        // console.log(currentPosition);
-                        if (othersPosition[0] == currentPosition[0] && othersPosition[1] == currentPosition[1]) {
-                            console.log("HIT!");
-                            return true;
-                            break;
-                        }
-                    }
-                }
+        // console.log("firstFrag: " + firstFragment.getCubesPositions());
+        // console.log("currentFrag: " + currentFragment.getCubesPositions());
+        // let collisions: Collision[] = [];
+        for (let cube of currentFragment.getChildren()) {
+            let element = L08_FudgeCraft_Collision.grid.pull(cube.mtxWorld.translation);
+            console.log(element);
+            if (element) {
+                // collisions.push({ element, cube });
+                return true;
             }
         }
         return false;
+        // for (let fragment of game.getChildren()) {
+        //     // console.log("1. durch alle game.getChildren");
+        //     if (fragment != currentFragment && fragment instanceof Fragment) {
+        //         // console.log("2. if fragment != currentFragment und Fragment instace");
+        //         for (let othersPosition of fragment.getCubesPositions()) {
+        //             // console.log("3. for otherpositions of fragment.getCubesPositions");
+        //             for (let currentPosition of currentFragment.getCubesPositions()) {
+        //                 // console.log("4. for currentPos of currentFrag.getCubesPositions");
+        //                 // console.log(othersPosition);
+        //                 // console.log(currentPosition);
+        //                 if (othersPosition[0] == currentPosition[0] && othersPosition[1] == currentPosition[1]) {
+        //                     console.log("HIT!");
+        //                     return true;
+        //                     break;
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+        // return false;
     } //close checkIfHit
     function createNewFragment() {
         let rndFragNum = Math.floor(Math.random() * fragment.fragmentDef.length);

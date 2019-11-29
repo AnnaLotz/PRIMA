@@ -7,6 +7,7 @@ var L08_FudgeCraft_Collision;
         constructor(_position, _mtr) {
             super("Cube" + _mtr); //f.Node constructor vergibt einen simplen Namen
             this.mesh = new f.MeshCube();
+            // console.log(this.mtxWorld.translation);
             //Dem Cube die Position geben aus dem Übergabeparameter
             let cmpTransform = new f.ComponentTransform(f.Matrix4x4.TRANSLATION(_position));
             cmpTransform.local.scale(f.Vector3.ONE(0.8)); // um den Würfel bissl zu verkleinern
@@ -17,6 +18,7 @@ var L08_FudgeCraft_Collision;
             this.addComponent(cmpMesh);
             let cmpMaterial = new f.ComponentMaterial(_mtr);
             this.addComponent(cmpMaterial);
+            f.RenderManager.update();
         } //close constructor        
     } //close class Cube
     L08_FudgeCraft_Collision.Cube = Cube;

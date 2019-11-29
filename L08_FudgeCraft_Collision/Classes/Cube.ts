@@ -10,6 +10,7 @@ namespace L08_FudgeCraft_Collision {
         constructor(_position: f.Vector3, _mtr: f.Material) {
             super("Cube" + _mtr); //f.Node constructor vergibt einen simplen Namen
 
+            // console.log(this.mtxWorld.translation);
             //Dem Cube die Position geben aus dem Übergabeparameter
             let cmpTransform: f.ComponentTransform = new f.ComponentTransform(f.Matrix4x4.TRANSLATION(_position));
             cmpTransform.local.scale(f.Vector3.ONE(0.8)); // um den Würfel bissl zu verkleinern
@@ -21,6 +22,7 @@ namespace L08_FudgeCraft_Collision {
             this.addComponent(cmpMesh);
             let cmpMaterial: f.ComponentMaterial = new f.ComponentMaterial(_mtr);
             this.addComponent(cmpMaterial);
+            f.RenderManager.update();
         } //close constructor        
 
     } //close class Cube

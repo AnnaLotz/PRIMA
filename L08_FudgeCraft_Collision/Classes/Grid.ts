@@ -1,5 +1,6 @@
 namespace L08_FudgeCraft_Collision {
     import f = FudgeCore;
+
     export class GridElement {
         public cube: Cube;
 
@@ -9,6 +10,7 @@ namespace L08_FudgeCraft_Collision {
     }
 
     export class Grid extends Map<string, GridElement> {
+
         constructor() {
             super();
         }
@@ -18,6 +20,7 @@ namespace L08_FudgeCraft_Collision {
             this.set(key, _element);
             if (_element)
                 game.appendChild(_element.cube);
+            // console.log(grid);
         }
 
         pull(_position: f.Vector3): GridElement {
