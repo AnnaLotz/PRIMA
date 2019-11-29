@@ -22,7 +22,7 @@ var L08_FudgeCraft_Collision;
         let camera = new f.Node("Camera");
         let cmpCam = new f.ComponentCamera();
         camera.addComponent(cmpCam);
-        cmpCam.pivot.translate(new f.Vector3(0, 3, 30)); // kamera auf ort setzen
+        cmpCam.pivot.translate(new f.Vector3(0, 6, 30)); // kamera auf ort setzen
         // cmpCam.pivot.lookAt(f.Vector3.ZERO()); // um auf 0|0|0 zu schauen
         //create Game Node
         game = createGame();
@@ -83,10 +83,10 @@ var L08_FudgeCraft_Collision;
         return false;
     } //close checkIfHit
     function createNewFragment() {
-        //funktioniert noch nicht: das neue Fragment ist nicht sichtbar, hat aber werte
-        fragment = new L08_FudgeCraft_Collision.Fragment(0);
+        let rndFragNum = Math.floor(Math.random() * fragment.fragmentDef.length);
+        fragment = new L08_FudgeCraft_Collision.Fragment(rndFragNum);
         fragment.addComponent(new f.ComponentTransform);
-        fragment.cmpTransform.local.translate(new f.Vector3(0, 5, 0));
+        fragment.cmpTransform.local.translate(new f.Vector3(0, 7, 0));
         currentFragment = fragment;
         game.appendChild(fragment);
         f.RenderManager.update();
