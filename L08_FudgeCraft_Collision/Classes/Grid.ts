@@ -18,6 +18,7 @@ namespace L08_FudgeCraft_Collision {
         push(_position: f.Vector3, _element: GridElement = null): void {
             let key: string = this.toKey(_position);
             this.set(key, _element);
+            // console.log(_element);
             if (_element)
                 game.appendChild(_element.cube);
             // console.log(grid);

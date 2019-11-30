@@ -3,6 +3,7 @@ var L08_FudgeCraft;
 (function (L08_FudgeCraft) {
     var f = FudgeCore;
     class CameraOrbit extends f.Node {
+        // private camera: f.ComponentCamera;
         constructor(_maxRotX) {
             super("CameraOrbit");
             // rotatorX: f.Node;

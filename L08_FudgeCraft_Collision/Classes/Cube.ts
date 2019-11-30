@@ -16,6 +16,7 @@ namespace L08_FudgeCraft_Collision {
             cmpTransform.local.scale(f.Vector3.ONE(0.8)); // um den Würfel bissl zu verkleinern
             this.addComponent(cmpTransform);
             this.transformComp = cmpTransform;
+            // console.log(cmpTransform.local.translation);
 
             //Dem Cube ein mesh- und Material-component anhängen
             let cmpMesh: f.ComponentMesh = new f.ComponentMesh(this.mesh);

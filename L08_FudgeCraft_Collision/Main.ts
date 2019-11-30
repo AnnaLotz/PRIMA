@@ -9,13 +9,6 @@ namespace L08_FudgeCraft_Collision {
     export let grid: Grid;
     let fragment: Fragment;
     let currentFragment: Fragment;
-    let firstFragment: Fragment;
-
-    // interface Collision {
-    //     element: GridElement;
-    //     thisCube: Cube;
-    // }
-
 
     // ############################################################################################
     // ############################################################################################
@@ -39,7 +32,6 @@ namespace L08_FudgeCraft_Collision {
 
         //create Game Node
         game = new f.Node("Game");
-
         grid = new Grid();
         createStart();
 
@@ -58,8 +50,6 @@ namespace L08_FudgeCraft_Collision {
 
         window.addEventListener("keydown", handleKeyDown);
         
-
-
         console.log("Setup done");
     } //close handleLoad
 
@@ -68,23 +58,21 @@ namespace L08_FudgeCraft_Collision {
 
         let rndFragNum: number = Math.floor(Math.random() * 7);
         fragment = new Fragment(rndFragNum);
-        firstFragment = fragment;
-        game.appendChild(firstFragment);
+        currentFragment = fragment;
+        game.appendChild(currentFragment);
 
-
-        for (let cube of firstFragment.getChildren()) {
-            f.RenderManager.update();
-            let position: f.Vector3 = cube.mtxWorld.translation;
-            console.log(cube.mtxWorld.translation.toString());
-            // cube.cmpTransform.local.translation = position;
-            // grid.push(position, new GridElement(cube));
+        for (let cube of currentFragment.cubes) {
+            console.log("set cube at pos: " + cube.transformComp.local.translation);
+            let position: f.Vector3 = cube.transformComp.local.translation;
+            cube.cmpTransform.local.translation = position;
+            grid.push(position, new GridElement(cube));
         }
 
-        // rndFragNum = Math.floor(Math.random() * fragment.fragmentDef.length);
-        // fragment = new Fragment(rndFragNum);
-        // fragment.addComponent(new f.ComponentTransform(f.Matrix4x4.TRANSLATION(new f.Vector3(0, 7, 0))));
-        // currentFragment = fragment;
-        // game.appendChild(fragment);
+        rndFragNum = Math.floor(Math.random() * fragment.fragmentDef.length);
+        fragment = new Fragment(rndFragNum);
+        fragment.addComponent(new f.ComponentTransform(f.Matrix4x4.TRANSLATION(new f.Vector3(0, 7, 0))));
+        currentFragment = fragment;
+        game.appendChild(fragment);
 
         return game;
     } //close createGame
@@ -98,11 +86,8 @@ namespace L08_FudgeCraft_Collision {
 
         if (checkIfHit()) {
             processInput(_event, -1); //die bewegung rückgängig machen
-            for (let cube of currentFragment.getChildren()) {
-                let position: f.Vector3 = cube.mtxWorld.translation;
-                cube.cmpTransform.local.translation = position;
-                grid.push(position, new GridElement());
-            }
+            // f.RenderManager.update();
+            fragment.setAtPosition();
             createNewFragment(); //neues Fragment erstellen und zum currentFrag machen
         }
     } //close handleKeyDown
@@ -110,44 +95,15 @@ namespace L08_FudgeCraft_Collision {
 
     function checkIfHit(): boolean {
 
-        // console.log("firstFrag: " + firstFragment.getCubesPositions());
-        // console.log("currentFrag: " + currentFragment.getCubesPositions());
-
-        // let collisions: Collision[] = [];
-        
+ 
         for (let cube of currentFragment.getChildren()) {
             let element: GridElement = grid.pull(cube.mtxWorld.translation);
-            console.log(element);
             if (element) {
-                
-                // collisions.push({ element, cube });
                 return true;
             }
         }
         return false;
 
-
-
-        // for (let fragment of game.getChildren()) {
-        //     // console.log("1. durch alle game.getChildren");
-        //     if (fragment != currentFragment && fragment instanceof Fragment) {
-        //         // console.log("2. if fragment != currentFragment und Fragment instace");
-        //         for (let othersPosition of fragment.getCubesPositions()) {
-        //             // console.log("3. for otherpositions of fragment.getCubesPositions");
-        //             for (let currentPosition of currentFragment.getCubesPositions()) {
-        //                 // console.log("4. for currentPos of currentFrag.getCubesPositions");
-        //                 // console.log(othersPosition);
-        //                 // console.log(currentPosition);
-        //                 if (othersPosition[0] == currentPosition[0] && othersPosition[1] == currentPosition[1]) {
-        //                     console.log("HIT!");
-        //                     return true;
-        //                     break;
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
-        // return false;
     } //close checkIfHit
 
 

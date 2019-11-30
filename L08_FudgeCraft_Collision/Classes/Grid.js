@@ -14,6 +14,7 @@ var L08_FudgeCraft_Collision;
         push(_position, _element = null) {
             let key = this.toKey(_position);
             this.set(key, _element);
+            // console.log(_element);
             if (_element)
                 L08_FudgeCraft_Collision.game.appendChild(_element.cube);
             // console.log(grid);

@@ -12,7 +12,7 @@ namespace L08_FudgeCraft_Collision {
 
         constructor(_shape: number) {
             super("Fragment-Type" + _shape);
-            console.log("Fragment-Type" + _shape);
+            console.log("New Fragment Type " + _shape);
             this.shape = this.fragmentDef[_shape];
             let mtr: f.Material = this.getMaterial(_shape);
 
@@ -26,23 +26,19 @@ namespace L08_FudgeCraft_Collision {
                 this.cubes.push(cube);
                 this.appendChild(cube);
             }
+
+            console.log();
         } //close constructor
 
 
-        getCubesPositions(): number[][] {
-            let cubePositions: number[][] = [];
-            for (let i: number = 0; i < this.cubes.length; i++) {
-                let cube: Cube = this.cubes[i];
-                cubePositions[i] =
-                    [
-                        Math.round(cube.mtxWorld.translation.x),
-                        Math.round(cube.mtxWorld.translation.y),
-                        Math.round(cube.mtxWorld.translation.z)
-                    ];
+        setAtPosition(): void {
+            for (let cube of this.cubes) {
+                console.log("set cube at pos: " + cube.mtxWorld.translation);
+                let position: f.Vector3 = cube.mtxWorld.translation;
+                cube.cmpTransform.local.translation = position;
+                grid.push(position, new GridElement(cube));
             }
-            return cubePositions;
-        } //close getCubesPositions
-
+        } //close setAtPosition
 
 
         getShapeArray(): number[][][] {

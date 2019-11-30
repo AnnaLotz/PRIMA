@@ -9,7 +9,7 @@ var L08_FudgeCraft_Collision;
             this.position = new f.Vector3(0, 0, 0);
             this.materials = this.createMaterials();
             this.cubes = [];
-            console.log("Fragment-Type" + _shape);
+            console.log("New Fragment Type " + _shape);
             this.shape = this.fragmentDef[_shape];
             let mtr = this.getMaterial(_shape);
             //schleife durch eine Form um die einzelnen Cubes zu setzen
@@ -22,20 +22,16 @@ var L08_FudgeCraft_Collision;
                 this.cubes.push(cube);
                 this.appendChild(cube);
             }
+            console.log();
         } //close constructor
-        getCubesPositions() {
-            let cubePositions = [];
-            for (let i = 0; i < this.cubes.length; i++) {
-                let cube = this.cubes[i];
-                cubePositions[i] =
-                    [
-                        Math.round(cube.mtxWorld.translation.x),
-                        Math.round(cube.mtxWorld.translation.y),
-                        Math.round(cube.mtxWorld.translation.z)
-                    ];
+        setAtPosition() {
+            for (let cube of this.cubes) {
+                console.log("set cube at pos: " + cube.mtxWorld.translation);
+                let position = cube.mtxWorld.translation;
+                cube.cmpTransform.local.translation = position;
+                L08_FudgeCraft_Collision.grid.push(position, new L08_FudgeCraft_Collision.GridElement(cube));
             }
-            return cubePositions;
-        } //close getCubesPositions
+        } //close setAtPosition
         getShapeArray() {
             //[Index der Form/shape][Eine Form][Position eines Cubes]
             let shapeArray = [
