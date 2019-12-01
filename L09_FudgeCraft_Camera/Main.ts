@@ -5,11 +5,6 @@ namespace L09_FudgeCraft_Camera {
 
     document.addEventListener("DOMContentLoaded", handleLoad);
 
-
-    let camera: f.Node = new f.Node("Camera");
-    let cmpCam1: f.ComponentCamera = new f.ComponentCamera();
-    let canvas: HTMLCanvasElement;
-
     export let game: f.Node;
     export let grid: Grid;
     let fragment: Fragment;
@@ -24,29 +19,43 @@ namespace L09_FudgeCraft_Camera {
 
 
         console.log("Hello World");
-        canvas = document.querySelector("canvas");
+        const canvas: HTMLCanvasElement = document.querySelector("canvas");
         f.RenderManager.initialize(true); //true um Antialiasing zu vermeiden
 
         //Camera
-
-
-        camera.addComponent(cmpCam1);
-        cmpCam1.pivot.translate(new f.Vector3(-0.5, 6, 30)); // kamera auf ort setzen
-        cmpCam1.pivot.lookAt(new f.Vector3(0, 6, 0));
-        cmpCam1.backgroundColor = f.Color.DARK_GREY;
-        cmpCam1.activate(true);
-
+        let camera: f.Node = new f.Node("Camera");
+        let cmpCam: f.ComponentCamera = new f.ComponentCamera();
+        camera.addComponent(cmpCam);
+        cmpCam.pivot.translate(new f.Vector3(-0.5, 6, 30)); // kamera auf ort setzen
+        cmpCam.pivot.lookAt(new f.Vector3(0, 6, 0)); // um auf 0|0|0 zu schauen
+        cmpCam.backgroundColor = f.Color.DARK_GREY;
 
         //create Game Node
         game = new f.Node("Game");
         grid = new Grid();
 
         //Light
-        let cmpLight: f.ComponentLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
-        cmpLight.pivot.lookAt(new f.Vector3(0.5, 0, 0.5));
+        let cmpLight: f.ComponentLight;
+        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
+        cmpLight.pivot.translate(new f.Vector3(30, 10, 30));
+        cmpLight.pivot.lookAt(new f.Vector3(0, 0, 0));
         game.addComponent(cmpLight);
-        let cmpLightAmbient: f.ComponentLight = new f.ComponentLight(new f.LightAmbient(f.Color.GREY));
-        game.addComponent(cmpLightAmbient);
+        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
+        cmpLight.pivot.translate(new f.Vector3(-30, 10, 30));
+        cmpLight.pivot.lookAt(new f.Vector3(0, 0, 0));
+        game.addComponent(cmpLight);
+        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
+        cmpLight.pivot.translate(new f.Vector3(-30, 10, -30));
+        cmpLight.pivot.lookAt(new f.Vector3(0, 0, 0));
+        game.addComponent(cmpLight);
+        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
+        cmpLight.pivot.translate(new f.Vector3(30, 10, -30));
+        cmpLight.pivot.lookAt(new f.Vector3(0, 0, 0));
+        game.addComponent(cmpLight);
+
+
+        let cmpLightAmbient: f.ComponentLight = new f.ComponentLight(new f.LightAmbient(f.Color.WHITE));
+        // game.addComponent(cmpLightAmbient);
 
         //Viewport
         viewport = new f.Viewport();
@@ -103,23 +112,9 @@ namespace L09_FudgeCraft_Camera {
             }
         } else if (_event.code == f.KEYBOARD_CODE.ARROW_LEFT) {
             console.log("rotate left");
-
-            cmpCam1.activate(false);
-            let camera2: f.Node = new f.Node("Camera2");
-            let cmpCam2: f.ComponentCamera = new f.ComponentCamera();
-            camera2.addComponent(cmpCam2);
-            cmpCam2.pivot.translate(new f.Vector3(-0.5, 6, - 30.5)); // kamera auf ort setzen
-            cmpCam2.backgroundColor = f.Color.DARK_GREY;
-            cmpCam2.pivot.lookAt(new f.Vector3(0, 6, 0)); // um auf 0|0|0 zu schauen
-            cmpCam2.activate(true);
-
-            viewport.initialize("Viewport", game, camera2.getComponent(f.ComponentCamera), canvas);
-            
-            f.RenderManager.update();
-            viewport.draw();
-
         } else if (_event.code == f.KEYBOARD_CODE.ARROW_RIGHT) {
             console.log("rotate right");
+
         }
 
     } //close handleKeyDown

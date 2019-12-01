@@ -5,9 +5,6 @@ var L09_FudgeCraft_Camera;
 (function (L09_FudgeCraft_Camera) {
     var f = FudgeCore;
     document.addEventListener("DOMContentLoaded", handleLoad);
-    let camera = new f.Node("Camera");
-    let cmpCam1 = new f.ComponentCamera();
-    let canvas;
     let fragment;
     let currentFragment;
     // ############################################################################################
@@ -16,23 +13,38 @@ var L09_FudgeCraft_Camera;
         // grid.set("Jonas", new Cube(new f.Vector3(3, 3, 0), new f.Material("Cyan", f.ShaderFlat, new f.CoatColored(f.Color.CYAN))));
         // console.log(grid);
         console.log("Hello World");
-        canvas = document.querySelector("canvas");
+        const canvas = document.querySelector("canvas");
         f.RenderManager.initialize(true); //true um Antialiasing zu vermeiden
         //Camera
-        camera.addComponent(cmpCam1);
-        cmpCam1.pivot.translate(new f.Vector3(-0.5, 6, 30)); // kamera auf ort setzen
-        cmpCam1.pivot.lookAt(new f.Vector3(0, 6, 0));
-        cmpCam1.backgroundColor = f.Color.DARK_GREY;
-        cmpCam1.activate(true);
+        let camera = new f.Node("Camera");
+        let cmpCam = new f.ComponentCamera();
+        camera.addComponent(cmpCam);
+        cmpCam.pivot.translate(new f.Vector3(-0.5, 6, 30)); // kamera auf ort setzen
+        cmpCam.pivot.lookAt(new f.Vector3(0, 6, 0)); // um auf 0|0|0 zu schauen
+        cmpCam.backgroundColor = f.Color.DARK_GREY;
         //create Game Node
         L09_FudgeCraft_Camera.game = new f.Node("Game");
         L09_FudgeCraft_Camera.grid = new L09_FudgeCraft_Camera.Grid();
         //Light
-        let cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
-        cmpLight.pivot.lookAt(new f.Vector3(0.5, 0, 0.5));
+        let cmpLight;
+        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
+        cmpLight.pivot.translate(new f.Vector3(30, 10, 30));
+        cmpLight.pivot.lookAt(new f.Vector3(0, 0, 0));
         L09_FudgeCraft_Camera.game.addComponent(cmpLight);
-        let cmpLightAmbient = new f.ComponentLight(new f.LightAmbient(f.Color.GREY));
-        L09_FudgeCraft_Camera.game.addComponent(cmpLightAmbient);
+        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
+        cmpLight.pivot.translate(new f.Vector3(-30, 10, 30));
+        cmpLight.pivot.lookAt(new f.Vector3(0, 0, 0));
+        L09_FudgeCraft_Camera.game.addComponent(cmpLight);
+        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
+        cmpLight.pivot.translate(new f.Vector3(-30, 10, -30));
+        cmpLight.pivot.lookAt(new f.Vector3(0, 0, 0));
+        L09_FudgeCraft_Camera.game.addComponent(cmpLight);
+        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
+        cmpLight.pivot.translate(new f.Vector3(30, 10, -30));
+        cmpLight.pivot.lookAt(new f.Vector3(0, 0, 0));
+        L09_FudgeCraft_Camera.game.addComponent(cmpLight);
+        let cmpLightAmbient = new f.ComponentLight(new f.LightAmbient(f.Color.WHITE));
+        // game.addComponent(cmpLightAmbient);
         //Viewport
         L09_FudgeCraft_Camera.viewport = new f.Viewport();
         L09_FudgeCraft_Camera.viewport.initialize("Viewport", L09_FudgeCraft_Camera.game, camera.getComponent(f.ComponentCamera), canvas);
@@ -79,17 +91,6 @@ var L09_FudgeCraft_Camera;
         }
         else if (_event.code == f.KEYBOARD_CODE.ARROW_LEFT) {
             console.log("rotate left");
-            cmpCam1.activate(false);
-            let camera2 = new f.Node("Camera2");
-            let cmpCam2 = new f.ComponentCamera();
-            camera2.addComponent(cmpCam2);
-            cmpCam2.pivot.translate(new f.Vector3(-0.5, 6, -30.5)); // kamera auf ort setzen
-            cmpCam2.backgroundColor = f.Color.DARK_GREY;
-            cmpCam2.pivot.lookAt(new f.Vector3(0, 6, 0)); // um auf 0|0|0 zu schauen
-            cmpCam2.activate(true);
-            L09_FudgeCraft_Camera.viewport.initialize("Viewport", L09_FudgeCraft_Camera.game, camera2.getComponent(f.ComponentCamera), canvas);
-            f.RenderManager.update();
-            L09_FudgeCraft_Camera.viewport.draw();
         }
         else if (_event.code == f.KEYBOARD_CODE.ARROW_RIGHT) {
             console.log("rotate right");
