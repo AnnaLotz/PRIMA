@@ -5,6 +5,11 @@ namespace L09_FudgeCraft_Camera {
 
     document.addEventListener("DOMContentLoaded", handleLoad);
 
+
+    let camera: f.Node = new f.Node("Camera");
+    let cmpCam1: f.ComponentCamera = new f.ComponentCamera();
+    let canvas: HTMLCanvasElement;
+
     export let game: f.Node;
     export let grid: Grid;
     let fragment: Fragment;
@@ -19,16 +24,18 @@ namespace L09_FudgeCraft_Camera {
 
 
         console.log("Hello World");
-        const canvas: HTMLCanvasElement = document.querySelector("canvas");
+        canvas = document.querySelector("canvas");
         f.RenderManager.initialize(true); //true um Antialiasing zu vermeiden
 
         //Camera
-        let camera: f.Node = new f.Node("Camera");
-        let cmpCam: f.ComponentCamera = new f.ComponentCamera();
-        camera.addComponent(cmpCam);
-        cmpCam.pivot.translate(new f.Vector3(0, 6, 30)); // kamera auf ort setzen
-        cmpCam.backgroundColor = f.Color.DARK_GREY;
-        // cmpCam.pivot.lookAt(f.Vector3.ZERO()); // um auf 0|0|0 zu schauen
+
+
+        camera.addComponent(cmpCam1);
+        cmpCam1.pivot.translate(new f.Vector3(-0.5, 6, 30)); // kamera auf ort setzen
+        cmpCam1.pivot.lookAt(new f.Vector3(0, 6, 0));
+        cmpCam1.backgroundColor = f.Color.DARK_GREY;
+        cmpCam1.activate(true);
+
 
         //create Game Node
         game = new f.Node("Game");
@@ -49,20 +56,13 @@ namespace L09_FudgeCraft_Camera {
 
         createStart();
         window.addEventListener("keydown", handleKeyDown);
-        viewport.draw();
         console.log("Setup done");
     } //close handleLoad
 
 
     function createStart(): void {
 
-        // let rndFragNum: number = Math.floor(Math.random() * 7);
-        // fragment = new Fragment(rndFragNum);
-        // fragment.addComponent(new f.ComponentTransform());
-        // fragment.cmpTransform.local.translate(new f.Vector3(0, 7, 10));
-        // currentFragment = fragment;
-        // game.appendChild(currentFragment);
-
+        //Boden erstellen
         for (let x: number = -6; x < 6; x++) {
             for (let z: number = -6; z < 6; z++) {
                 let position: f.Vector3 = new f.Vector3(x, 0, z);
@@ -71,7 +71,6 @@ namespace L09_FudgeCraft_Camera {
                 grid.push(position, new GridElement(cube));
                 console.log("set cube at pos: " + position);
             }
-
         }
 
         console.log(grid);
@@ -84,7 +83,7 @@ namespace L09_FudgeCraft_Camera {
         game.appendChild(fragment);
 
         f.RenderManager.update();
-        // viewport.draw();
+        viewport.draw();
     } //close createStart
 
 
@@ -92,14 +91,37 @@ namespace L09_FudgeCraft_Camera {
     // ############################################################################################
     function handleKeyDown(_event: KeyboardEvent): void {
 
-        processInput(_event, 1);
+        // let key: f.KEYBOARD_CODE = f.KEYBOARD_CODE;
+        if (_event.code == f.KEYBOARD_CODE.W || _event.code == f.KEYBOARD_CODE.A || _event.code == f.KEYBOARD_CODE.S ||
+            _event.code == f.KEYBOARD_CODE.D || _event.code == f.KEYBOARD_CODE.Q || _event.code == f.KEYBOARD_CODE.E) {
+            moveFragment(_event, 1);
+            if (checkIfHit()) {
+                moveFragment(_event, -1); //die bewegung rückgängig machen
+                // f.RenderManager.update();
+                fragment.setAtPosition();
+                createNewFragment(); //neues Fragment erstellen und zum currentFrag machen
+            }
+        } else if (_event.code == f.KEYBOARD_CODE.ARROW_LEFT) {
+            console.log("rotate left");
 
-        if (checkIfHit()) {
-            processInput(_event, -1); //die bewegung rückgängig machen
-            // f.RenderManager.update();
-            fragment.setAtPosition();
-            createNewFragment(); //neues Fragment erstellen und zum currentFrag machen
+            cmpCam1.activate(false);
+            let camera2: f.Node = new f.Node("Camera2");
+            let cmpCam2: f.ComponentCamera = new f.ComponentCamera();
+            camera2.addComponent(cmpCam2);
+            cmpCam2.pivot.translate(new f.Vector3(-0.5, 6, - 30.5)); // kamera auf ort setzen
+            cmpCam2.backgroundColor = f.Color.DARK_GREY;
+            cmpCam2.pivot.lookAt(new f.Vector3(0, 6, 0)); // um auf 0|0|0 zu schauen
+            cmpCam2.activate(true);
+
+            viewport.initialize("Viewport", game, camera2.getComponent(f.ComponentCamera), canvas);
+            
+            f.RenderManager.update();
+            viewport.draw();
+
+        } else if (_event.code == f.KEYBOARD_CODE.ARROW_RIGHT) {
+            console.log("rotate right");
         }
+
     } //close handleKeyDown
 
 
@@ -130,7 +152,7 @@ namespace L09_FudgeCraft_Camera {
     } //close createNewFragment
 
 
-    function processInput(_event: KeyboardEvent, _moveOn: number): void {
+    function moveFragment(_event: KeyboardEvent, _moveOn: number): void {
 
         //bewegung
         switch (_event.code) {
