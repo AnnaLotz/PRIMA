@@ -7,6 +7,7 @@ namespace L09_FudgeCraft_Camera {
 
     export let game: f.Node;
     export let grid: Grid;
+    let camera: CameraOrbit;
     let fragment: Fragment;
     let currentFragment: Fragment;
 
@@ -23,12 +24,7 @@ namespace L09_FudgeCraft_Camera {
         f.RenderManager.initialize(true); //true um Antialiasing zu vermeiden
 
         //Camera
-        let camera: f.Node = new f.Node("Camera");
-        let cmpCam: f.ComponentCamera = new f.ComponentCamera();
-        camera.addComponent(cmpCam);
-        cmpCam.pivot.translate(new f.Vector3(-0.5, 6, 30)); // kamera auf ort setzen
-        cmpCam.pivot.lookAt(new f.Vector3(0, 6, 0)); // um auf 0|0|0 zu schauen
-        cmpCam.backgroundColor = f.Color.DARK_GREY;
+        camera = new CameraOrbit();
 
         //create Game Node
         game = new f.Node("Game");

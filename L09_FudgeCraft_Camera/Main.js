@@ -5,6 +5,7 @@ var L09_FudgeCraft_Camera;
 (function (L09_FudgeCraft_Camera) {
     var f = FudgeCore;
     document.addEventListener("DOMContentLoaded", handleLoad);
+    let camera;
     let fragment;
     let currentFragment;
     // ############################################################################################
@@ -16,12 +17,7 @@ var L09_FudgeCraft_Camera;
         const canvas = document.querySelector("canvas");
         f.RenderManager.initialize(true); //true um Antialiasing zu vermeiden
         //Camera
-        let camera = new f.Node("Camera");
-        let cmpCam = new f.ComponentCamera();
-        camera.addComponent(cmpCam);
-        cmpCam.pivot.translate(new f.Vector3(-0.5, 6, 30)); // kamera auf ort setzen
-        cmpCam.pivot.lookAt(new f.Vector3(0, 6, 0)); // um auf 0|0|0 zu schauen
-        cmpCam.backgroundColor = f.Color.DARK_GREY;
+        camera = new L09_FudgeCraft_Camera.CameraOrbit();
         //create Game Node
         L09_FudgeCraft_Camera.game = new f.Node("Game");
         L09_FudgeCraft_Camera.grid = new L09_FudgeCraft_Camera.Grid();
