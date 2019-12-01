@@ -33,7 +33,6 @@ namespace L09_FudgeCraft_Camera {
         //create Game Node
         game = new f.Node("Game");
         grid = new Grid();
-        createStart();
 
         //Light
         let cmpLight: f.ComponentLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
@@ -48,40 +47,51 @@ namespace L09_FudgeCraft_Camera {
         viewport.draw();
         // console.log("currentFragment after viewport.draw(): " + currentFragment.getCubesPositions()); //erst hier ist die position im raum richtig erfasst
 
+        createStart();
         window.addEventListener("keydown", handleKeyDown);
-        
+        viewport.draw();
         console.log("Setup done");
     } //close handleLoad
 
 
-    function createStart(): f.Node {
+    function createStart(): void {
+
+        // let rndFragNum: number = Math.floor(Math.random() * 7);
+        // fragment = new Fragment(rndFragNum);
+        // fragment.addComponent(new f.ComponentTransform());
+        // fragment.cmpTransform.local.translate(new f.Vector3(0, 7, 10));
+        // currentFragment = fragment;
+        // game.appendChild(currentFragment);
+
+        for (let x: number = -6; x < 6; x++) {
+            for (let z: number = -6; z < 6; z++) {
+                let position: f.Vector3 = new f.Vector3(x, 0, z);
+                let cube: Cube = new Cube(position, new f.Material("White", f.ShaderFlat, new f.CoatColored(f.Color.WHITE)));
+                cube.cmpTransform.local.translation = position;
+                grid.push(position, new GridElement(cube));
+                console.log("set cube at pos: " + position);
+            }
+
+        }
+
+        console.log(grid);
 
         let rndFragNum: number = Math.floor(Math.random() * 7);
         fragment = new Fragment(rndFragNum);
-        currentFragment = fragment;
-        game.appendChild(currentFragment);
-
-        for (let cube of currentFragment.cubes) {
-            console.log("set cube at pos: " + cube.transformComp.local.translation);
-            let position: f.Vector3 = cube.transformComp.local.translation;
-            cube.cmpTransform.local.translation = position;
-            grid.push(position, new GridElement(cube));
-        }
-
-        rndFragNum = Math.floor(Math.random() * fragment.fragmentDef.length);
-        fragment = new Fragment(rndFragNum);
-        fragment.addComponent(new f.ComponentTransform(f.Matrix4x4.TRANSLATION(new f.Vector3(0, 7, 0))));
+        fragment.addComponent(new f.ComponentTransform);
+        fragment.cmpTransform.local.translate(new f.Vector3(0, 7, 5));
         currentFragment = fragment;
         game.appendChild(fragment);
 
-        return game;
-    } //close createGame
+        f.RenderManager.update();
+        // viewport.draw();
+    } //close createStart
 
 
     // ############################################################################################
     // ############################################################################################
     function handleKeyDown(_event: KeyboardEvent): void {
-        
+
         processInput(_event, 1);
 
         if (checkIfHit()) {
@@ -95,7 +105,7 @@ namespace L09_FudgeCraft_Camera {
 
     function checkIfHit(): boolean {
 
- 
+
         for (let cube of currentFragment.getChildren()) {
             let element: GridElement = grid.pull(cube.mtxWorld.translation);
             if (element) {
@@ -111,10 +121,10 @@ namespace L09_FudgeCraft_Camera {
         let rndFragNum: number = Math.floor(Math.random() * fragment.fragmentDef.length);
         fragment = new Fragment(rndFragNum);
         fragment.addComponent(new f.ComponentTransform);
-        fragment.cmpTransform.local.translate(new f.Vector3(0, 7, 0));
+        fragment.cmpTransform.local.translate(new f.Vector3(0, 7, 5));
         currentFragment = fragment;
         game.appendChild(fragment);
-        
+
         f.RenderManager.update();
         viewport.draw();
     } //close createNewFragment

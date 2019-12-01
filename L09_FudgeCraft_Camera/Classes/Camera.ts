@@ -1,7 +1,7 @@
 namespace L09_FudgeCraft_Camera {
     import f = FudgeCore;
 
-    export class CameraOrbit extends f.Node {
+    export class Camera extends f.Node {
 
         // rotatorX: f.Node;
         maxRotX: number = 75;
