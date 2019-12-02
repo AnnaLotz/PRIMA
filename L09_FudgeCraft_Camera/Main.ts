@@ -99,7 +99,7 @@ namespace L09_FudgeCraft_Camera {
         } else if (_event.code == f.KEYBOARD_CODE.ARROW_LEFT) {
             console.log("rotate left");
             rotateFragmentAround(-90);
-            camera.rotateY(-90);
+            // camera.rotateY(-90);
         } else if (_event.code == f.KEYBOARD_CODE.ARROW_RIGHT) {
             console.log("rotate right");
             rotateFragmentAround(90);
@@ -109,72 +109,39 @@ namespace L09_FudgeCraft_Camera {
     } //close handleKeyDown
 
     function rotateFragmentAround(_direction: number): void {
-        // let vectorToCurrent: f.Vector3 = currentFragment.mtxWorld.translation;
-        // console.log(vectorToCurrent);
-        for (let cube of currentFragment.getChildren()) {
-            let pos: f.Vector3 = cube.mtxWorld.translation;
-            console.log(pos.get());
-            pos.set(-pos.z, pos.y, pos.x);
-            // let newPos: f.Vector3 = new f.Vector3(-pos.z, pos.y, pos.x);
-            // newPos.x = pos.z * -1;
-            // newPos.z = pos.x;
-            // console.log("newPos: " + newPos);
-            console.log(pos.get());
 
+        // let vectorToFragment: f.Vector3 = currentFragment.mtxWorld.translation;
+        // console.log(vectorToFragment);
+        // let minusVectorToFragment: f.Vector3 = vectorToFragment;
+        // minusVectorToFragment.x = vectorToFragment.x * -1;
+        // minusVectorToFragment.y = vectorToFragment.y * -1;
+        // minusVectorToFragment.z = vectorToFragment.z * -1;
 
-            let vctPosition: f.Vector3 = f.Vector3.ZERO();
-            vctPosition.set(pos.x, pos.y, pos.z);
+        // currentFragment.cmpTransform.local.translate(minusVectorToFragment);
+        // currentFragment.cmpTransform.local.rotateY(_direction);
+        // currentFragment.cmpTransform.local.translate(minusVectorToFragment);
 
-            cube.cmpTransform.local.translation.x = pos.x;
-            
+        // currentFragment.mtxWorld.translation.set(1, 1, 1);
 
-            currentFragment.cmpTransform.local.translation = pos;
+        // for (let cube of currentFragment.getChildren()) {
 
-            f.RenderManager.update();
-            viewport.draw();
+            // let relativeVectorToCube: f.Vector3 = cube.cmpTransform.local.translation;
+        //     console.log(relativeVectorToCube);
 
-            // cube.cmpTransform.local.translate(newPos);
-            // cube.cmpTransform.local.translation.set(pos);
+        //     let vectorToCube: f.Vector3 = new f.Vector3(0, 0, 0);
+        //     vectorToCube.x = vectorToFragment.x + relativeVectorToCube.x;
+        //     vectorToCube.y = vectorToFragment.y + relativeVectorToCube.y;
+        //     vectorToCube.z = vectorToFragment.z + relativeVectorToCube.z;
+        //     console.log("own cube vector: " + vectorToCube);
+        //     console.log("fudge vector cube: " + cube.mtxWorld.translation);
 
+        //     cube.mtxWorld.translation = new f.Vector3(1, 1, 1);
 
-            // cube.mtxWorld.translation.set(newPos);
-            // cube.mtxWorld.translation.x = newPos.x;
-            // cube.mtxWorld.translate(newPos);
-            // cube.mtxWorld.translateX(newPos.x);
-            // cube.cmpTransform.local.translation.set(pos);
-            // cube.cmpTransform.local.translate(pos);
+        //     console.log("fudge vector cube: " + cube.mtxWorld.translation);
+        // }
+        f.RenderManager.update();
+        viewport.draw();
 
-            // let cmpTransform: f.ComponentTransform = new f.ComponentTransform(f.Matrix4x4.TRANSLATION(newPos));
-            // // cube.addComponent(cmpTransform);
-            // cube.transformComp = cmpTransform;
-
-            // cube.mtxWorld.translation.x = newPos.x;
-            // cube.mtxWorld.translateX = newPos.x;
-
-            // let newContainer: f.Node = new f.Node("Container");
-            // let cmpTransform: f.ComponentTransform = new f.ComponentTransform(f.Matrix4x4.TRANSLATION(pos));
-            // newContainer.addComponent(cmpTransform);
-
-
-            // let vctPosition: f.Vector3 = f.Vector3.ZERO();
-            // vctPosition.set(newPos.x, newPos.y, newPos.z);
-
-
-            // fragment.cmpTransform.local.translate(new f.Vector3(0, 7, 5));
-            // cube.cmpTransform.local.translate(new f.Vector3(-pos.z, pos.y, pos.x));
-
-
-            // cube.cmpTransform.local.translation = new f.Vector3(-pos.z, pos.y, pos.x);
-            // cube.cmpTransform.local.translation.set(vctPosition);
-
-            // cube.cmpTransform.
-            // console.log("newPos: " + newPos);
-            // cube.mtxWorld.translation.set(-pos.z, pos.y, pos.x);
-            // cube.mtxWorld.translate(newPos);
-            // cube.cmpTransform.local.translation.y = 2;
-            // cube.cmpTransform.local.translate(newPos);
-        }
-        
     }//close rotateFragmentAround
 
 
