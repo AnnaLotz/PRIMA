@@ -94,28 +94,6 @@ var L09_FudgeCraft_Camera;
         }
     } //close handleKeyDown
     function rotateFragmentAround(_direction) {
-        // let vectorToFragment: f.Vector3 = currentFragment.mtxWorld.translation;
-        // console.log(vectorToFragment);
-        // let minusVectorToFragment: f.Vector3 = vectorToFragment;
-        // minusVectorToFragment.x = vectorToFragment.x * -1;
-        // minusVectorToFragment.y = vectorToFragment.y * -1;
-        // minusVectorToFragment.z = vectorToFragment.z * -1;
-        // currentFragment.cmpTransform.local.translate(minusVectorToFragment);
-        // currentFragment.cmpTransform.local.rotateY(_direction);
-        // currentFragment.cmpTransform.local.translate(minusVectorToFragment);
-        // currentFragment.mtxWorld.translation.set(1, 1, 1);
-        // for (let cube of currentFragment.getChildren()) {
-        // let relativeVectorToCube: f.Vector3 = cube.cmpTransform.local.translation;
-        //     console.log(relativeVectorToCube);
-        //     let vectorToCube: f.Vector3 = new f.Vector3(0, 0, 0);
-        //     vectorToCube.x = vectorToFragment.x + relativeVectorToCube.x;
-        //     vectorToCube.y = vectorToFragment.y + relativeVectorToCube.y;
-        //     vectorToCube.z = vectorToFragment.z + relativeVectorToCube.z;
-        //     console.log("own cube vector: " + vectorToCube);
-        //     console.log("fudge vector cube: " + cube.mtxWorld.translation);
-        //     cube.mtxWorld.translation = new f.Vector3(1, 1, 1);
-        //     console.log("fudge vector cube: " + cube.mtxWorld.translation);
-        // }
         f.RenderManager.update();
         L09_FudgeCraft_Camera.viewport.draw();
     } //close rotateFragmentAround
