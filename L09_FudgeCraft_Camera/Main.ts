@@ -5,8 +5,8 @@ namespace L09_FudgeCraft_Camera {
 
     document.addEventListener("DOMContentLoaded", handleLoad);
 
-    export let game: f.Node;
-    export let grid: Grid;
+    export let game: f.Node = new f.Node("Game");
+    export let grid: Grid = new Grid();
     let camera: CameraOrbit;
     let fragment: Fragment;
     let currentFragment: Fragment;
@@ -15,20 +15,12 @@ namespace L09_FudgeCraft_Camera {
     // ############################################################################################
     function handleLoad(_event: Event): void {
 
-        // grid.set("Jonas", new Cube(new f.Vector3(3, 3, 0), new f.Material("Cyan", f.ShaderFlat, new f.CoatColored(f.Color.CYAN))));
-        // console.log(grid);
-
-
         console.log("Hello World");
         const canvas: HTMLCanvasElement = document.querySelector("canvas");
         f.RenderManager.initialize(true); //true um Antialiasing zu vermeiden
 
-        //Camera
         camera = new CameraOrbit();
-
-        //create Game Node
-        game = new f.Node("Game");
-        grid = new Grid();
+        game.appendChild(camera);
 
         //Light
         let cmpLight: f.ComponentLight;
@@ -49,8 +41,7 @@ namespace L09_FudgeCraft_Camera {
         cmpLight.pivot.lookAt(new f.Vector3(0, 0, 0));
         game.addComponent(cmpLight);
 
-
-        let cmpLightAmbient: f.ComponentLight = new f.ComponentLight(new f.LightAmbient(f.Color.WHITE));
+        // let cmpLightAmbient: f.ComponentLight = new f.ComponentLight(new f.LightAmbient(f.Color.WHITE));
         // game.addComponent(cmpLightAmbient);
 
         //Viewport
@@ -74,11 +65,10 @@ namespace L09_FudgeCraft_Camera {
                 let cube: Cube = new Cube(position, new f.Material("White", f.ShaderFlat, new f.CoatColored(f.Color.WHITE)));
                 cube.cmpTransform.local.translation = position;
                 grid.push(position, new GridElement(cube));
-                console.log("set cube at pos: " + position);
+                // console.log("set cube at pos: " + position);
             }
         }
-
-        console.log(grid);
+        // console.log(grid);
 
         let rndFragNum: number = Math.floor(Math.random() * 7);
         fragment = new Fragment(rndFragNum);
@@ -108,17 +98,87 @@ namespace L09_FudgeCraft_Camera {
             }
         } else if (_event.code == f.KEYBOARD_CODE.ARROW_LEFT) {
             console.log("rotate left");
+            rotateFragmentAround(-90);
+            camera.rotateY(-90);
         } else if (_event.code == f.KEYBOARD_CODE.ARROW_RIGHT) {
             console.log("rotate right");
-
+            rotateFragmentAround(90);
+            camera.rotateY(90);
         }
 
     } //close handleKeyDown
 
+    function rotateFragmentAround(_direction: number): void {
+        // let vectorToCurrent: f.Vector3 = currentFragment.mtxWorld.translation;
+        // console.log(vectorToCurrent);
+        for (let cube of currentFragment.getChildren()) {
+            let pos: f.Vector3 = cube.mtxWorld.translation;
+            console.log(pos.get());
+            pos.set(-pos.z, pos.y, pos.x);
+            // let newPos: f.Vector3 = new f.Vector3(-pos.z, pos.y, pos.x);
+            // newPos.x = pos.z * -1;
+            // newPos.z = pos.x;
+            // console.log("newPos: " + newPos);
+            console.log(pos.get());
+
+
+            let vctPosition: f.Vector3 = f.Vector3.ZERO();
+            vctPosition.set(pos.x, pos.y, pos.z);
+
+            cube.cmpTransform.local.translation.x = pos.x;
+            
+
+            currentFragment.cmpTransform.local.translation = pos;
+
+            f.RenderManager.update();
+            viewport.draw();
+
+            // cube.cmpTransform.local.translate(newPos);
+            // cube.cmpTransform.local.translation.set(pos);
+
+
+            // cube.mtxWorld.translation.set(newPos);
+            // cube.mtxWorld.translation.x = newPos.x;
+            // cube.mtxWorld.translate(newPos);
+            // cube.mtxWorld.translateX(newPos.x);
+            // cube.cmpTransform.local.translation.set(pos);
+            // cube.cmpTransform.local.translate(pos);
+
+            // let cmpTransform: f.ComponentTransform = new f.ComponentTransform(f.Matrix4x4.TRANSLATION(newPos));
+            // // cube.addComponent(cmpTransform);
+            // cube.transformComp = cmpTransform;
+
+            // cube.mtxWorld.translation.x = newPos.x;
+            // cube.mtxWorld.translateX = newPos.x;
+
+            // let newContainer: f.Node = new f.Node("Container");
+            // let cmpTransform: f.ComponentTransform = new f.ComponentTransform(f.Matrix4x4.TRANSLATION(pos));
+            // newContainer.addComponent(cmpTransform);
+
+
+            // let vctPosition: f.Vector3 = f.Vector3.ZERO();
+            // vctPosition.set(newPos.x, newPos.y, newPos.z);
+
+
+            // fragment.cmpTransform.local.translate(new f.Vector3(0, 7, 5));
+            // cube.cmpTransform.local.translate(new f.Vector3(-pos.z, pos.y, pos.x));
+
+
+            // cube.cmpTransform.local.translation = new f.Vector3(-pos.z, pos.y, pos.x);
+            // cube.cmpTransform.local.translation.set(vctPosition);
+
+            // cube.cmpTransform.
+            // console.log("newPos: " + newPos);
+            // cube.mtxWorld.translation.set(-pos.z, pos.y, pos.x);
+            // cube.mtxWorld.translate(newPos);
+            // cube.cmpTransform.local.translation.y = 2;
+            // cube.cmpTransform.local.translate(newPos);
+        }
+        
+    }//close rotateFragmentAround
+
 
     function checkIfHit(): boolean {
-
-
         for (let cube of currentFragment.getChildren()) {
             let element: GridElement = grid.pull(cube.mtxWorld.translation);
             if (element) {
@@ -126,7 +186,6 @@ namespace L09_FudgeCraft_Camera {
             }
         }
         return false;
-
     } //close checkIfHit
 
 

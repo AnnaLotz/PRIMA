@@ -12,31 +12,28 @@ namespace L09_FudgeCraft_Camera {
             this.addComponent(cmpTransform);
 
             let cmpCam: f.ComponentCamera = new f.ComponentCamera();
-            cmpCam.pivot.translate(new f.Vector3(-0.5, 6, 30));
+            cmpCam.pivot.translate(new f.Vector3(0, 6, 30));
             cmpCam.pivot.lookAt(new f.Vector3(0, 6, 0)); // um auf 0|0|0 zu schauen
             cmpCam.backgroundColor = f.Color.DARK_GREY;
             this.addComponent(cmpCam);
 
-        } //close constructor    
-
-
-        // get cmpCamera(): f.ComponentCamera {
-        //     let rotatorX: f.Node = this.getChildrenByName("CameraRotX")[0];
-        //     return rotatorX.getComponent(f.ComponentCamera);
-        // }
+        } //close constructor
 
         rotate(_direction: Enumerator): void {
-            
+
             // 
         }
 
         rotateY(_delta: number): void {
             this.cmpTransform.local.rotateY(_delta);
+            f.RenderManager.update();
+            viewport.draw();
         }
 
         setRotationY(_angle: number): void {
-            this.cmpTransform.local.rotation.y = _angle;
-            // 
+            this.cmpTransform.local.rotation = f.Vector3.Y(_angle); 
+            f.RenderManager.update();
+            viewport.draw();
         }
 
         // rotateX(_delta: number): void {
