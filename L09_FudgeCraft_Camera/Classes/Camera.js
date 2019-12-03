@@ -8,7 +8,7 @@ var L09_FudgeCraft_Camera;
             let cmpTransform = new f.ComponentTransform();
             this.addComponent(cmpTransform);
             let cmpCam = new f.ComponentCamera();
-            cmpCam.pivot.translate(new f.Vector3(0, 6, 30));
+            cmpCam.pivot.translate(new f.Vector3(-0.0, 6, 30));
             cmpCam.pivot.lookAt(new f.Vector3(0, 6, 0)); // um auf 0|0|0 zu schauen
             cmpCam.backgroundColor = f.Color.DARK_GREY;
             this.addComponent(cmpCam);

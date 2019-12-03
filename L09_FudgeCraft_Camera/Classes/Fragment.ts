@@ -46,7 +46,7 @@ namespace L09_FudgeCraft_Camera {
             let shapeArray: number[][][] =
                 [
                     [[-1, 0, 0], [0, 0, 0], [1, 0, 0], [1, 1, 0]], //L: Orange Ricky
-                    [[-1, -1, 0], [-1, 0, 0], [0, 0, 0], [1, 0, 0]], //J: Blue Ricky
+                    [[1, -1, 0], [-1, 0, 0], [0, 0, 0], [1, 0, 0]], //J: Blue Ricky
                     [[0, 0, 0], [0, 1, 0], [-1, 1, 0], [1, 0, 0]], //Z: Cleveland Z
                     [[0, 0, 0], [0, 1, 0], [1, 1, 0], [-1, 0, 0]], //S: Rhode Island Z
                     [[0, 0, 0], [0, 1, 0], [-1, 0, 0], [1, 0, 0]], //T: Teewee 
@@ -60,7 +60,7 @@ namespace L09_FudgeCraft_Camera {
         createMaterials(): f.Material[] {
             let mtrArray: f.Material[] = [];
             mtrArray = [
-                new f.Material("Orange", f.ShaderFlat, new f.CoatColored(new f.Color(1, 0.75, 0, 1))),
+                new f.Material("Orange", f.ShaderFlat, new f.CoatColored(new f.Color(0.8, 0.75, 0, 1))),
                 new f.Material("Blue", f.ShaderFlat, new f.CoatColored(f.Color.BLUE)),
                 new f.Material("Red", f.ShaderFlat, new f.CoatColored(f.Color.RED)),
                 new f.Material("Green", f.ShaderFlat, new f.CoatColored(f.Color.GREEN)),

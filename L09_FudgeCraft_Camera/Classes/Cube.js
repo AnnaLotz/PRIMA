@@ -10,7 +10,7 @@ var L09_FudgeCraft_Camera;
             // console.log(this.mtxWorld.translation);
             //Dem Cube die Position geben aus dem Übergabeparameter
             let cmpTransform = new f.ComponentTransform(f.Matrix4x4.TRANSLATION(_position));
-            cmpTransform.local.scale(f.Vector3.ONE(0.8)); // um den Würfel bissl zu verkleinern
+            cmpTransform.local.scale(f.Vector3.ONE(0.99)); // um den Würfel bissl zu verkleinern
             this.addComponent(cmpTransform);
             this.transformComp = cmpTransform;
             // console.log(cmpTransform.local.translation);
