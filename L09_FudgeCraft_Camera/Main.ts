@@ -10,6 +10,7 @@ namespace L09_FudgeCraft_Camera {
     let camera: CameraOrbit;
     let fragment: Fragment;
     let currentFragment: Fragment;
+    let rotator: f.Node = new f.Node("Rotator");
 
     // ############################################################################################
     // ############################################################################################
@@ -20,7 +21,7 @@ namespace L09_FudgeCraft_Camera {
         f.RenderManager.initialize(true); //true um Antialiasing zu vermeiden
 
         camera = new CameraOrbit();
-        game.appendChild(camera);
+        rotator.appendChild(camera);
 
         //Light
         let cmpLight: f.ComponentLight;
@@ -58,6 +59,10 @@ namespace L09_FudgeCraft_Camera {
 
     function createStart(): void {
 
+        rotator.addComponent(new f.ComponentTransform());
+        console.log(rotator.cmpTransform.local.translation);
+        game.appendChild(rotator);
+
         //Boden erstellen
         for (let x: number = -5; x < 6; x++) {
             for (let z: number = -5; z < 6; z++) {
@@ -75,7 +80,7 @@ namespace L09_FudgeCraft_Camera {
         fragment.addComponent(new f.ComponentTransform);
         fragment.cmpTransform.local.translate(new f.Vector3(0, 7, 5));
         currentFragment = fragment;
-        game.appendChild(fragment);
+        rotator.appendChild(fragment);
 
         f.RenderManager.update();
         viewport.draw();
@@ -98,50 +103,20 @@ namespace L09_FudgeCraft_Camera {
             }
         } else if (_event.code == f.KEYBOARD_CODE.ARROW_LEFT) {
             console.log("rotate left");
-            rotateFragmentAround(-90);
-            camera.rotateY(-90);
+            rotateAroundNode(-90, rotator);
         } else if (_event.code == f.KEYBOARD_CODE.ARROW_RIGHT) {
             console.log("rotate right");
-            rotateFragmentAround(90);
-            camera.rotateY(90);
+            rotateAroundNode(90, rotator);
         }
 
     } //close handleKeyDown
 
-    function rotateFragmentAround(_direction: number): void {
+    
+    function rotateAroundNode(_direction: number, _node: f.Node): void {
 
-        let pos: f.Vector3;
-        
-        for (let cube of currentFragment.getChildren()) {
-
-            // mutator holen, mutator position setzten, den cube mutieren: cmpTransform.local.mutate(...)
-
-            pos = cube.mtxWorld.translation;
-            console.log("askedPos1: " + pos);
-            let newPos: f.Vector3 = new f.Vector3(0, 0, 0);
-            newPos.x = - pos.z;
-            newPos.y = pos.y;
-            newPos.z = pos.x;
-
-            cube.cmpTransform.local.translation = f.Vector3.ZERO();
-            cube.cmpTransform.local.translation = newPos; //wieso geht das nicht??
-
-            // cube.cmpTransform.local.translate(f.Vector3.ZERO());
-            // cube.cmpTransform.local.translate(newPos);
-
-            // über rotator lösen
-            // cube.mtxWorld.translation.set(newPos.x, newPos.y, newPos.z);
-            // cube.mtxWorld.translation = f.Vector3.ZERO();
-            // cube.mtxWorld.translation = newPos; // matrix darf nicht verändert werden!!!
-
-            console.log("soll newPos: " + newPos);
-            console.log("ist askedPos2: " + cube.mtxWorld.translation);
-            
-            f.RenderManager.update();
-            viewport.draw();
-        }
-
-
+        rotator.cmpTransform.local.rotateY(_direction);
+        f.RenderManager.update();
+        viewport.draw();
 
     }//close rotateFragmentAround
 
@@ -163,7 +138,7 @@ namespace L09_FudgeCraft_Camera {
         fragment.addComponent(new f.ComponentTransform);
         fragment.cmpTransform.local.translate(new f.Vector3(0, 10, 5));
         currentFragment = fragment;
-        game.appendChild(fragment);
+        rotator.appendChild(fragment);
 
         f.RenderManager.update();
         viewport.draw();

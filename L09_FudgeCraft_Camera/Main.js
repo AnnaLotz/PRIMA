@@ -10,6 +10,7 @@ var L09_FudgeCraft_Camera;
     let camera;
     let fragment;
     let currentFragment;
+    let rotator = new f.Node("Rotator");
     // ############################################################################################
     // ############################################################################################
     function handleLoad(_event) {
@@ -17,7 +18,7 @@ var L09_FudgeCraft_Camera;
         const canvas = document.querySelector("canvas");
         f.RenderManager.initialize(true); //true um Antialiasing zu vermeiden
         camera = new L09_FudgeCraft_Camera.CameraOrbit();
-        L09_FudgeCraft_Camera.game.appendChild(camera);
+        rotator.appendChild(camera);
         //Light
         let cmpLight;
         cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
@@ -48,6 +49,9 @@ var L09_FudgeCraft_Camera;
         console.log("Setup done");
     } //close handleLoad
     function createStart() {
+        rotator.addComponent(new f.ComponentTransform());
+        console.log(rotator.cmpTransform.local.translation);
+        L09_FudgeCraft_Camera.game.appendChild(rotator);
         //Boden erstellen
         for (let x = -5; x < 6; x++) {
             for (let z = -5; z < 6; z++) {
@@ -64,7 +68,7 @@ var L09_FudgeCraft_Camera;
         fragment.addComponent(new f.ComponentTransform);
         fragment.cmpTransform.local.translate(new f.Vector3(0, 7, 5));
         currentFragment = fragment;
-        L09_FudgeCraft_Camera.game.appendChild(fragment);
+        rotator.appendChild(fragment);
         f.RenderManager.update();
         L09_FudgeCraft_Camera.viewport.draw();
     } //close createStart
@@ -84,38 +88,17 @@ var L09_FudgeCraft_Camera;
         }
         else if (_event.code == f.KEYBOARD_CODE.ARROW_LEFT) {
             console.log("rotate left");
-            rotateFragmentAround(-90);
-            camera.rotateY(-90);
+            rotateAroundNode(-90, rotator);
         }
         else if (_event.code == f.KEYBOARD_CODE.ARROW_RIGHT) {
             console.log("rotate right");
-            rotateFragmentAround(90);
-            camera.rotateY(90);
+            rotateAroundNode(90, rotator);
         }
     } //close handleKeyDown
-    function rotateFragmentAround(_direction) {
-        let pos;
-        for (let cube of currentFragment.getChildren()) {
-            // mutator holen, mutator position setzten, den cube mutieren: cmpTransform.local.mutate(...)
-            pos = cube.mtxWorld.translation;
-            console.log("askedPos1: " + pos);
-            let newPos = new f.Vector3(0, 0, 0);
-            newPos.x = -pos.z;
-            newPos.y = pos.y;
-            newPos.z = pos.x;
-            cube.cmpTransform.local.translation = f.Vector3.ZERO();
-            cube.cmpTransform.local.translation = newPos; //wieso geht das nicht??
-            // cube.cmpTransform.local.translate(f.Vector3.ZERO());
-            // cube.cmpTransform.local.translate(newPos);
-            // über rotator lösen
-            // cube.mtxWorld.translation.set(newPos.x, newPos.y, newPos.z);
-            // cube.mtxWorld.translation = f.Vector3.ZERO();
-            // cube.mtxWorld.translation = newPos; // matrix darf nicht verändert werden!!!
-            console.log("soll newPos: " + newPos);
-            console.log("ist askedPos2: " + cube.mtxWorld.translation);
-            f.RenderManager.update();
-            L09_FudgeCraft_Camera.viewport.draw();
-        }
+    function rotateAroundNode(_direction, _node) {
+        rotator.cmpTransform.local.rotateY(_direction);
+        f.RenderManager.update();
+        L09_FudgeCraft_Camera.viewport.draw();
     } //close rotateFragmentAround
     function checkIfHit() {
         for (let cube of currentFragment.getChildren()) {
@@ -132,7 +115,7 @@ var L09_FudgeCraft_Camera;
         fragment.addComponent(new f.ComponentTransform);
         fragment.cmpTransform.local.translate(new f.Vector3(0, 10, 5));
         currentFragment = fragment;
-        L09_FudgeCraft_Camera.game.appendChild(fragment);
+        rotator.appendChild(fragment);
         f.RenderManager.update();
         L09_FudgeCraft_Camera.viewport.draw();
     } //close createNewFragment
