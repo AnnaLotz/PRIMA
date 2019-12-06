@@ -87,16 +87,21 @@ var L09_FudgeCraft_Camera;
             }
         }
         else if (_event.code == f.KEYBOARD_CODE.ARROW_LEFT) {
-            console.log("rotate left");
             rotateAroundNode(-90, rotator);
+            if (checkIfHit()) {
+                rotateAroundNode(90, rotator);
+            }
         }
         else if (_event.code == f.KEYBOARD_CODE.ARROW_RIGHT) {
-            console.log("rotate right");
             rotateAroundNode(90, rotator);
+            if (checkIfHit()) {
+                rotateAroundNode(-90, rotator);
+            }
         }
     } //close handleKeyDown
     function rotateAroundNode(_direction, _node) {
-        rotator.cmpTransform.local.rotateY(_direction);
+        console.log("rotate" + _direction);
+        _node.cmpTransform.local.rotateY(-_direction);
         f.RenderManager.update();
         L09_FudgeCraft_Camera.viewport.draw();
     } //close rotateFragmentAround

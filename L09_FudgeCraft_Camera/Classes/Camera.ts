@@ -12,8 +12,8 @@ namespace L09_FudgeCraft_Camera {
             this.addComponent(cmpTransform);
 
             let cmpCam: f.ComponentCamera = new f.ComponentCamera();
-            cmpCam.pivot.translate(new f.Vector3(-0.0, 6, 30));
-            cmpCam.pivot.lookAt(new f.Vector3(0, 6, 0)); // um auf 0|0|0 zu schauen
+            cmpCam.pivot.translate(new f.Vector3(-0.0, 7, 30));
+            cmpCam.pivot.lookAt(new f.Vector3(0, 7, 0)); // um auf 0|0|0 zu schauen
             cmpCam.backgroundColor = f.Color.DARK_GREY;
             this.addComponent(cmpCam);
 

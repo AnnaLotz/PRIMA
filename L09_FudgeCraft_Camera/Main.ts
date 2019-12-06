@@ -102,19 +102,23 @@ namespace L09_FudgeCraft_Camera {
                 createNewFragment(); //neues Fragment erstellen und zum currentFrag machen
             }
         } else if (_event.code == f.KEYBOARD_CODE.ARROW_LEFT) {
-            console.log("rotate left");
             rotateAroundNode(-90, rotator);
+            if (checkIfHit()) {
+                rotateAroundNode(90, rotator);
+            }
         } else if (_event.code == f.KEYBOARD_CODE.ARROW_RIGHT) {
-            console.log("rotate right");
             rotateAroundNode(90, rotator);
+            if (checkIfHit()) {
+                rotateAroundNode(-90, rotator);
+            }
         }
-
     } //close handleKeyDown
 
-    
+
     function rotateAroundNode(_direction: number, _node: f.Node): void {
 
-        rotator.cmpTransform.local.rotateY(_direction);
+        console.log("rotate" + _direction);
+        _node.cmpTransform.local.rotateY( - _direction);
         f.RenderManager.update();
         viewport.draw();
 
