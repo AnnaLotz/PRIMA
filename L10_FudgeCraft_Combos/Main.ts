@@ -142,6 +142,7 @@ namespace L10_FudgeCraft_Combos {
         return false;
     } //close checkIfHit
 
+
     function findFullRows(): void {
 
         interface Rows {
@@ -161,20 +162,13 @@ namespace L10_FudgeCraft_Combos {
         console.log(rows);
 
         for (let y in rows) {
-            console.log(y);
             if (rows[y].length >= 5) {
-                deleteRow(Number(y));
+                grid.popRow(Number(y));
             }
 
         }
 
     } //close findFullRow
-
-    function deleteRow(_row: number): void {
-        console.log("over 5 in row " + _row);
-
-    }
-
 
 
 

@@ -38,7 +38,21 @@ namespace L10_FudgeCraft_Combos {
             this.delete(key);
             if (element)
                 game.removeChild(element.cube);
+            console.log(_position);
             return element;
+        }
+
+        popRow(_yPosition: number): void {
+            console.log("delete Row " + _yPosition);
+            for (let element of grid.values()) {
+                if (element.yPos == _yPosition) {
+                    // console.log(element.cube.cmpTransform.local.translation);
+                    this.pop(element.cube.cmpTransform.local.translation);
+                }
+            }
+            f.RenderManager.update();
+            viewport.draw();
+            console.log(grid);
         }
 
         toKey(_position: f.Vector3): string {

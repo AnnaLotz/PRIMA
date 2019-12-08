@@ -1,6 +1,7 @@
 "use strict";
 var L10_FudgeCraft_Combos;
 (function (L10_FudgeCraft_Combos) {
+    var f = FudgeCore;
     class GridElement {
         constructor(_cube = null) {
             this.cube = _cube;
@@ -31,7 +32,20 @@ var L10_FudgeCraft_Combos;
             this.delete(key);
             if (element)
                 L10_FudgeCraft_Combos.game.removeChild(element.cube);
+            console.log(_position);
             return element;
+        }
+        popRow(_yPosition) {
+            console.log("delete Row " + _yPosition);
+            for (let element of L10_FudgeCraft_Combos.grid.values()) {
+                if (element.yPos == _yPosition) {
+                    // console.log(element.cube.cmpTransform.local.translation);
+                    this.pop(element.cube.cmpTransform.local.translation);
+                }
+            }
+            f.RenderManager.update();
+            L10_FudgeCraft_Combos.viewport.draw();
+            console.log(L10_FudgeCraft_Combos.grid);
         }
         toKey(_position) {
             let position = _position.map(Math.round);
