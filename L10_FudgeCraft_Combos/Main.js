@@ -100,6 +100,7 @@ var L10_FudgeCraft_Combos;
         }
     } //close handleKeyDown
     function createNewFragment() {
+        rotator.removeChild(currentFragment);
         let rndFragNum = Math.floor(Math.random() * fragment.fragmentDef.length);
         fragment = new L10_FudgeCraft_Combos.Fragment(rndFragNum);
         fragment.addComponent(new f.ComponentTransform);
@@ -134,10 +135,12 @@ var L10_FudgeCraft_Combos;
         }
         console.log(rows);
         for (let y in rows) {
-            if (rows[y].length >= 5) {
+            if (rows[y].length >= 4) {
                 L10_FudgeCraft_Combos.grid.popRow(Number(y));
+                rows[y] = [];
             }
         }
+        console.log(rows);
     } //close findFullRow
     //MOVEMENT
     // ############################################################################################

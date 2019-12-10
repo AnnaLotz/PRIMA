@@ -32,14 +32,14 @@ var L10_FudgeCraft_Combos;
             this.delete(key);
             if (element)
                 L10_FudgeCraft_Combos.game.removeChild(element.cube);
-            console.log(_position);
+            // console.log(_position);
             return element;
         }
         popRow(_yPosition) {
             console.log("delete Row " + _yPosition);
             for (let element of L10_FudgeCraft_Combos.grid.values()) {
                 if (element.yPos == _yPosition) {
-                    // console.log(element.cube.cmpTransform.local.translation);
+                    console.log("poped: " + element.cube.cmpTransform.local.translation);
                     this.pop(element.cube.cmpTransform.local.translation);
                 }
             }

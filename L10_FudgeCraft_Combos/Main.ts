@@ -116,6 +116,7 @@ namespace L10_FudgeCraft_Combos {
 
 
     function createNewFragment(): void {
+        rotator.removeChild(currentFragment);
         let rndFragNum: number = Math.floor(Math.random() * fragment.fragmentDef.length);
         fragment = new Fragment(rndFragNum);
         fragment.addComponent(new f.ComponentTransform);
@@ -162,11 +163,13 @@ namespace L10_FudgeCraft_Combos {
         console.log(rows);
 
         for (let y in rows) {
-            if (rows[y].length >= 5) {
+            if (rows[y].length >= 4) {
                 grid.popRow(Number(y));
+                rows[y] = [];
             }
 
         }
+        console.log(rows);
 
     } //close findFullRow
 
