@@ -135,7 +135,7 @@ var L10_FudgeCraft_Combos;
         }
         console.log(rows);
         for (let y in rows) {
-            if (rows[y].length >= 4) {
+            if (rows[y].length >= 7) {
                 L10_FudgeCraft_Combos.grid.popRow(Number(y));
                 rows[y] = [];
             }
