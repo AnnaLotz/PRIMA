@@ -12,6 +12,11 @@ namespace L11_FudgeCraft_Compression {
     let currentFragment: Fragment;
     let rotator: f.Node = new f.Node("Rotator");
 
+    interface Rows {
+        [y: number]: GridElement[];
+    }
+    export let rows: Rows = {};
+
     //SETUP
     // ############################################################################################
     // ############################################################################################
@@ -146,30 +151,16 @@ namespace L11_FudgeCraft_Compression {
 
     function findFullRows(): void {
 
-        interface Rows {
-            [y: number]: GridElement[];
-        }
-
-        let rows: Rows = {};
-        for (let element of grid.values()) {
-            let yPos: number = element.yPos;
-            if (yPos != 0) {
-                if (rows[yPos] == undefined)
-                    rows[yPos] = [element];
-                else
-                    rows[yPos].push(element);
-            }
-        }
-        console.log(rows);
-
+        let comboRows: number = 0;
+        //volle rows finden
         for (let y in rows) {
-            if (rows[y].length >= 7) {
+            if (rows[y].length >= 5) {
                 grid.popRow(Number(y));
                 rows[y] = [];
+                comboRows++;
             }
-
         }
-        console.log(rows);
+        console.log(comboRows);
 
     } //close findFullRow
 

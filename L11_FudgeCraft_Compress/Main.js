@@ -11,6 +11,7 @@ var L11_FudgeCraft_Compression;
     let fragment;
     let currentFragment;
     let rotator = new f.Node("Rotator");
+    L11_FudgeCraft_Compression.rows = {};
     //SETUP
     // ############################################################################################
     // ############################################################################################
@@ -123,24 +124,16 @@ var L11_FudgeCraft_Compression;
         return false;
     } //close checkIfHit
     function findFullRows() {
-        let rows = {};
-        for (let element of L11_FudgeCraft_Compression.grid.values()) {
-            let yPos = element.yPos;
-            if (yPos != 0) {
-                if (rows[yPos] == undefined)
-                    rows[yPos] = [element];
-                else
-                    rows[yPos].push(element);
-            }
-        }
-        console.log(rows);
-        for (let y in rows) {
-            if (rows[y].length >= 7) {
+        let comboRows = 0;
+        //volle rows finden
+        for (let y in L11_FudgeCraft_Compression.rows) {
+            if (L11_FudgeCraft_Compression.rows[y].length >= 5) {
                 L11_FudgeCraft_Compression.grid.popRow(Number(y));
-                rows[y] = [];
+                L11_FudgeCraft_Compression.rows[y] = [];
+                comboRows++;
             }
         }
-        console.log(rows);
+        console.log(comboRows);
     } //close findFullRow
     //MOVEMENT
     // ############################################################################################
