@@ -151,16 +151,18 @@ namespace L11_FudgeCraft_Compression {
 
     function findFullRows(): void {
 
-        let comboRows: number = 0;
         //volle rows finden
         for (let y in rows) {
-            if (rows[y].length >= 5) {
+            if (rows[y].length >= 4) {
+                
                 grid.popRow(Number(y));
                 rows[y] = [];
-                comboRows++;
+                grid.slideRowsDown(Number(y));
+
+                f.RenderManager.update();
+                viewport.draw();
             }
         }
-        console.log(comboRows);
 
     } //close findFullRow
 

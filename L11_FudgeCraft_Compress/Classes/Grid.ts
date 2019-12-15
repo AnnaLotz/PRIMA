@@ -21,17 +21,19 @@ namespace L11_FudgeCraft_Compression {
             //cube ins grid pushen
             let key: string = this.toKey(_position);
             this.set(key, _element);
-            if (_element)
+            if (_element) {
                 game.appendChild(_element.cube);
-
-            //cube in row pushen
-            let yPos: number = _element.yPos;
-            if (yPos != 0) {
-                if (rows[yPos] == undefined)
-                    rows[yPos] = [_element];
-                else
-                    rows[yPos].push(_element);
+                //cube in row pushen:
+                let yPos: number = _element.yPos;
+                if (_element.yPos != 0) {
+                    if (rows[yPos] == undefined)
+                        rows[yPos] = [_element];
+                    else
+                        rows[yPos].push(_element);
+                }
             }
+            
+
         }
 
         pull(_position: f.Vector3): GridElement {
@@ -69,8 +71,22 @@ namespace L11_FudgeCraft_Compression {
             return key;
         }
 
-        slideRowsDown(_row: number): void {
+        slideRowsDown(_fromRow: number): void {
+            for (let element of grid.values()) {
+                console.log(element);
+                console.log(grid.values());
+                // if (element.cube.mtxWorld.translation.y > _fromRow) {
+                //     console.log(element);
+                //     console.log("old Position: " + element.cube.mtxWorld.translation.toString());
+                //     let newPosition: f.Vector3;
+                //     newPosition = element.cube.mtxWorld.translation;
+                //     newPosition.y--;
+                //     console.log("new Position" + newPosition);
 
+                //     grid.pop(element.cube.mtxWorld.translation);
+                //     grid.push(newPosition, grid.pull(element.cube.mtxWorld.translation));
+                // }
+            }
         }
     }
 }

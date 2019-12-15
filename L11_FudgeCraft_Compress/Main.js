@@ -124,16 +124,16 @@ var L11_FudgeCraft_Compression;
         return false;
     } //close checkIfHit
     function findFullRows() {
-        let comboRows = 0;
         //volle rows finden
         for (let y in L11_FudgeCraft_Compression.rows) {
-            if (L11_FudgeCraft_Compression.rows[y].length >= 5) {
+            if (L11_FudgeCraft_Compression.rows[y].length >= 4) {
                 L11_FudgeCraft_Compression.grid.popRow(Number(y));
                 L11_FudgeCraft_Compression.rows[y] = [];
-                comboRows++;
+                L11_FudgeCraft_Compression.grid.slideRowsDown(Number(y));
+                f.RenderManager.update();
+                L11_FudgeCraft_Compression.viewport.draw();
             }
         }
-        console.log(comboRows);
     } //close findFullRow
     //MOVEMENT
     // ############################################################################################
