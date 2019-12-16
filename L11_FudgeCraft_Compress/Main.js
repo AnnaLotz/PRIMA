@@ -124,16 +124,22 @@ var L11_FudgeCraft_Compression;
         return false;
     } //close checkIfHit
     function findFullRows() {
+        let rowsToSlide = [];
         //volle rows finden
         for (let y in L11_FudgeCraft_Compression.rows) {
             if (L11_FudgeCraft_Compression.rows[y].length >= 4) {
                 L11_FudgeCraft_Compression.grid.popRow(Number(y));
                 L11_FudgeCraft_Compression.rows[y] = [];
-                L11_FudgeCraft_Compression.grid.slideRowsDown(Number(y));
-                f.RenderManager.update();
-                L11_FudgeCraft_Compression.viewport.draw();
+                // grid.slideRowsDown(Number(y));
+                rowsToSlide.push(Number(y));
             }
         }
+        console.log(rowsToSlide);
+        for (let i = 0; i < rowsToSlide.length; i++) {
+            L11_FudgeCraft_Compression.grid.slideRowsDown(rowsToSlide[i]);
+        }
+        f.RenderManager.update();
+        L11_FudgeCraft_Compression.viewport.draw();
     } //close findFullRow
     //MOVEMENT
     // ############################################################################################
@@ -167,7 +173,7 @@ var L11_FudgeCraft_Compression;
         L11_FudgeCraft_Compression.viewport.draw();
     } //close process Input
     function rotateAroundNode(_direction, _node) {
-        console.log("rotate" + _direction);
+        // console.log("rotate" + _direction);
         _node.cmpTransform.local.rotateY(-_direction);
         f.RenderManager.update();
         L11_FudgeCraft_Compression.viewport.draw();

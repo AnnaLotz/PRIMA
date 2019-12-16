@@ -151,18 +151,25 @@ namespace L11_FudgeCraft_Compression {
 
     function findFullRows(): void {
 
+        let rowsToSlide: number[] = [];
         //volle rows finden
         for (let y in rows) {
             if (rows[y].length >= 4) {
-                
+
                 grid.popRow(Number(y));
                 rows[y] = [];
-                grid.slideRowsDown(Number(y));
-
-                f.RenderManager.update();
-                viewport.draw();
+                // grid.slideRowsDown(Number(y));
+                rowsToSlide.push(Number(y));
             }
         }
+        
+        console.log(rowsToSlide);
+        for (let i: number = 0; i < rowsToSlide.length; i++) {
+            grid.slideRowsDown(rowsToSlide[i]);
+        }
+
+        f.RenderManager.update();
+        viewport.draw();
 
     } //close findFullRow
 
@@ -205,7 +212,7 @@ namespace L11_FudgeCraft_Compression {
 
     function rotateAroundNode(_direction: number, _node: f.Node): void {
 
-        console.log("rotate" + _direction);
+        // console.log("rotate" + _direction);
         _node.cmpTransform.local.rotateY(- _direction);
         f.RenderManager.update();
         viewport.draw();
