@@ -87,8 +87,9 @@ namespace L11_FudgeCraft_Compression {
                     console.log("newPos: " + newPos.toString());
 
                     console.log(element);
-                    let newElement: GridElement = element;
+                    
                     element.cube.cmpTransform.local.translation = newPos;
+                    let newElement: GridElement = element;
                     newElement.yPos = newPos.y;
                     grid.push(newPos, newElement);
 
