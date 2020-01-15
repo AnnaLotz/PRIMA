@@ -22,23 +22,23 @@ var L10_FudgeCraft_Combos;
         rotator.appendChild(camera);
         //Light
         let cmpLight;
-        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
+        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.CSS("WHITE")));
         cmpLight.pivot.translate(new f.Vector3(50, 10, 50));
         cmpLight.pivot.lookAt(new f.Vector3(0, 0, 0));
         L10_FudgeCraft_Combos.game.addComponent(cmpLight);
-        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
+        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.CSS("WHITE")));
         cmpLight.pivot.translate(new f.Vector3(-50, 10, 50));
         cmpLight.pivot.lookAt(new f.Vector3(0, 0, 0));
         L10_FudgeCraft_Combos.game.addComponent(cmpLight);
-        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
+        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.CSS("WHITE")));
         cmpLight.pivot.translate(new f.Vector3(-50, 10, -50));
         cmpLight.pivot.lookAt(new f.Vector3(0, 0, 0));
         L10_FudgeCraft_Combos.game.addComponent(cmpLight);
-        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
+        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.CSS("WHITE")));
         cmpLight.pivot.translate(new f.Vector3(50, 10, -50));
         cmpLight.pivot.lookAt(new f.Vector3(0, 0, 0));
         L10_FudgeCraft_Combos.game.addComponent(cmpLight);
-        let cmpLightAmbient = new f.ComponentLight(new f.LightAmbient(f.Color.GREY));
+        let cmpLightAmbient = new f.ComponentLight(new f.LightAmbient(f.Color.CSS("GREY")));
         L10_FudgeCraft_Combos.game.addComponent(cmpLightAmbient);
         //Viewport
         L10_FudgeCraft_Combos.viewport = new f.Viewport();
@@ -57,7 +57,7 @@ var L10_FudgeCraft_Combos;
         for (let x = -5; x < 6; x++) {
             for (let z = -5; z < 6; z++) {
                 let position = new f.Vector3(x, 0, z);
-                let cube = new L10_FudgeCraft_Combos.Cube(position, new f.Material("White", f.ShaderFlat, new f.CoatColored(f.Color.WHITE)));
+                let cube = new L10_FudgeCraft_Combos.Cube(position, new f.Material("White", f.ShaderFlat, new f.CoatColored(f.Color.CSS("WHITE"))));
                 cube.cmpTransform.local.translation = position;
                 L10_FudgeCraft_Combos.grid.push(position, new L10_FudgeCraft_Combos.GridElement(cube));
             }

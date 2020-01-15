@@ -24,7 +24,7 @@ var L08_FudgeCraft;
         //create Game Node
         game = createGame();
         //Light
-        let cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
+        let cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.CSS("WHITE")));
         cmpLight.pivot.lookAt(new f.Vector3(0.5, 0, 0.5));
         game.addComponent(cmpLight);
         //Viewport

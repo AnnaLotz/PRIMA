@@ -27,7 +27,7 @@ namespace L08_FudgeCraft_Collision {
         let cmpCam: f.ComponentCamera = new f.ComponentCamera();
         camera.addComponent(cmpCam);
         cmpCam.pivot.translate(new f.Vector3(0, 6, 30)); // kamera auf ort setzen
-        cmpCam.backgroundColor = f.Color.DARK_GREY;
+        cmpCam.backgroundColor = f.Color.CSS("DARK_GREY");
         // cmpCam.pivot.lookAt(f.Vector3.ZERO()); // um auf 0|0|0 zu schauen
 
         //create Game Node
@@ -36,10 +36,10 @@ namespace L08_FudgeCraft_Collision {
         createStart();
 
         //Light
-        let cmpLight: f.ComponentLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
+        let cmpLight: f.ComponentLight = new f.ComponentLight(new f.LightDirectional(f.Color.CSS("WHITE")));
         cmpLight.pivot.lookAt(new f.Vector3(0.5, 0, 0.5));
         game.addComponent(cmpLight);
-        let cmpLightAmbient: f.ComponentLight = new f.ComponentLight(new f.LightAmbient(f.Color.GREY));
+        let cmpLightAmbient: f.ComponentLight = new f.ComponentLight(new f.LightAmbient(f.Color.CSS("GREY")));
         game.addComponent(cmpLightAmbient);
 
         //Viewport

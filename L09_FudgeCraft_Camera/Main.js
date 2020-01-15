@@ -21,23 +21,23 @@ var L09_FudgeCraft_Camera;
         rotator.appendChild(camera);
         //Light
         let cmpLight;
-        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
+        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.CSS("WHITE")));
         cmpLight.pivot.translate(new f.Vector3(50, 10, 50));
         cmpLight.pivot.lookAt(new f.Vector3(0, 0, 0));
         L09_FudgeCraft_Camera.game.addComponent(cmpLight);
-        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
+        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.CSS("WHITE")));
         cmpLight.pivot.translate(new f.Vector3(-50, 10, 50));
         cmpLight.pivot.lookAt(new f.Vector3(0, 0, 0));
         L09_FudgeCraft_Camera.game.addComponent(cmpLight);
-        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
+        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.CSS("WHITE")));
         cmpLight.pivot.translate(new f.Vector3(-50, 10, -50));
         cmpLight.pivot.lookAt(new f.Vector3(0, 0, 0));
         L09_FudgeCraft_Camera.game.addComponent(cmpLight);
-        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
+        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.CSS("WHITE")));
         cmpLight.pivot.translate(new f.Vector3(50, 10, -50));
         cmpLight.pivot.lookAt(new f.Vector3(0, 0, 0));
         L09_FudgeCraft_Camera.game.addComponent(cmpLight);
-        let cmpLightAmbient = new f.ComponentLight(new f.LightAmbient(f.Color.GREY));
+        let cmpLightAmbient = new f.ComponentLight(new f.LightAmbient(f.Color.CSS("GREY")));
         L09_FudgeCraft_Camera.game.addComponent(cmpLightAmbient);
         //Viewport
         L09_FudgeCraft_Camera.viewport = new f.Viewport();
@@ -56,7 +56,7 @@ var L09_FudgeCraft_Camera;
         for (let x = -5; x < 6; x++) {
             for (let z = -5; z < 6; z++) {
                 let position = new f.Vector3(x, 0, z);
-                let cube = new L09_FudgeCraft_Camera.Cube(position, new f.Material("White", f.ShaderFlat, new f.CoatColored(f.Color.WHITE)));
+                let cube = new L09_FudgeCraft_Camera.Cube(position, new f.Material("White", f.ShaderFlat, new f.CoatColored(f.Color.CSS("WHITE"))));
                 cube.cmpTransform.local.translation = position;
                 L09_FudgeCraft_Camera.grid.push(position, new L09_FudgeCraft_Camera.GridElement(cube));
                 // console.log("set cube at pos: " + position);

@@ -14,7 +14,7 @@ namespace L11_FudgeCraft_Compression {
             let cmpCam: f.ComponentCamera = new f.ComponentCamera();
             cmpCam.pivot.translate(new f.Vector3(0, 7, 30));
             cmpCam.pivot.lookAt(new f.Vector3(0, 7, 0)); // um auf 0|0|0 zu schauen
-            cmpCam.backgroundColor = f.Color.DARK_GREY;
+            cmpCam.backgroundColor = f.Color.CSS("DARK_GREY");
             this.addComponent(cmpCam);
 
         } //close constructor

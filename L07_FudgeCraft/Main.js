@@ -37,7 +37,7 @@ var L07_FudgeCraft;
         fragment.addComponent(new f.ComponentTransform(f.Matrix4x4.TRANSLATION(f.Vector3.X(7))));
         game.appendChild(fragment);
         //Light
-        let cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
+        let cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.CSS("WHITE")));
         cmpLight.pivot.lookAt(new f.Vector3(0.5, 1, 0.8));
         game.addComponent(cmpLight);
         return game;

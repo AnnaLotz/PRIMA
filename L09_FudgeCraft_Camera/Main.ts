@@ -25,24 +25,24 @@ namespace L09_FudgeCraft_Camera {
 
         //Light
         let cmpLight: f.ComponentLight;
-        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
+        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.CSS("WHITE")));
         cmpLight.pivot.translate(new f.Vector3(50, 10, 50));
         cmpLight.pivot.lookAt(new f.Vector3(0, 0, 0));
         game.addComponent(cmpLight);
-        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
+        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.CSS("WHITE")));
         cmpLight.pivot.translate(new f.Vector3(-50, 10, 50));
         cmpLight.pivot.lookAt(new f.Vector3(0, 0, 0));
         game.addComponent(cmpLight);
-        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
+        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.CSS("WHITE")));
         cmpLight.pivot.translate(new f.Vector3(-50, 10, -50));
         cmpLight.pivot.lookAt(new f.Vector3(0, 0, 0));
         game.addComponent(cmpLight);
-        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
+        cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.CSS("WHITE")));
         cmpLight.pivot.translate(new f.Vector3(50, 10, -50));
         cmpLight.pivot.lookAt(new f.Vector3(0, 0, 0));
         game.addComponent(cmpLight);
 
-        let cmpLightAmbient: f.ComponentLight = new f.ComponentLight(new f.LightAmbient(f.Color.GREY));
+        let cmpLightAmbient: f.ComponentLight = new f.ComponentLight(new f.LightAmbient(f.Color.CSS("GREY")));
         game.addComponent(cmpLightAmbient);
 
         //Viewport
@@ -67,7 +67,7 @@ namespace L09_FudgeCraft_Camera {
         for (let x: number = -5; x < 6; x++) {
             for (let z: number = -5; z < 6; z++) {
                 let position: f.Vector3 = new f.Vector3(x, 0, z);
-                let cube: Cube = new Cube(position, new f.Material("White", f.ShaderFlat, new f.CoatColored(f.Color.WHITE)));
+                let cube: Cube = new Cube(position, new f.Material("White", f.ShaderFlat, new f.CoatColored(f.Color.CSS("WHITE"))));
                 cube.cmpTransform.local.translation = position;
                 grid.push(position, new GridElement(cube));
                 // console.log("set cube at pos: " + position);

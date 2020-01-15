@@ -34,10 +34,10 @@ var L07_FudgeCraft;
         createMaterials() {
             let mtrArray = [];
             mtrArray = [
-                new f.Material("Red", f.ShaderFlat, new f.CoatColored(f.Color.RED)),
-                new f.Material("Green", f.ShaderFlat, new f.CoatColored(f.Color.GREEN)),
-                new f.Material("Blue", f.ShaderFlat, new f.CoatColored(f.Color.BLUE)),
-                new f.Material("Yellow", f.ShaderFlat, new f.CoatColored(f.Color.YELLOW))
+                new f.Material("Red", f.ShaderFlat, new f.CoatColored(f.Color.CSS("RED"))),
+                new f.Material("Green", f.ShaderFlat, new f.CoatColored(f.Color.CSS("LIME"))),
+                new f.Material("Blue", f.ShaderFlat, new f.CoatColored(f.Color.CSS("BLUE"))),
+                new f.Material("Yellow", f.ShaderFlat, new f.CoatColored(f.Color.CSS("YELLOW")))
             ];
             return mtrArray;
         }

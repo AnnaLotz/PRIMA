@@ -29,7 +29,7 @@ namespace L08_FudgeCraft {
         game = createGame();
 
         //Light
-        let cmpLight: f.ComponentLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
+        let cmpLight: f.ComponentLight = new f.ComponentLight(new f.LightDirectional(f.Color.CSS("WHITE")));
         cmpLight.pivot.lookAt(new f.Vector3(0.5, 0, 0.5));
         game.addComponent(cmpLight);
 

@@ -54,12 +54,12 @@ var L08_FudgeCraft;
             let mtrArray = [];
             mtrArray = [
                 new f.Material("Orange", f.ShaderFlat, new f.CoatColored(new f.Color(1, 0.75, 0, 1))),
-                new f.Material("Blue", f.ShaderFlat, new f.CoatColored(f.Color.BLUE)),
-                new f.Material("Red", f.ShaderFlat, new f.CoatColored(f.Color.RED)),
-                new f.Material("Green", f.ShaderFlat, new f.CoatColored(f.Color.GREEN)),
-                new f.Material("Magenta", f.ShaderFlat, new f.CoatColored(f.Color.MAGENTA)),
-                new f.Material("Yellow", f.ShaderFlat, new f.CoatColored(f.Color.YELLOW)),
-                new f.Material("Cyan", f.ShaderFlat, new f.CoatColored(f.Color.CYAN))
+                new f.Material("Blue", f.ShaderFlat, new f.CoatColored(f.Color.CSS("BLUE"))),
+                new f.Material("Red", f.ShaderFlat, new f.CoatColored(f.Color.CSS("RED"))),
+                new f.Material("Green", f.ShaderFlat, new f.CoatColored(f.Color.CSS("GREEN"))),
+                new f.Material("Magenta", f.ShaderFlat, new f.CoatColored(f.Color.CSS("MAGENTA"))),
+                new f.Material("Yellow", f.ShaderFlat, new f.CoatColored(f.Color.CSS("YELLOW"))),
+                new f.Material("Cyan", f.ShaderFlat, new f.CoatColored(f.Color.CSS("CYAN")))
             ];
             return mtrArray;
         } //close createMaterials
