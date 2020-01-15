@@ -11,12 +11,11 @@ var L11_FudgeCraft_Compression;
     let fragment;
     let currentFragment;
     let rotator = new f.Node("Rotator");
-    L11_FudgeCraft_Compression.rows = {};
+    // export let rows: Rows = {};
     //SETUP
     // ############################################################################################
     // ############################################################################################
     function handleLoad(_event) {
-        console.log("Hello World");
         const canvas = document.querySelector("canvas");
         f.RenderManager.initialize(true); //true um Antialiasing zu vermeiden
         camera = new L11_FudgeCraft_Compression.CameraOrbit();
@@ -52,7 +51,6 @@ var L11_FudgeCraft_Compression;
     } //close handleLoad
     function createStart() {
         rotator.addComponent(new f.ComponentTransform());
-        console.log(rotator.cmpTransform.local.translation);
         L11_FudgeCraft_Compression.game.appendChild(rotator);
         //Boden erstellen
         for (let x = -5; x < 6; x++) {
@@ -124,23 +122,42 @@ var L11_FudgeCraft_Compression;
         return false;
     } //close checkIfHit
     function findFullRows() {
+        let rows = {};
+        fillRowsArray(rows);
         let rowsToSlide = [];
         //volle rows finden
-        for (let y in L11_FudgeCraft_Compression.rows) {
-            if (L11_FudgeCraft_Compression.rows[y].length >= 4) {
+        for (let y in rows) {
+            console.log("Testet Reihe " + y);
+            if (rows[y].length >= 4) {
                 L11_FudgeCraft_Compression.grid.popRow(Number(y));
-                L11_FudgeCraft_Compression.rows[y] = [];
-                // grid.slideRowsDown(Number(y));
-                rowsToSlide.push(Number(y));
+                rows[y] = []; //Array wird irgendwie nicht richtig geleert?
+                console.log(rows[y]);
+                L11_FudgeCraft_Compression.grid.slideRowsDown(Number(y));
+                // rowsToSlide.push(Number(y));
             }
         }
-        console.log(rowsToSlide);
-        for (let i = 0; i < rowsToSlide.length; i++) {
-            L11_FudgeCraft_Compression.grid.slideRowsDown(rowsToSlide[i]);
-        }
+        // console.log(rowsToSlide);
+        // for (let i: number = 0; i < rowsToSlide.length; i++) {
+        //     grid.slideRowsDown(rowsToSlide[i]);
+        // }
+        fillRowsArray(rows);
+        console.log("rows:");
+        console.log(rows);
         f.RenderManager.update();
         L11_FudgeCraft_Compression.viewport.draw();
     } //close findFullRow
+    function fillRowsArray(_rows) {
+        _rows = [];
+        for (let element of L11_FudgeCraft_Compression.grid.values()) {
+            let yPos = element.cube.mtxWorld.translation.y;
+            if (yPos != 0) {
+                if (_rows[yPos] == undefined)
+                    _rows[yPos] = [element];
+                else
+                    _rows[yPos].push(element);
+            }
+        }
+    }
     //MOVEMENT
     // ############################################################################################
     // ############################################################################################
@@ -173,7 +190,6 @@ var L11_FudgeCraft_Compression;
         L11_FudgeCraft_Compression.viewport.draw();
     } //close process Input
     function rotateAroundNode(_direction, _node) {
-        // console.log("rotate" + _direction);
         _node.cmpTransform.local.rotateY(-_direction);
         f.RenderManager.update();
         L11_FudgeCraft_Compression.viewport.draw();

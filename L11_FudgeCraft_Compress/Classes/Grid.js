@@ -19,15 +19,15 @@ var L11_FudgeCraft_Compression;
             this.set(key, _element);
             if (_element) {
                 L11_FudgeCraft_Compression.game.appendChild(_element.cube);
-                console.log("createt at: " + _position.toString());
+                // console.log("createt at: " + _position.toString());
                 //cube in row pushen:
                 let yPos = _element.yPos;
-                if (_element.yPos != 0) {
-                    if (L11_FudgeCraft_Compression.rows[yPos] == undefined)
-                        L11_FudgeCraft_Compression.rows[yPos] = [_element];
-                    else
-                        L11_FudgeCraft_Compression.rows[yPos].push(_element);
-                }
+                // if (_element.yPos != 0) {
+                //     if (rows[yPos] == undefined)
+                //         rows[yPos] = [_element];
+                //     else
+                //         rows[yPos].push(_element);
+                // }
             }
         }
         pull(_position) {
@@ -52,6 +52,7 @@ var L11_FudgeCraft_Compression;
                     this.pop(element.cube.cmpTransform.local.translation);
                 }
             }
+            // rows[_yPosition] = [];
             f.RenderManager.update();
             L11_FudgeCraft_Compression.viewport.draw();
             // console.log(grid);
@@ -65,17 +66,21 @@ var L11_FudgeCraft_Compression;
             console.log("slide Rows down over: " + _fromRowUp);
             for (let element of L11_FudgeCraft_Compression.grid.values()) {
                 if (element.yPos > _fromRowUp) {
+                    // rows[_fromRowUp] = [];
                     let oldPos = element.cube.mtxWorld.translation;
                     console.log("oldPos: " + oldPos.toString());
                     L11_FudgeCraft_Compression.grid.pop(oldPos);
                     let newPos = oldPos;
                     newPos.y--;
                     console.log("newPos: " + newPos.toString());
-                    console.log(element);
-                    element.cube.cmpTransform.local.translation = newPos;
+                    // console.log(element);
+                    element.cube.cmpTransform.local.translation.y--;
+                    element.yPos--;
                     let newElement = element;
                     newElement.yPos = newPos.y;
                     L11_FudgeCraft_Compression.grid.push(newPos, newElement);
+                    element.cube.cmpTransform.local.translateY(-1);
+                    // console.log(element);
                     f.RenderManager.update();
                     L11_FudgeCraft_Compression.viewport.draw();
                 }

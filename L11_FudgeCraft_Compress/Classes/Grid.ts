@@ -24,15 +24,15 @@ namespace L11_FudgeCraft_Compression {
             
             if (_element) {
                 game.appendChild(_element.cube);
-                console.log("createt at: " + _position.toString());
+                // console.log("createt at: " + _position.toString());
                 //cube in row pushen:
                 let yPos: number = _element.yPos;
-                if (_element.yPos != 0) {
-                    if (rows[yPos] == undefined)
-                        rows[yPos] = [_element];
-                    else
-                        rows[yPos].push(_element);
-                }
+                // if (_element.yPos != 0) {
+                //     if (rows[yPos] == undefined)
+                //         rows[yPos] = [_element];
+                //     else
+                //         rows[yPos].push(_element);
+                // }
             }
 
 
@@ -48,7 +48,7 @@ namespace L11_FudgeCraft_Compression {
             let key: string = this.toKey(_position);
             let element: GridElement = this.get(key);
             this.delete(key);
-            if (element)
+            if (element) 
                 game.removeChild(element.cube);
             console.log("popped: " + _position);
             return element;
@@ -62,6 +62,7 @@ namespace L11_FudgeCraft_Compression {
                     this.pop(element.cube.cmpTransform.local.translation);
                 }
             }
+            // rows[_yPosition] = [];
             f.RenderManager.update();
             viewport.draw();
             // console.log(grid);
@@ -78,6 +79,7 @@ namespace L11_FudgeCraft_Compression {
             for (let element of grid.values()) {
                 if (element.yPos > _fromRowUp) {
 
+                    // rows[_fromRowUp] = [];
                     let oldPos: f.Vector3 = element.cube.mtxWorld.translation; 
                     console.log("oldPos: " + oldPos.toString());                  
                     grid.pop(oldPos);
@@ -86,12 +88,16 @@ namespace L11_FudgeCraft_Compression {
                     newPos.y--;
                     console.log("newPos: " + newPos.toString());
 
-                    console.log(element);
+                    // console.log(element);
                     
-                    element.cube.cmpTransform.local.translation = newPos;
+                    element.cube.cmpTransform.local.translation.y--;
+                    element.yPos--;
                     let newElement: GridElement = element;
                     newElement.yPos = newPos.y;
                     grid.push(newPos, newElement);
+                    element.cube.cmpTransform.local.translateY(-1);
+
+                    // console.log(element);
 
                     f.RenderManager.update();
                     viewport.draw();
