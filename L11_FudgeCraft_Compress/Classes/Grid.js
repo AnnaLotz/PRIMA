@@ -21,7 +21,7 @@ var L11_FudgeCraft_Compression;
                 L11_FudgeCraft_Compression.game.appendChild(_element.cube);
                 // console.log("createt at: " + _position.toString());
                 //cube in row pushen:
-                let yPos = _element.yPos;
+                // let yPos: number = _element.yPos;
                 // if (_element.yPos != 0) {
                 //     if (rows[yPos] == undefined)
                 //         rows[yPos] = [_element];

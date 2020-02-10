@@ -152,7 +152,7 @@ namespace L11_FudgeCraft_Compression {
         let rows: Rows = {};
         fillRowsArray(rows);
 
-        let rowsToSlide: number[] = [];
+        // let rowsToSlide: number[] = [];
         //volle rows finden
         for (let y in rows) {
             console.log("Testet Reihe " + y);

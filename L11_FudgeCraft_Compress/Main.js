@@ -124,7 +124,7 @@ var L11_FudgeCraft_Compression;
     function findFullRows() {
         let rows = {};
         fillRowsArray(rows);
-        let rowsToSlide = [];
+        // let rowsToSlide: number[] = [];
         //volle rows finden
         for (let y in rows) {
             console.log("Testet Reihe " + y);
