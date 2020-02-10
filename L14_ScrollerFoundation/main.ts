@@ -23,12 +23,12 @@ namespace L14_ScrollerFoundation {
 
         f.RenderManager.initialize(true, false);
         root = new f.Node("Root");
-        let mtxBall: f.Matrix4x4;
+        // let mtxBall: f.Matrix4x4;
         let ball: NodeSprite;
 
         ball = new NodeSprite("Ball", sprite);
         ball.addComponent(new f.ComponentTransform);
-        mtxBall = f.Matrix4x4.TRANSLATION(f.Vector3.X(1));
+        // mtxBall = f.Matrix4x4.TRANSLATION(f.Vector3.X(1));
         ball.setFrameDirection(1);
         root.appendChild(ball);
 
@@ -55,9 +55,9 @@ namespace L14_ScrollerFoundation {
 
         function update(_event: f.Eventƒ): void {
             // ƒ.Debug.log(frame);
-            ball.showFrameNext();
+            // ball.showFrameNext();
             ball.cmpTransform.local.translateX(-0.2);
-            // ball.broadcastEvent(new CustomEvent("showNext"));
+            ball.broadcastEvent(new CustomEvent("showNext"));
             // root.getChildren()[3].cmpTransform.local.rotateY(5);
             // mtxBall. cmpTransform.local.translateZ(1);
             // mtxBall.translateZ(1);
