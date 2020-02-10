@@ -1,5 +1,7 @@
 "use strict";
+///<reference types="../Fudge/FudgeCore.js"/> 
 var L14_ScrollerFoundation;
+///<reference types="../Fudge/FudgeCore.js"/> 
 (function (L14_ScrollerFoundation) {
     var f = FudgeCore;
     var Sprite = L14_ScrollerFoundation.Sprite;

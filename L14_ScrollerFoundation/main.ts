@@ -1,3 +1,4 @@
+///<reference types="../Fudge/FudgeCore.js"/> 
 namespace L14_ScrollerFoundation {
     import f = FudgeCore;
     import Sprite = L14_ScrollerFoundation.Sprite;
