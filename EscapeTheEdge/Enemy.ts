@@ -1,16 +1,16 @@
 namespace EscapeTheEdge {
     import f = FudgeCore;
 
-    export enum ACTION {
+    export enum ENEMYACTION {
         IDLE = "Idle",
         WALK = "Walk",
         JUMP = "Jump"
     }
-    export enum DIRECTION {
+    export enum ENEMYDIRECTION {
         LEFT, RIGHT
     }
 
-    export class Bobo extends Moveable {
+    export class Enemy extends Moveable {
         // private static sprites: Sprite[];
         // private static speedMax: f.Vector2 = new f.Vector2(1.5, 5); // units per second
         // private static gravity: f.Vector2 = f.Vector2.Y(-3);
@@ -22,7 +22,7 @@ namespace EscapeTheEdge {
             super(_name);
             this.addComponent(new f.ComponentTransform());
 
-            for (let sprite of Bobo.sprites) {
+            for (let sprite of Enemy.sprites) {
                 let nodeSprite: NodeSprite = new NodeSprite(sprite.name, sprite);
                 nodeSprite.activate(false);
 
@@ -40,14 +40,14 @@ namespace EscapeTheEdge {
         } //close constructor
 
         public static generateSprites(_txtImage: f.TextureImage): void {
-            Bobo.sprites = [];
+            Enemy.sprites = [];
             let sprite: Sprite = new Sprite(ACTION.WALK);
-            sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 1, 17, 17), 6, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
-            Bobo.sprites.push(sprite);
+            sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 54, 17, 14), 6, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
+            Enemy.sprites.push(sprite);
 
             sprite = new Sprite(ACTION.IDLE);
-            sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 18, 17, 17), 7, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
-            Bobo.sprites.push(sprite);
+            sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 54, 17, 14), 4, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
+            Enemy.sprites.push(sprite); //(1, 68, 17, 14), 2
         }
 
         public act(_action: ACTION, _direction?: DIRECTION): void {
@@ -57,7 +57,7 @@ namespace EscapeTheEdge {
                     break;
                 case ACTION.WALK:
                     let direction: number = (_direction == DIRECTION.RIGHT ? 1 : -1);
-                    this.speed.x = Bobo.speedMax.x; // * direction;
+                    this.speed.x = Enemy.speedMax.x; // * direction;
                     this.cmpTransform.local.rotation = f.Vector3.Y(90 - 90 * direction);
                     // console.log(direction);
                     break;
@@ -72,14 +72,14 @@ namespace EscapeTheEdge {
             this.broadcastEvent(new CustomEvent("showNext"));
 
             let timeFrame: number = f.Loop.timeFrameGame / 1000;
-            this.speed.y += Bobo.gravity.y * timeFrame;
+            this.speed.y += Enemy.gravity.y * timeFrame;
             let distance: f.Vector3 = f.Vector3.SCALE(this.speed, timeFrame);
             this.cmpTransform.local.translate(distance);
 
             this.checkCollision();
         } //close update
 
-
+       
     } //close class
 
 } //close namespace

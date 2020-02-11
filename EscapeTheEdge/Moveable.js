@@ -1,0 +1,45 @@
+"use strict";
+var EscapeTheEdge;
+(function (EscapeTheEdge) {
+    var f = FudgeCore;
+    class Moveable extends f.Node {
+        constructor(_name = "Bobo") {
+            super(_name);
+            // private action: ACTION;
+            // private time: f.Time = new f.Time();
+            this.speed = f.Vector3.ZERO();
+            this.update = (_event) => {
+                this.broadcastEvent(new CustomEvent("showNext"));
+                let timeFrame = f.Loop.timeFrameGame / 1000;
+                // this.speed.y += Bobo.gravity.y * timeFrame;
+                let distance = f.Vector3.SCALE(this.speed, timeFrame);
+                this.cmpTransform.local.translate(distance);
+                this.checkCollision();
+            }; //close update
+        } //close constructor
+        show(_action) {
+            if (_action == EscapeTheEdge.ACTION.JUMP)
+                return;
+            for (let child of this.getChildren())
+                child.activate(child.name == _action);
+            // this.action = _action;
+        }
+        checkCollision() {
+            for (let floor of EscapeTheEdge.level.getChildren()) {
+                let rect = floor.getRectWorld();
+                //console.log(rect.toString());
+                let hit = rect.isInside(this.cmpTransform.local.translation.toVector2());
+                if (hit) {
+                    let translation = this.cmpTransform.local.translation;
+                    translation.y = rect.y;
+                    this.cmpTransform.local.translation = translation;
+                    this.speed.y = 0;
+                }
+            }
+        } //close checkCollision
+    } //close class
+    Moveable.speedMax = new f.Vector2(1.5, 5); // units per second
+    Moveable.gravity = f.Vector2.Y(-3);
+    EscapeTheEdge.Moveable = Moveable;
+})(EscapeTheEdge || (EscapeTheEdge = {})); //close namespace
+//# sourceMappingURL=Moveable.js.map

@@ -52,6 +52,7 @@ namespace EscapeTheEdge {
         characters.appendChild(bobo);
 
 
+
         // bobo.appendChild(mover);
 
 
