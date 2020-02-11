@@ -37,16 +37,16 @@ namespace EscapeTheEdge {
 
             this.show(ACTION.IDLE);
             f.Loop.addEventListener(f.EVENT.LOOP_FRAME, this.update);
-        }
+        } //close constructor
 
         public static generateSprites(_txtImage: f.TextureImage): void {
             Bobo.sprites = [];
             let sprite: Sprite = new Sprite(ACTION.WALK);
-            sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 1, 17, 17), 6, new f.Vector2(1, 1), 16, f.ORIGIN2D.BOTTOMCENTER);
+            sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 1, 17, 17), 6, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
             Bobo.sprites.push(sprite);
 
             sprite = new Sprite(ACTION.IDLE);
-            sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 1, 17, 17), 3, new f.Vector2(1, 1), 16, f.ORIGIN2D.BOTTOMCENTER);
+            sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 1, 17, 17), 1, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
             Bobo.sprites.push(sprite);
         }
 
@@ -74,7 +74,7 @@ namespace EscapeTheEdge {
                     break;
             }
             this.show(_action);
-        }
+        } //close act
 
         private update = (_event: f.Eventƒ): void => {
             this.broadcastEvent(new CustomEvent("showNext"));
@@ -84,22 +84,23 @@ namespace EscapeTheEdge {
             let distance: f.Vector3 = f.Vector3.SCALE(this.speed, timeFrame);
             this.cmpTransform.local.translate(distance);
 
-            // this.checkCollision();
-        }
+            this.checkCollision();
+        } //close update
 
-        // private checkCollision(): void {
-        //     for (let floor of level.getChildren()) {
-        //         let rect: f.Rectangle = (<Floor>floor).getRectWorld();
-        //         //console.log(rect.toString());
-        //         let hit: boolean = rect.isInside(this.cmpTransform.local.translation.toVector2());
-        //         if (hit) {
-        //             let translation: f.Vector3 = this.cmpTransform.local.translation;
-        //             translation.y = rect.y;
-        //             this.cmpTransform.local.translation = translation;
-        //             this.speed.y = 0;
-        //         }
-        //     }
-        // }
-    }
+        private checkCollision(): void {
+            for (let floor of level.getChildren()) {
+                let rect: f.Rectangle = (<Floor>floor).getRectWorld();
+                //console.log(rect.toString());
+                let hit: boolean = rect.isInside(this.cmpTransform.local.translation.toVector2());
+                if (hit) {
+                    let translation: f.Vector3 = this.cmpTransform.local.translation;
+                    translation.y = rect.y;
+                    this.cmpTransform.local.translation = translation;
+                    this.speed.y = 0;
+                }
+            }
+        } //close checkCollision
 
-}
+    } //close class
+
+} //close namespace

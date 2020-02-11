@@ -25,8 +25,8 @@ var EscapeTheEdge;
                 this.speed.y += Bobo.gravity.y * timeFrame;
                 let distance = f.Vector3.SCALE(this.speed, timeFrame);
                 this.cmpTransform.local.translate(distance);
-                // this.checkCollision();
-            };
+                this.checkCollision();
+            }; //close update
             this.addComponent(new f.ComponentTransform());
             for (let sprite of Bobo.sprites) {
                 let nodeSprite = new EscapeTheEdge.NodeSprite(sprite.name, sprite);
@@ -36,14 +36,14 @@ var EscapeTheEdge;
             }
             this.show(ACTION.IDLE);
             f.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, this.update);
-        }
+        } //close constructor
         static generateSprites(_txtImage) {
             Bobo.sprites = [];
             let sprite = new EscapeTheEdge.Sprite(ACTION.WALK);
-            sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 1, 17, 17), 6, new f.Vector2(1, 1), 16, f.ORIGIN2D.BOTTOMCENTER);
+            sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 1, 17, 17), 6, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
             Bobo.sprites.push(sprite);
             sprite = new EscapeTheEdge.Sprite(ACTION.IDLE);
-            sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 1, 17, 17), 3, new f.Vector2(1, 1), 16, f.ORIGIN2D.BOTTOMCENTER);
+            sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 1, 17, 17), 1, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
             Bobo.sprites.push(sprite);
         }
         show(_action) {
@@ -69,10 +69,23 @@ var EscapeTheEdge;
                     break;
             }
             this.show(_action);
-        }
-    }
+        } //close act
+        checkCollision() {
+            for (let floor of EscapeTheEdge.level.getChildren()) {
+                let rect = floor.getRectWorld();
+                //console.log(rect.toString());
+                let hit = rect.isInside(this.cmpTransform.local.translation.toVector2());
+                if (hit) {
+                    let translation = this.cmpTransform.local.translation;
+                    translation.y = rect.y;
+                    this.cmpTransform.local.translation = translation;
+                    this.speed.y = 0;
+                }
+            }
+        } //close checkCollision
+    } //close class
     Bobo.speedMax = new f.Vector2(1.5, 5); // units per second
     Bobo.gravity = f.Vector2.Y(-3);
     EscapeTheEdge.Bobo = Bobo;
-})(EscapeTheEdge || (EscapeTheEdge = {}));
+})(EscapeTheEdge || (EscapeTheEdge = {})); //close namespace
 //# sourceMappingURL=Bobo.js.map
