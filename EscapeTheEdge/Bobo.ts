@@ -46,7 +46,7 @@ namespace EscapeTheEdge {
             Bobo.sprites.push(sprite);
 
             sprite = new Sprite(ACTION.IDLE);
-            sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 1, 17, 17), 1, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
+            sprite.generateByGrid(_txtImage, f.Rectangle.GET(18, 18, 17, 17), 7, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
             Bobo.sprites.push(sprite);
         }
 

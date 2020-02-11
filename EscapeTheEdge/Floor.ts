@@ -3,7 +3,7 @@ namespace EscapeTheEdge {
 
     export class Floor extends f.Node {
         private static mesh: f.MeshSprite = new f.MeshSprite();
-        private static material: f.Material = new f.Material("Floor", f.ShaderUniColor, new f.CoatColored(f.Color.CSS("RED")));
+        private static material: f.Material = new f.Material("Floor", f.ShaderUniColor, new f.CoatColored(f.Color.CSS("Darkred")));
         private static readonly pivot: f.Matrix4x4 = f.Matrix4x4.TRANSLATION(f.Vector3.Y(-0.5));
 
         public constructor() {

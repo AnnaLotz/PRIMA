@@ -27,7 +27,7 @@ var EscapeTheEdge;
         }
     }
     Floor.mesh = new f.MeshSprite();
-    Floor.material = new f.Material("Floor", f.ShaderUniColor, new f.CoatColored(f.Color.CSS("RED")));
+    Floor.material = new f.Material("Floor", f.ShaderUniColor, new f.CoatColored(f.Color.CSS("Darkred")));
     Floor.pivot = f.Matrix4x4.TRANSLATION(f.Vector3.Y(-0.5));
     EscapeTheEdge.Floor = Floor;
 })(EscapeTheEdge || (EscapeTheEdge = {}));

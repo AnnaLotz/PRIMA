@@ -7,10 +7,12 @@ var EscapeTheEdge;
     let mover;
     let characters;
     let bobo;
+    let crc2;
+    let canvas;
     let keysPressed = {};
     window.addEventListener("load", init);
     function init(_event) {
-        const canvas = document.querySelector("canvas");
+        canvas = document.querySelector("canvas");
         f.RenderManager.initialize(true, false);
         startGame(canvas);
     } //close init
@@ -22,19 +24,21 @@ var EscapeTheEdge;
         EscapeTheEdge.rootNode.appendChild(mover);
         EscapeTheEdge.rootNode.appendChild(characters);
         EscapeTheEdge.rootNode.appendChild(EscapeTheEdge.level);
-        // let crc2: CanvasRenderingContext2D = _canvas.getContext("2d");
+        mover.addComponent(new f.ComponentTransform());
+        crc2 = _canvas.getContext("2d");
         let img = document.querySelector("img");
         let txtBobo = new f.TextureImage();
         txtBobo.image = img;
         EscapeTheEdge.Bobo.generateSprites(txtBobo);
         bobo = new EscapeTheEdge.Bobo("Bobo");
         characters.appendChild(bobo);
+        // bobo.appendChild(mover);
         let camera = new f.Node("Camera");
         let cmpCam = new f.ComponentCamera();
         camera.addComponent(cmpCam);
-        cmpCam.pivot.translateZ(10);
+        cmpCam.pivot.translateZ(5);
         cmpCam.pivot.lookAt(f.Vector3.ZERO());
-        cmpCam.pivot.translateY(2);
+        cmpCam.pivot.translateY(1);
         cmpCam.backgroundColor = f.Color.CSS("grey");
         mover.appendChild(camera);
         let cmpLightAmbient = new f.ComponentLight(new f.LightAmbient(f.Color.CSS("WHITE")));
@@ -45,7 +49,7 @@ var EscapeTheEdge;
         cmpLight.pivot.translate(new f.Vector3(0, 0, 10));
         cmpLight.pivot.lookAt(new f.Vector3(0, 0, 0));
         light.addComponent(cmpLight);
-        mover.appendChild(light);
+        // mover.appendChild(light);
         EscapeTheEdge.viewport = new f.Viewport();
         EscapeTheEdge.viewport.initialize("Viewport", EscapeTheEdge.rootNode, camera.getComponent(f.ComponentCamera), _canvas);
         //starting game
@@ -59,20 +63,30 @@ var EscapeTheEdge;
     function createLevel() {
         let level = new f.Node("Level");
         let floor = new EscapeTheEdge.Floor();
-        floor.cmpTransform.local.scaleY(0.2);
+        floor = new EscapeTheEdge.Floor();
+        floor.cmpTransform.local.scaleY(1);
+        floor.cmpTransform.local.scaleX(3);
+        // floor.cmpTransform.local.translateY(0);
+        // floor.cmpTransform.local.translateX(1.5);
         level.appendChild(floor);
         floor = new EscapeTheEdge.Floor();
-        floor.cmpTransform.local.scaleY(0.2);
-        floor.cmpTransform.local.scaleX(10);
-        floor.cmpTransform.local.translateY(0.2);
-        floor.cmpTransform.local.translateX(1.5);
+        floor.cmpTransform.local.scaleX(1);
+        floor.cmpTransform.local.translateY(3.5);
         level.appendChild(floor);
+        floor = new EscapeTheEdge.Floor();
+        floor.cmpTransform.local.scaleX(2);
+        floor.cmpTransform.local.translateY(1);
+        floor.cmpTransform.local.translateX(2);
+        // rootNode.appendChild(floor);
         return level;
     }
     function update() {
         processInput();
-        // bobo.broadcastEvent(new CustomEvent("showNext"));
+        // mover.cmpTransform.local.translation.x = bobo.cmpTransform.local.translation.x;
         EscapeTheEdge.viewport.draw();
+        f.RenderManager.update();
+        crc2.strokeRect(-1, -1, canvas.width / 2, canvas.height + 2);
+        crc2.strokeRect(-1, 550, canvas.width + 2, canvas.height);
     } //close update
     function handleKeyboard(_event) {
         keysPressed[_event.code] = (_event.type == "keydown");
