@@ -22,6 +22,7 @@ var EscapeTheEdge;
     class Bobo extends EscapeTheEdge.Moveable {
         constructor(_name = "Bobo") {
             super(_name);
+            this.mana = 100;
             // private static sprites: Sprite[];
             this.speedMax = new f.Vector2(1.5, 5); // units per second
             // private static gravity: f.Vector2 = f.Vector2.Y(-3);
@@ -29,14 +30,23 @@ var EscapeTheEdge;
             // private time: f.Time = new f.Time();
             // public speed: f.Vector3 = f.Vector3.ZERO();
             this.size = SIZE.MEDIUM;
-            this.scale = new f.Vector3(1, 1, 1);
             this.update = (_event) => {
                 this.broadcastEvent(new CustomEvent("showNext"));
                 let timeFrame = f.Loop.timeFrameGame / 1000;
                 this.speed.y += Bobo.gravity.y * timeFrame;
                 let distance = f.Vector3.SCALE(this.speed, timeFrame);
                 this.cmpTransform.local.translate(distance);
-                // console.log(this.speed.y);
+                //mana abzeihen für größe
+                if (this.size != SIZE.MEDIUM) {
+                    this.mana -= 5;
+                }
+                if (this.mana < 0) {
+                    this.mana = 0;
+                }
+                else if (this.mana > 100) {
+                    this.mana = 100;
+                }
+                console.log(this.mana);
                 this.checkCollision(distance);
             }; //close update
             this.addComponent(new f.ComponentTransform());
@@ -57,7 +67,7 @@ var EscapeTheEdge;
             sprite = new EscapeTheEdge.Sprite(ACTION.IDLE);
             sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 18, 17, 17), 7, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
             Bobo.sprites.push(sprite);
-        }
+        } //close generate Sprites
         act(_action, _direction) {
             switch (_action) {
                 case ACTION.IDLE:
@@ -71,12 +81,16 @@ var EscapeTheEdge;
                     break;
                 case ACTION.JUMP:
                     // if (this.speed.y == 0) //für kein doppelSprung
+                    console.log(this.speedMax.y);
                     this.speed.y = 2;
                     break;
             }
             this.show(_action);
         } //close act
         toSize(_size) {
+            if (this.mana <= 0) {
+                _size = SIZE.MEDIUM;
+            }
             this.size = _size;
             console.log(this.size);
             switch (_size) {
@@ -90,10 +104,10 @@ var EscapeTheEdge;
                     break;
                 case SIZE.BIG:
                     this.cmpTransform.local.scaling = new f.Vector3(1.5, 1.5, 1);
-                    this.speedMax = new f.Vector2(0.5, 4);
+                    this.speedMax = new f.Vector2(0.5, 10);
                     break;
             }
-        }
+        } //close toSize
     } //close class
     EscapeTheEdge.Bobo = Bobo;
 })(EscapeTheEdge || (EscapeTheEdge = {})); //close namespace

@@ -17,6 +17,7 @@ namespace EscapeTheEdge {
     }
 
     export class Bobo extends Moveable {
+        protected mana: number = 100;
         // private static sprites: Sprite[];
         private speedMax: f.Vector2 = new f.Vector2(1.5, 5); // units per second
         // private static gravity: f.Vector2 = f.Vector2.Y(-3);
@@ -24,7 +25,7 @@ namespace EscapeTheEdge {
         // private time: f.Time = new f.Time();
         // public speed: f.Vector3 = f.Vector3.ZERO();
         private size: SIZE = SIZE.MEDIUM;
-        private scale: f.Vector3 = new f.Vector3(1, 1, 1);
+
 
         constructor(_name: string = "Bobo") {
             super(_name);
@@ -56,7 +57,7 @@ namespace EscapeTheEdge {
             sprite = new Sprite(ACTION.IDLE);
             sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 18, 17, 17), 7, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
             Bobo.sprites.push(sprite);
-        }
+        } //close generate Sprites
 
         public act(_action: ACTION, _direction?: DIRECTION): void {
             switch (_action) {
@@ -71,6 +72,7 @@ namespace EscapeTheEdge {
                     break;
                 case ACTION.JUMP:
                     // if (this.speed.y == 0) //für kein doppelSprung
+                    console.log(this.speedMax.y);
                     this.speed.y = 2;
                     break;
             }
@@ -78,6 +80,9 @@ namespace EscapeTheEdge {
         } //close act
 
         public toSize(_size: SIZE): void {
+            if (this.mana <= 0) {
+                _size = SIZE.MEDIUM;
+            }
             this.size = _size;
             console.log(this.size);
             switch (_size) {
@@ -91,12 +96,11 @@ namespace EscapeTheEdge {
                     break;
                 case SIZE.BIG:
                     this.cmpTransform.local.scaling = new f.Vector3(1.5, 1.5, 1);
-                    this.speedMax = new f.Vector2(0.5, 4);
+                    this.speedMax = new f.Vector2(0.5, 10);
                     break;
-
-
             }
-        }
+
+        } //close toSize
 
         protected update = (_event: f.Eventƒ): void => {
             this.broadcastEvent(new CustomEvent("showNext"));
@@ -106,7 +110,18 @@ namespace EscapeTheEdge {
             let distance: f.Vector3 = f.Vector3.SCALE(this.speed, timeFrame);
             this.cmpTransform.local.translate(distance);
 
-            // console.log(this.speed.y);
+            //mana abzeihen für größe
+            if (this.size != SIZE.MEDIUM) {
+                this.mana -= 5;
+
+            }
+            if (this.mana < 0) {
+                this.mana = 0;
+            } else if (this.mana > 100) {
+                this.mana = 100;
+            }
+            console.log(this.mana);
+
             this.checkCollision(distance);
         } //close update
 
