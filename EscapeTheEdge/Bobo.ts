@@ -77,7 +77,7 @@ namespace EscapeTheEdge {
             let distance: f.Vector3 = f.Vector3.SCALE(this.speed, timeFrame);
             this.cmpTransform.local.translate(distance);
 
-            console.log(this.speed.y);
+            // console.log(this.speed.y);
             this.checkCollision(distance);
         } //close update
 

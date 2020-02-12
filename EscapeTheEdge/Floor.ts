@@ -50,8 +50,8 @@ namespace EscapeTheEdge {
         }
         public getRectBottomWorld(): f.Rectangle {
             let rect: f.Rectangle = f.Rectangle.GET(0, 0, 100, 100);
-            let topleft: f.Vector3 = new f.Vector3(-0.5, -0.4, 0);
-            let bottomright: f.Vector3 = new f.Vector3(0.5, -0.5, 0);
+            let topleft: f.Vector3 = new f.Vector3(-0.4, -0.2, 0);
+            let bottomright: f.Vector3 = new f.Vector3(0.4, -0.5, 0);
 
             //let pivot: f.Matrix4x4 = this.getComponent(f.ComponentMesh).pivot;
             let mtxResult: f.Matrix4x4 = f.Matrix4x4.MULTIPLICATION(this.mtxWorld, Floor.pivot);

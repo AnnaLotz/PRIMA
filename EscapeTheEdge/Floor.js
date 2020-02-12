@@ -40,8 +40,8 @@ var EscapeTheEdge;
         }
         getRectBottomWorld() {
             let rect = f.Rectangle.GET(0, 0, 100, 100);
-            let topleft = new f.Vector3(-0.5, -0.4, 0);
-            let bottomright = new f.Vector3(0.5, -0.5, 0);
+            let topleft = new f.Vector3(-0.4, -0.2, 0);
+            let bottomright = new f.Vector3(0.4, -0.5, 0);
             //let pivot: f.Matrix4x4 = this.getComponent(f.ComponentMesh).pivot;
             let mtxResult = f.Matrix4x4.MULTIPLICATION(this.mtxWorld, Floor.pivot);
             topleft.transform(mtxResult, true);

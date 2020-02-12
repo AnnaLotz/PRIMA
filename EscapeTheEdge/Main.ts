@@ -141,7 +141,7 @@ namespace EscapeTheEdge {
         keysPressed[_event.code] = (_event.type == "keydown");
         if (_event.code == f.KEYBOARD_CODE.SPACE && _event.type == "keydown")
             bobo.act(ACTION.JUMP);
-        console.log(_event.code);
+        // console.log(_event.code);
     } //close handleKeyboard
 
     function processInput(): void {
