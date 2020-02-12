@@ -62,6 +62,7 @@ namespace EscapeTheEdge {
                     // console.log(direction);
                     break;
                 case ACTION.JUMP:
+                    // if (this.speed.y == 0) //für kein doppelSprung
                     this.speed.y = 2;
                     break;
             }

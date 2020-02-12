@@ -13,6 +13,7 @@ namespace EscapeTheEdge {
     let crc2: CanvasRenderingContext2D;
     let canvas: HTMLCanvasElement;
 
+    let cmpCam: f.ComponentCamera;
 
     interface KeyPressed {
         [code: string]: boolean;
@@ -37,9 +38,10 @@ namespace EscapeTheEdge {
         mover = new f.Node("Mover");
         characters = new f.Node("Characters");
         level = createLevel();
-        rootNode.appendChild(mover);
-        rootNode.appendChild(characters);
         rootNode.appendChild(level);
+        rootNode.appendChild(mover);
+        // rootNode.appendChild(characters);
+
 
         mover.addComponent(new f.ComponentTransform());
 
@@ -49,7 +51,7 @@ namespace EscapeTheEdge {
         txtBobo.image = img;
         Bobo.generateSprites(txtBobo);
         bobo = new Bobo("Bobo");
-        characters.appendChild(bobo);
+        rootNode.appendChild(bobo);
 
 
 
@@ -57,13 +59,14 @@ namespace EscapeTheEdge {
 
 
         let camera: f.Node = new f.Node("Camera");
-        let cmpCam: f.ComponentCamera = new f.ComponentCamera();
+        cmpCam = new f.ComponentCamera();
         camera.addComponent(cmpCam);
         cmpCam.pivot.translateZ(5);
         cmpCam.pivot.lookAt(f.Vector3.ZERO());
         cmpCam.pivot.translateY(1);
         cmpCam.backgroundColor = f.Color.CSS("grey");
         mover.appendChild(camera);
+
 
         let cmpLightAmbient: f.ComponentLight = new f.ComponentLight(new f.LightAmbient(f.Color.CSS("WHITE")));
         rootNode.addComponent(cmpLightAmbient);
@@ -74,6 +77,7 @@ namespace EscapeTheEdge {
         cmpLight.pivot.translate(new f.Vector3(0, 0, 10));
         cmpLight.pivot.lookAt(new f.Vector3(0, 0, 0));
         light.addComponent(cmpLight);
+        rootNode.appendChild(light);
         // mover.appendChild(light);
 
         viewport = new f.Viewport();
@@ -122,11 +126,10 @@ namespace EscapeTheEdge {
     function update(): void {
         processInput();
 
-        // mover.cmpTransform.local.translation.x = bobo.cmpTransform.local.translation.x;
-       
-        
+        // mover.cmpTransform.local.translation.set = new f.Vector3(bobo.cmpTransform.local.translation.x, 0, 0);
+        // mover.mtxWorld.translation.x = bobo.cmpTransform.local.translation.x;
 
-        
+        updateCamera();
 
         viewport.draw();
         f.RenderManager.update();
@@ -134,6 +137,12 @@ namespace EscapeTheEdge {
         crc2.strokeRect(-1, 550, canvas.width + 2, canvas.height);
 
     }//close update
+
+    function updateCamera(): void {
+        let camPos: f.Vector3 = mover.getChildrenByName("Camera")[0].getComponent(f.ComponentCamera).pivot.translation;
+        let boboPos: f.Vector3 = bobo.cmpTransform.local.translation;
+        cmpCam.pivot.translation = new f.Vector3(boboPos.x, boboPos.y / 2 + 1, camPos.z);
+    }
 
     function handleKeyboard(_event: KeyboardEvent): void {
         keysPressed[_event.code] = (_event.type == "keydown");
@@ -145,6 +154,7 @@ namespace EscapeTheEdge {
     function processInput(): void {
         if (keysPressed[f.KEYBOARD_CODE.A]) {
             bobo.act(ACTION.WALK, DIRECTION.LEFT);
+            // mover.cmpTransform.local.translation.set
             return;
         }
         if (keysPressed[f.KEYBOARD_CODE.D]) {
@@ -153,5 +163,7 @@ namespace EscapeTheEdge {
         }
 
         bobo.act(ACTION.IDLE);
+        
+
     } //close processInput
 } //close Namespace
