@@ -38,7 +38,8 @@ var EscapeTheEdge;
                 this.cmpTransform.local.translate(distance);
                 //mana abzeihen für größe
                 if (this.size != SIZE.MEDIUM) {
-                    this.mana -= 5;
+                    this.mana -= 0.5;
+                    console.log("Mana: " + this.mana);
                 }
                 if (this.mana < 0) {
                     this.mana = 0;
@@ -46,7 +47,6 @@ var EscapeTheEdge;
                 else if (this.mana > 100) {
                     this.mana = 100;
                 }
-                console.log(this.mana);
                 this.checkCollision(distance);
             }; //close update
             this.addComponent(new f.ComponentTransform());
@@ -81,7 +81,6 @@ var EscapeTheEdge;
                     break;
                 case ACTION.JUMP:
                     // if (this.speed.y == 0) //für kein doppelSprung
-                    console.log(this.speedMax.y);
                     this.speed.y = 2;
                     break;
             }
@@ -92,14 +91,14 @@ var EscapeTheEdge;
                 _size = SIZE.MEDIUM;
             }
             this.size = _size;
-            console.log(this.size);
+            // console.log(this.size);
             switch (_size) {
                 case SIZE.MEDIUM:
                     this.cmpTransform.local.scaling = new f.Vector3(1, 1, 1);
                     this.speedMax = new f.Vector2(1, 2);
                     break;
                 case SIZE.SMALL:
-                    this.cmpTransform.local.scaling = new f.Vector3(0.5, 0.5, 1);
+                    this.cmpTransform.local.scaling = new f.Vector3(0.6, 0.6, 1);
                     this.speedMax = new f.Vector2(5, 1);
                     break;
                 case SIZE.BIG:
@@ -108,6 +107,11 @@ var EscapeTheEdge;
                     break;
             }
         } //close toSize
+        shoot(_direction) {
+            console.log("shoot " + _direction);
+            this.bullet = new EscapeTheEdge.BoboBullet(_direction);
+            EscapeTheEdge.items.appendChild(this.bullet);
+        } //close shoot
     } //close class
     EscapeTheEdge.Bobo = Bobo;
 })(EscapeTheEdge || (EscapeTheEdge = {})); //close namespace

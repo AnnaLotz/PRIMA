@@ -17,7 +17,9 @@ namespace EscapeTheEdge {
     }
 
     export class Bobo extends Moveable {
+        public bullet: BoboBullet;
         protected mana: number = 100;
+        
         // private static sprites: Sprite[];
         private speedMax: f.Vector2 = new f.Vector2(1.5, 5); // units per second
         // private static gravity: f.Vector2 = f.Vector2.Y(-3);
@@ -72,7 +74,6 @@ namespace EscapeTheEdge {
                     break;
                 case ACTION.JUMP:
                     // if (this.speed.y == 0) //für kein doppelSprung
-                    console.log(this.speedMax.y);
                     this.speed.y = 2;
                     break;
             }
@@ -84,14 +85,14 @@ namespace EscapeTheEdge {
                 _size = SIZE.MEDIUM;
             }
             this.size = _size;
-            console.log(this.size);
+            // console.log(this.size);
             switch (_size) {
                 case SIZE.MEDIUM:
                     this.cmpTransform.local.scaling = new f.Vector3(1, 1, 1);
                     this.speedMax = new f.Vector2(1, 2);
                     break;
                 case SIZE.SMALL:
-                    this.cmpTransform.local.scaling = new f.Vector3(0.5, 0.5, 1);
+                    this.cmpTransform.local.scaling = new f.Vector3(0.6, 0.6, 1);
                     this.speedMax = new f.Vector2(5, 1);
                     break;
                 case SIZE.BIG:
@@ -101,6 +102,12 @@ namespace EscapeTheEdge {
             }
 
         } //close toSize
+
+        public shoot(_direction: number): void {
+            console.log("shoot " + _direction);
+            this.bullet = new BoboBullet(_direction);
+            items.appendChild(this.bullet);
+        } //close shoot
 
         protected update = (_event: f.Eventƒ): void => {
             this.broadcastEvent(new CustomEvent("showNext"));
@@ -112,19 +119,19 @@ namespace EscapeTheEdge {
 
             //mana abzeihen für größe
             if (this.size != SIZE.MEDIUM) {
-                this.mana -= 5;
-
+                this.mana -= 0.5;
+                console.log("Mana: " + this.mana);
             }
             if (this.mana < 0) {
                 this.mana = 0;
             } else if (this.mana > 100) {
                 this.mana = 100;
             }
-            console.log(this.mana);
 
             this.checkCollision(distance);
         } //close update
 
+        
 
     } //close class
 

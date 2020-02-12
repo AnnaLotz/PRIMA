@@ -5,8 +5,8 @@ var EscapeTheEdge;
 (function (EscapeTheEdge) {
     var f = FudgeCore;
     let mover;
-    let characters;
-    let bobo;
+    let enemy;
+    // let boboBullet: BoboBullet;
     let crc2;
     let canvas;
     let keysPressed = {};
@@ -19,20 +19,26 @@ var EscapeTheEdge;
     function startGame(_canvas) {
         EscapeTheEdge.rootNode = new f.Node("RootNode");
         mover = new f.Node("Mover");
-        characters = new f.Node("Characters");
+        EscapeTheEdge.items = new f.Node("Items");
+        EscapeTheEdge.characters = new f.Node("Characters");
         EscapeTheEdge.level = createLevel();
         EscapeTheEdge.rootNode.appendChild(EscapeTheEdge.level);
         EscapeTheEdge.rootNode.appendChild(mover);
-        EscapeTheEdge.rootNode.appendChild(characters);
+        EscapeTheEdge.rootNode.appendChild(EscapeTheEdge.characters);
+        EscapeTheEdge.rootNode.appendChild(EscapeTheEdge.items);
         mover.addComponent(new f.ComponentTransform());
         crc2 = _canvas.getContext("2d");
         let img = document.querySelector("img");
-        let txtBobo = new f.TextureImage();
-        txtBobo.image = img;
-        EscapeTheEdge.Bobo.generateSprites(txtBobo);
-        bobo = new EscapeTheEdge.Bobo("Bobo");
-        characters.appendChild(bobo);
-        // bobo.appendChild(mover);
+        let txtFigures = new f.TextureImage();
+        txtFigures.image = img;
+        EscapeTheEdge.Bobo.generateSprites(txtFigures);
+        EscapeTheEdge.bobo = new EscapeTheEdge.Bobo("Bobo");
+        EscapeTheEdge.characters.appendChild(EscapeTheEdge.bobo);
+        EscapeTheEdge.Enemy.generateSprites(txtFigures);
+        enemy = new EscapeTheEdge.Enemy("Enemy");
+        EscapeTheEdge.characters.appendChild(enemy);
+        enemy.cmpTransform.local.translateX(-1.5);
+        EscapeTheEdge.BoboBullet.generateSprites(txtFigures);
         let camera = new f.Node("Camera");
         let cmpCam = new f.ComponentCamera();
         camera.addComponent(cmpCam);
@@ -66,7 +72,7 @@ var EscapeTheEdge;
         let floor = new EscapeTheEdge.Floor();
         floor = new EscapeTheEdge.Floor();
         floor.cmpTransform.local.scaleY(1);
-        floor.cmpTransform.local.scaleX(3);
+        floor.cmpTransform.local.scaleX(10);
         // floor.cmpTransform.local.translateY(0);
         // floor.cmpTransform.local.translateX(1.5);
         level.appendChild(floor);
@@ -76,48 +82,52 @@ var EscapeTheEdge;
         level.appendChild(floor);
         floor = new EscapeTheEdge.Floor();
         floor.cmpTransform.local.scaleX(2);
-        floor.cmpTransform.local.translateY(1);
+        floor.cmpTransform.local.translateY(0.5);
         floor.cmpTransform.local.translateX(2);
         level.appendChild(floor);
         return level;
-    }
+    } //close createLevel
     function update() {
         processInput();
         updateCamera();
         EscapeTheEdge.viewport.draw();
         f.RenderManager.update();
-        crc2.strokeRect(-1, -1, canvas.width / 2, canvas.height + 2);
-        crc2.strokeRect(-1, 550, canvas.width + 2, canvas.height);
+        // crc2.strokeRect(-1, -1, canvas.width / 2, canvas.height + 2);
+        // crc2.strokeRect(-1, 550, canvas.width + 2, canvas.height);
     } //close update
     function updateCamera() {
         let cmpCam = mover.getChildrenByName("Camera")[0].getComponent(f.ComponentCamera);
-        let boboPos = bobo.cmpTransform.local.translation;
+        let boboPos = EscapeTheEdge.bobo.cmpTransform.local.translation;
         cmpCam.pivot.translation = new f.Vector3(boboPos.x, boboPos.y / 3 + 1, cmpCam.pivot.translation.z);
     } //close updateCamera
     function handleKeyboard(_event) {
         keysPressed[_event.code] = (_event.type == "keydown");
         if (_event.code == f.KEYBOARD_CODE.SPACE && _event.type == "keydown")
-            bobo.act(EscapeTheEdge.ACTION.JUMP);
+            EscapeTheEdge.bobo.act(EscapeTheEdge.ACTION.JUMP);
+        if (_event.code == f.KEYBOARD_CODE.ARROW_LEFT && _event.type == "keydown")
+            EscapeTheEdge.bobo.shoot(-1);
+        if (_event.code == f.KEYBOARD_CODE.ARROW_RIGHT && _event.type == "keydown")
+            EscapeTheEdge.bobo.shoot(1);
         // console.log(_event.code);
     } //close handleKeyboard
     function processInput() {
         if (keysPressed[f.KEYBOARD_CODE.ARROW_DOWN]) {
-            bobo.toSize(EscapeTheEdge.SIZE.SMALL);
+            EscapeTheEdge.bobo.toSize(EscapeTheEdge.SIZE.SMALL);
         }
         else if (keysPressed[f.KEYBOARD_CODE.ARROW_UP]) {
-            bobo.toSize(EscapeTheEdge.SIZE.BIG);
+            EscapeTheEdge.bobo.toSize(EscapeTheEdge.SIZE.BIG);
         }
         else {
-            bobo.toSize(EscapeTheEdge.SIZE.MEDIUM);
+            EscapeTheEdge.bobo.toSize(EscapeTheEdge.SIZE.MEDIUM);
         }
         if (keysPressed[f.KEYBOARD_CODE.A]) {
-            bobo.act(EscapeTheEdge.ACTION.WALK, EscapeTheEdge.DIRECTION.LEFT);
+            EscapeTheEdge.bobo.act(EscapeTheEdge.ACTION.WALK, EscapeTheEdge.DIRECTION.LEFT);
         }
         else if (keysPressed[f.KEYBOARD_CODE.D]) {
-            bobo.act(EscapeTheEdge.ACTION.WALK, EscapeTheEdge.DIRECTION.RIGHT);
+            EscapeTheEdge.bobo.act(EscapeTheEdge.ACTION.WALK, EscapeTheEdge.DIRECTION.RIGHT);
         }
         else {
-            bobo.act(EscapeTheEdge.ACTION.IDLE);
+            EscapeTheEdge.bobo.act(EscapeTheEdge.ACTION.IDLE);
         }
     } //close processInput
 })(EscapeTheEdge || (EscapeTheEdge = {})); //close Namespace

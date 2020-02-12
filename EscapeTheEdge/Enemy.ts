@@ -17,8 +17,7 @@ namespace EscapeTheEdge {
         // private action: ACTION;
         // private time: f.Time = new f.Time();
         // public speed: f.Vector3 = f.Vector3.ZERO();
-
-        constructor(_name: string = "Bobo") {
+        constructor(_name: string = "Enemy") {
             super(_name);
             this.addComponent(new f.ComponentTransform());
 
@@ -35,6 +34,7 @@ namespace EscapeTheEdge {
                 this.appendChild(nodeSprite);
             }
 
+            this.cmpTransform.local.scaling = new f.Vector3(1, 1, 1);
             this.show(ACTION.IDLE);
             f.Loop.addEventListener(f.EVENT.LOOP_FRAME, this.update);
         } //close constructor
@@ -42,13 +42,13 @@ namespace EscapeTheEdge {
         public static generateSprites(_txtImage: f.TextureImage): void {
             Enemy.sprites = [];
             let sprite: Sprite = new Sprite(ACTION.WALK);
-            sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 54, 17, 14), 6, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
+            sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 54, 17, 13), 6, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
             Enemy.sprites.push(sprite);
 
             sprite = new Sprite(ACTION.IDLE);
-            sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 54, 17, 14), 4, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
+            sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 54, 17, 13), 4, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
             Enemy.sprites.push(sprite); //(1, 68, 17, 14), 2
-        }
+        } //close generateSprites
 
         public act(_action: ACTION, _direction?: DIRECTION): void {
             switch (_action) {

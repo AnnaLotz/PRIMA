@@ -20,7 +20,7 @@ var EscapeTheEdge;
         // private action: ACTION;
         // private time: f.Time = new f.Time();
         // public speed: f.Vector3 = f.Vector3.ZERO();
-        constructor(_name = "Bobo") {
+        constructor(_name = "Enemy") {
             super(_name);
             this.update = (_event) => {
                 this.broadcastEvent(new CustomEvent("showNext"));
@@ -37,18 +37,19 @@ var EscapeTheEdge;
                 nodeSprite.addEventListener("showNext", (_event) => { _event.currentTarget.showFrameNext(); }, true);
                 this.appendChild(nodeSprite);
             }
+            this.cmpTransform.local.scaling = new f.Vector3(1, 1, 1);
             this.show(EscapeTheEdge.ACTION.IDLE);
             f.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, this.update);
         } //close constructor
         static generateSprites(_txtImage) {
             Enemy.sprites = [];
             let sprite = new EscapeTheEdge.Sprite(EscapeTheEdge.ACTION.WALK);
-            sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 54, 17, 14), 6, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
+            sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 54, 17, 13), 6, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
             Enemy.sprites.push(sprite);
             sprite = new EscapeTheEdge.Sprite(EscapeTheEdge.ACTION.IDLE);
-            sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 54, 17, 14), 4, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
+            sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 54, 17, 13), 4, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
             Enemy.sprites.push(sprite); //(1, 68, 17, 14), 2
-        }
+        } //close generateSprites
         act(_action, _direction) {
             switch (_action) {
                 case EscapeTheEdge.ACTION.IDLE:

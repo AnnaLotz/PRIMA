@@ -7,9 +7,12 @@ namespace EscapeTheEdge {
     export let viewport: f.Viewport;
     export let rootNode: f.Node;
     export let level: f.Node;
-    let mover: f.Node;
-    let characters: f.Node;
-    let bobo: Bobo;
+    export let items: f.Node;
+    let mover: f.Node;    
+    export let characters: f.Node;
+    export let bobo: Bobo;
+    let enemy: Enemy;
+    // let boboBullet: BoboBullet;
     let crc2: CanvasRenderingContext2D;
     let canvas: HTMLCanvasElement;
 
@@ -32,26 +35,31 @@ namespace EscapeTheEdge {
 
         rootNode = new f.Node("RootNode");
         mover = new f.Node("Mover");
+        items = new f.Node("Items");
         characters = new f.Node("Characters");
         level = createLevel();
         rootNode.appendChild(level);
         rootNode.appendChild(mover);
         rootNode.appendChild(characters);
+        rootNode.appendChild(items);
 
 
         mover.addComponent(new f.ComponentTransform());
 
         crc2 = _canvas.getContext("2d");
         let img: HTMLImageElement = document.querySelector("img");
-        let txtBobo: f.TextureImage = new f.TextureImage();
-        txtBobo.image = img;
-        Bobo.generateSprites(txtBobo);
+        let txtFigures: f.TextureImage = new f.TextureImage();
+        txtFigures.image = img;
+        Bobo.generateSprites(txtFigures);
         bobo = new Bobo("Bobo");
         characters.appendChild(bobo);
 
+        Enemy.generateSprites(txtFigures);
+        enemy = new Enemy("Enemy");
+        characters.appendChild(enemy);
+        enemy.cmpTransform.local.translateX(-1.5);
 
-
-        // bobo.appendChild(mover);
+        BoboBullet.generateSprites(txtFigures);
 
 
         let camera: f.Node = new f.Node("Camera");
@@ -99,7 +107,7 @@ namespace EscapeTheEdge {
 
         floor = new Floor();
         floor.cmpTransform.local.scaleY(1);
-        floor.cmpTransform.local.scaleX(3);
+        floor.cmpTransform.local.scaleX(10);
         // floor.cmpTransform.local.translateY(0);
         // floor.cmpTransform.local.translateX(1.5);
         level.appendChild(floor);
@@ -111,12 +119,12 @@ namespace EscapeTheEdge {
 
         floor = new Floor();
         floor.cmpTransform.local.scaleX(2);
-        floor.cmpTransform.local.translateY(1);
+        floor.cmpTransform.local.translateY(0.5);
         floor.cmpTransform.local.translateX(2);
         level.appendChild(floor);
 
         return level;
-    }
+    } //close createLevel
 
 
     function update(): void {
@@ -126,9 +134,8 @@ namespace EscapeTheEdge {
 
         viewport.draw();
         f.RenderManager.update();
-        crc2.strokeRect(-1, -1, canvas.width / 2, canvas.height + 2);
-        crc2.strokeRect(-1, 550, canvas.width + 2, canvas.height);
-
+        // crc2.strokeRect(-1, -1, canvas.width / 2, canvas.height + 2);
+        // crc2.strokeRect(-1, 550, canvas.width + 2, canvas.height);
     }//close update
 
     function updateCamera(): void {
@@ -141,6 +148,11 @@ namespace EscapeTheEdge {
         keysPressed[_event.code] = (_event.type == "keydown");
         if (_event.code == f.KEYBOARD_CODE.SPACE && _event.type == "keydown")
             bobo.act(ACTION.JUMP);
+        if (_event.code == f.KEYBOARD_CODE.ARROW_LEFT && _event.type == "keydown")
+            bobo.shoot(-1);
+        if (_event.code == f.KEYBOARD_CODE.ARROW_RIGHT && _event.type == "keydown")
+            bobo.shoot(1); 
+
         // console.log(_event.code);
     } //close handleKeyboard
 
