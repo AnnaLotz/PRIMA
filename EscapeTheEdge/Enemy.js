@@ -28,7 +28,7 @@ var EscapeTheEdge;
                 this.speed.y += Enemy.gravity.y * timeFrame;
                 let distance = f.Vector3.SCALE(this.speed, timeFrame);
                 this.cmpTransform.local.translate(distance);
-                this.checkCollision();
+                this.checkCollision(distance);
             }; //close update
             this.addComponent(new f.ComponentTransform());
             for (let sprite of Enemy.sprites) {

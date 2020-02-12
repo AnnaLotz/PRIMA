@@ -9,7 +9,6 @@ var EscapeTheEdge;
     let bobo;
     let crc2;
     let canvas;
-    let cmpCam;
     let keysPressed = {};
     window.addEventListener("load", init);
     function init(_event) {
@@ -24,7 +23,7 @@ var EscapeTheEdge;
         EscapeTheEdge.level = createLevel();
         EscapeTheEdge.rootNode.appendChild(EscapeTheEdge.level);
         EscapeTheEdge.rootNode.appendChild(mover);
-        // rootNode.appendChild(characters);
+        EscapeTheEdge.rootNode.appendChild(characters);
         mover.addComponent(new f.ComponentTransform());
         crc2 = _canvas.getContext("2d");
         let img = document.querySelector("img");
@@ -32,10 +31,10 @@ var EscapeTheEdge;
         txtBobo.image = img;
         EscapeTheEdge.Bobo.generateSprites(txtBobo);
         bobo = new EscapeTheEdge.Bobo("Bobo");
-        EscapeTheEdge.rootNode.appendChild(bobo);
+        characters.appendChild(bobo);
         // bobo.appendChild(mover);
         let camera = new f.Node("Camera");
-        cmpCam = new f.ComponentCamera();
+        let cmpCam = new f.ComponentCamera();
         camera.addComponent(cmpCam);
         cmpCam.pivot.translateZ(5);
         cmpCam.pivot.lookAt(f.Vector3.ZERO());
@@ -79,13 +78,11 @@ var EscapeTheEdge;
         floor.cmpTransform.local.scaleX(2);
         floor.cmpTransform.local.translateY(1);
         floor.cmpTransform.local.translateX(2);
-        // rootNode.appendChild(floor);
+        level.appendChild(floor);
         return level;
     }
     function update() {
         processInput();
-        // mover.cmpTransform.local.translation.set = new f.Vector3(bobo.cmpTransform.local.translation.x, 0, 0);
-        // mover.mtxWorld.translation.x = bobo.cmpTransform.local.translation.x;
         updateCamera();
         EscapeTheEdge.viewport.draw();
         f.RenderManager.update();
@@ -93,16 +90,16 @@ var EscapeTheEdge;
         crc2.strokeRect(-1, 550, canvas.width + 2, canvas.height);
     } //close update
     function updateCamera() {
-        let camPos = mover.getChildrenByName("Camera")[0].getComponent(f.ComponentCamera).pivot.translation;
+        let cmpCam = mover.getChildrenByName("Camera")[0].getComponent(f.ComponentCamera);
         let boboPos = bobo.cmpTransform.local.translation;
-        cmpCam.pivot.translation = new f.Vector3(boboPos.x, boboPos.y / 2 + 1, camPos.z);
-    }
+        cmpCam.pivot.translation = new f.Vector3(boboPos.x, boboPos.y / 3 + 1, cmpCam.pivot.translation.z);
+    } //close updateCamera
     function handleKeyboard(_event) {
         keysPressed[_event.code] = (_event.type == "keydown");
         if (_event.code == f.KEYBOARD_CODE.SPACE && _event.type == "keydown")
             bobo.act(EscapeTheEdge.ACTION.JUMP);
         console.log(_event.code);
-    }
+    } //close handleKeyboard
     function processInput() {
         if (keysPressed[f.KEYBOARD_CODE.A]) {
             bobo.act(EscapeTheEdge.ACTION.WALK, EscapeTheEdge.DIRECTION.LEFT);

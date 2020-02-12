@@ -14,7 +14,7 @@ var EscapeTheEdge;
                 // this.speed.y += Bobo.gravity.y * timeFrame;
                 let distance = f.Vector3.SCALE(this.speed, timeFrame);
                 this.cmpTransform.local.translate(distance);
-                this.checkCollision();
+                this.checkCollision(distance);
             }; //close update
         } //close constructor
         show(_action) {
@@ -24,21 +24,39 @@ var EscapeTheEdge;
                 child.activate(child.name == _action);
             // this.action = _action;
         }
-        checkCollision() {
+        checkCollision(_distance) {
             for (let floor of EscapeTheEdge.level.getChildren()) {
                 let rect = floor.getRectWorld();
                 //console.log(rect.toString());
                 let hit = rect.isInside(this.cmpTransform.local.translation.toVector2());
                 if (hit) {
-                    let translation = this.cmpTransform.local.translation;
-                    translation.y = rect.y;
-                    this.cmpTransform.local.translation = translation;
-                    this.speed.y = 0;
+                    //rect Oberfläche prüfen:
+                    let rectTop = floor.getRectTopWorld();
+                    let hitTop = rectTop.isInside(this.cmpTransform.local.translation.toVector2());
+                    let rectBottom = floor.getRectBottomWorld();
+                    let hitBottom = rectBottom.isInside(this.cmpTransform.local.translation.toVector2());
+                    // console.log(hitBottom);
+                    if (hitTop) {
+                        if (this.speed.y < -0.01) {
+                            let translation = this.cmpTransform.local.translation;
+                            translation.y = rect.y;
+                            this.cmpTransform.local.translation = translation;
+                            this.speed.y = 0;
+                        }
+                    }
+                    else if (hitBottom) {
+                        // let translation: f.Vector3 = this.cmpTransform.local.translation;
+                        // translation.y = rect.y;
+                        // this.cmpTransform.local.translation = translation;
+                    }
+                    else {
+                        this.cmpTransform.local.translateX(-_distance.x);
+                    }
                 }
             }
         } //close checkCollision
     } //close class
-    Moveable.speedMax = new f.Vector2(1.5, 5); // units per second
+    Moveable.speedMax = new f.Vector2(1.5, 3); // units per second
     Moveable.gravity = f.Vector2.Y(-3);
     EscapeTheEdge.Moveable = Moveable;
 })(EscapeTheEdge || (EscapeTheEdge = {})); //close namespace
