@@ -35,7 +35,7 @@ var EscapeTheEdge;
                     let hitTop = rectTop.isInside(this.cmpTransform.local.translation.toVector2());
                     let rectBottom = floor.getRectBottomWorld();
                     let hitBottom = rectBottom.isInside(this.cmpTransform.local.translation.toVector2());
-                    console.log(hitBottom);
+                    // console.log(hitBottom);
                     if (hitTop) {
                         if (this.speed.y < -0.01) {
                             let translation = this.cmpTransform.local.translation;
@@ -45,11 +45,6 @@ var EscapeTheEdge;
                         }
                     }
                     else if (hitBottom) {
-                        // let translation: f.Vector3 = this.cmpTransform.local.translation;
-                        // console.log(rectBottom.y);
-                        // console.log(rectBottom.height);
-                        // translation.y = rectBottom.y - rectBottom.size.y;
-                        // this.cmpTransform.local.translation = translation;
                         this.cmpTransform.local.translateY(-_distance.y - 0.2);
                         this.speed.y = 0;
                     }

@@ -6,17 +6,25 @@ namespace EscapeTheEdge {
         WALK = "Walk",
         JUMP = "Jump"
     }
+
+    export enum SIZE {
+        SMALL = "Small",
+        MEDIUM = "Medium",
+        BIG = "Big"
+    }
     export enum DIRECTION {
         LEFT, RIGHT
     }
 
     export class Bobo extends Moveable {
         // private static sprites: Sprite[];
-        // private static speedMax: f.Vector2 = new f.Vector2(1.5, 5); // units per second
+        private speedMax: f.Vector2 = new f.Vector2(1.5, 5); // units per second
         // private static gravity: f.Vector2 = f.Vector2.Y(-3);
         // private action: ACTION;
         // private time: f.Time = new f.Time();
         // public speed: f.Vector3 = f.Vector3.ZERO();
+        private size: SIZE = SIZE.MEDIUM;
+        private scale: f.Vector3 = new f.Vector3(1, 1, 1);
 
         constructor(_name: string = "Bobo") {
             super(_name);
@@ -57,7 +65,7 @@ namespace EscapeTheEdge {
                     break;
                 case ACTION.WALK:
                     let direction: number = (_direction == DIRECTION.RIGHT ? 1 : -1);
-                    this.speed.x = Bobo.speedMax.x; // * direction;
+                    this.speed.x = this.speedMax.x; // * direction;
                     this.cmpTransform.local.rotation = f.Vector3.Y(90 - 90 * direction);
                     // console.log(direction);
                     break;
@@ -68,6 +76,27 @@ namespace EscapeTheEdge {
             }
             this.show(_action);
         } //close act
+
+        public toSize(_size: SIZE): void {
+            this.size = _size;
+            console.log(this.size);
+            switch (_size) {
+                case SIZE.MEDIUM:
+                    this.cmpTransform.local.scaling = new f.Vector3(1, 1, 1);
+                    this.speedMax = new f.Vector2(1, 2);
+                    break;
+                case SIZE.SMALL:
+                    this.cmpTransform.local.scaling = new f.Vector3(0.5, 0.5, 1);
+                    this.speedMax = new f.Vector2(5, 1);
+                    break;
+                case SIZE.BIG:
+                    this.cmpTransform.local.scaling = new f.Vector3(1.5, 1.5, 1);
+                    this.speedMax = new f.Vector2(0.5, 4);
+                    break;
+
+
+            }
+        }
 
         protected update = (_event: f.Eventƒ): void => {
             this.broadcastEvent(new CustomEvent("showNext"));

@@ -101,16 +101,24 @@ var EscapeTheEdge;
         // console.log(_event.code);
     } //close handleKeyboard
     function processInput() {
+        if (keysPressed[f.KEYBOARD_CODE.ARROW_DOWN]) {
+            bobo.toSize(EscapeTheEdge.SIZE.SMALL);
+        }
+        else if (keysPressed[f.KEYBOARD_CODE.ARROW_UP]) {
+            bobo.toSize(EscapeTheEdge.SIZE.BIG);
+        }
+        else {
+            bobo.toSize(EscapeTheEdge.SIZE.MEDIUM);
+        }
         if (keysPressed[f.KEYBOARD_CODE.A]) {
             bobo.act(EscapeTheEdge.ACTION.WALK, EscapeTheEdge.DIRECTION.LEFT);
-            // mover.cmpTransform.local.translation.set
-            return;
         }
-        if (keysPressed[f.KEYBOARD_CODE.D]) {
+        else if (keysPressed[f.KEYBOARD_CODE.D]) {
             bobo.act(EscapeTheEdge.ACTION.WALK, EscapeTheEdge.DIRECTION.RIGHT);
-            return;
         }
-        bobo.act(EscapeTheEdge.ACTION.IDLE);
+        else {
+            bobo.act(EscapeTheEdge.ACTION.IDLE);
+        }
     } //close processInput
 })(EscapeTheEdge || (EscapeTheEdge = {})); //close Namespace
 //# sourceMappingURL=Main.js.map

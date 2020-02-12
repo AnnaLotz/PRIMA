@@ -8,20 +8,28 @@ var EscapeTheEdge;
         ACTION["WALK"] = "Walk";
         ACTION["JUMP"] = "Jump";
     })(ACTION = EscapeTheEdge.ACTION || (EscapeTheEdge.ACTION = {}));
+    let SIZE;
+    (function (SIZE) {
+        SIZE["SMALL"] = "Small";
+        SIZE["MEDIUM"] = "Medium";
+        SIZE["BIG"] = "Big";
+    })(SIZE = EscapeTheEdge.SIZE || (EscapeTheEdge.SIZE = {}));
     let DIRECTION;
     (function (DIRECTION) {
         DIRECTION[DIRECTION["LEFT"] = 0] = "LEFT";
         DIRECTION[DIRECTION["RIGHT"] = 1] = "RIGHT";
     })(DIRECTION = EscapeTheEdge.DIRECTION || (EscapeTheEdge.DIRECTION = {}));
     class Bobo extends EscapeTheEdge.Moveable {
-        // private static sprites: Sprite[];
-        // private static speedMax: f.Vector2 = new f.Vector2(1.5, 5); // units per second
-        // private static gravity: f.Vector2 = f.Vector2.Y(-3);
-        // private action: ACTION;
-        // private time: f.Time = new f.Time();
-        // public speed: f.Vector3 = f.Vector3.ZERO();
         constructor(_name = "Bobo") {
             super(_name);
+            // private static sprites: Sprite[];
+            this.speedMax = new f.Vector2(1.5, 5); // units per second
+            // private static gravity: f.Vector2 = f.Vector2.Y(-3);
+            // private action: ACTION;
+            // private time: f.Time = new f.Time();
+            // public speed: f.Vector3 = f.Vector3.ZERO();
+            this.size = SIZE.MEDIUM;
+            this.scale = new f.Vector3(1, 1, 1);
             this.update = (_event) => {
                 this.broadcastEvent(new CustomEvent("showNext"));
                 let timeFrame = f.Loop.timeFrameGame / 1000;
@@ -57,7 +65,7 @@ var EscapeTheEdge;
                     break;
                 case ACTION.WALK:
                     let direction = (_direction == DIRECTION.RIGHT ? 1 : -1);
-                    this.speed.x = Bobo.speedMax.x; // * direction;
+                    this.speed.x = this.speedMax.x; // * direction;
                     this.cmpTransform.local.rotation = f.Vector3.Y(90 - 90 * direction);
                     // console.log(direction);
                     break;
@@ -68,6 +76,24 @@ var EscapeTheEdge;
             }
             this.show(_action);
         } //close act
+        toSize(_size) {
+            this.size = _size;
+            console.log(this.size);
+            switch (_size) {
+                case SIZE.MEDIUM:
+                    this.cmpTransform.local.scaling = new f.Vector3(1, 1, 1);
+                    this.speedMax = new f.Vector2(1, 2);
+                    break;
+                case SIZE.SMALL:
+                    this.cmpTransform.local.scaling = new f.Vector3(0.5, 0.5, 1);
+                    this.speedMax = new f.Vector2(5, 1);
+                    break;
+                case SIZE.BIG:
+                    this.cmpTransform.local.scaling = new f.Vector3(1.5, 1.5, 1);
+                    this.speedMax = new f.Vector2(0.5, 4);
+                    break;
+            }
+        }
     } //close class
     EscapeTheEdge.Bobo = Bobo;
 })(EscapeTheEdge || (EscapeTheEdge = {})); //close namespace

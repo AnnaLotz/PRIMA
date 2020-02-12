@@ -145,18 +145,21 @@ namespace EscapeTheEdge {
     } //close handleKeyboard
 
     function processInput(): void {
-        if (keysPressed[f.KEYBOARD_CODE.A]) {
-            bobo.act(ACTION.WALK, DIRECTION.LEFT);
-            // mover.cmpTransform.local.translation.set
-            return;
-        }
-        if (keysPressed[f.KEYBOARD_CODE.D]) {
-            bobo.act(ACTION.WALK, DIRECTION.RIGHT);
-            return;
+        if (keysPressed[f.KEYBOARD_CODE.ARROW_DOWN]) {
+            bobo.toSize(SIZE.SMALL);
+        } else if (keysPressed[f.KEYBOARD_CODE.ARROW_UP]) {
+            bobo.toSize(SIZE.BIG);
+        } else {
+            bobo.toSize(SIZE.MEDIUM);
         }
 
-        bobo.act(ACTION.IDLE);
-        
+        if (keysPressed[f.KEYBOARD_CODE.A]) {
+            bobo.act(ACTION.WALK, DIRECTION.LEFT);
+        } else if (keysPressed[f.KEYBOARD_CODE.D]) {
+            bobo.act(ACTION.WALK, DIRECTION.RIGHT);
+        } else {
+            bobo.act(ACTION.IDLE);
+        }
 
     } //close processInput
 } //close Namespace
