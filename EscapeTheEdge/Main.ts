@@ -8,13 +8,18 @@ namespace EscapeTheEdge {
     export let rootNode: f.Node;
     export let level: f.Node;
     export let items: f.Node;
-    let mover: f.Node;    
+    let mover: f.Node;
     export let characters: f.Node;
     export let bobo: Bobo;
     let enemy: Enemy;
-    // let boboBullet: BoboBullet;
     let crc2: CanvasRenderingContext2D;
     let canvas: HTMLCanvasElement;
+    enum GAMESTATE {
+        STARTSCREEN = "Startscreen",
+        RUNNING = "Running",
+        PAUSE = "Pause"
+    }
+    let gamestate: GAMESTATE = GAMESTATE.STARTSCREEN;
 
     interface KeyPressed {
         [code: string]: boolean;
@@ -95,6 +100,7 @@ namespace EscapeTheEdge {
         document.addEventListener("keydown", handleKeyboard);
         document.addEventListener("keyup", handleKeyboard);
 
+        gamestate = GAMESTATE.RUNNING;
         f.Loop.addEventListener(f.EVENT.LOOP_FRAME, update);
         f.Loop.start(f.LOOP_MODE.TIME_GAME, 10);
 
@@ -136,20 +142,17 @@ namespace EscapeTheEdge {
         f.RenderManager.update();
         document.getElementById("health").style.width = bobo.health + "%";
         document.getElementById("mana").style.width = bobo.mana + "%";
-        // crc2.strokeRect(-1, -1, canvas.width / 2, canvas.height + 2);
-        // crc2.strokeRect(-1, 550, canvas.width + 2, canvas.height);
     }//close update
 
     function updateCamera(): void {
         let cmpCam: f.ComponentCamera = mover.getChildrenByName("Camera")[0].getComponent(f.ComponentCamera);
         let boboPos: f.Vector3 = bobo.cmpTransform.local.translation;
-        cmpCam.pivot.translation = new f.Vector3(boboPos.x, boboPos.y / 3 + 1, cmpCam.pivot.translation.z);
+        cmpCam.pivot.translation = new f.Vector3(boboPos.x, boboPos.y / 5 + 1, cmpCam.pivot.translation.z);
     } //close updateCamera
 
     export function removeNodeFromNode(_toRemove: f.Node, _fromNode: f.Node): void {
         console.log("Removed" + _toRemove);
         _fromNode.removeChild(_toRemove);
-
     }
 
     function handleKeyboard(_event: KeyboardEvent): void {
@@ -159,7 +162,18 @@ namespace EscapeTheEdge {
         if (_event.code == f.KEYBOARD_CODE.ARROW_LEFT && _event.type == "keydown")
             bobo.shoot(-1);
         if (_event.code == f.KEYBOARD_CODE.ARROW_RIGHT && _event.type == "keydown")
-            bobo.shoot(1); 
+            bobo.shoot(1);
+
+        if (_event.code == f.KEYBOARD_CODE.ESC && _event.type == "keydown") {
+            if (gamestate == GAMESTATE.RUNNING) {
+                f.Loop.stop();
+                gamestate = GAMESTATE.PAUSE;
+            } else {
+                //ERROR!!
+                f.Loop.start(f.LOOP_MODE.TIME_GAME, 10);
+                gamestate = GAMESTATE.RUNNING;
+            }
+        }
 
         // console.log(_event.code);
     } //close handleKeyboard

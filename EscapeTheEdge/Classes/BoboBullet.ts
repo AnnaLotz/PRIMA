@@ -33,7 +33,9 @@ namespace EscapeTheEdge {
             }
             this.show(STATUS.FLYING);
 
-
+            setTimeout(() => {
+                this.removeBullet();
+            },         5000);
             f.Loop.addEventListener(f.EVENT.LOOP_FRAME, this.update);
 
         } //close constructor

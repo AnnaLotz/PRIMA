@@ -30,6 +30,9 @@ var EscapeTheEdge;
                 this.appendChild(nodeSprite);
             }
             this.show(STATUS.FLYING);
+            setTimeout(() => {
+                this.removeBullet();
+            }, 5000);
             f.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, this.update);
         } //close constructor
         static generateSprites(_txtImage) {
