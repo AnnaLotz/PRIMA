@@ -29,21 +29,23 @@ var EscapeTheEdge;
                 let rect = floor.getRectWorld();
                 //console.log(rect.toString());
                 let fallingVec = this.cmpTransform.local.translation.toVector2();
-                fallingVec.add(_distance.toVector2());
+                fallingVec.subtract(_distance.toVector2());
                 let hit = rect.isInside(fallingVec);
                 if (hit) {
                     let translation = this.cmpTransform.local.translation;
                     if (floor instanceof EscapeTheEdge.Wall) {
-                        console.log(floor);
+                        // console.log(floor);
                         // translation.x = + rect.width;
                         translation.x = rect.x + (floor.side == 1 ? -0.1 : +rect.width + 0.1);
                         this.speed.x = 0;
+                        this.cmpTransform.local.translation = translation;
                     }
                     else if (this.speed.y < 0) {
                         translation.y = rect.y;
                         this.speed.y = 0;
+                        this.cmpTransform.local.translation = translation;
+                        break;
                     }
-                    this.cmpTransform.local.translation = translation;
                 }
             }
             // for (let floor of level.getChildren()) {

@@ -29,13 +29,13 @@ var EscapeTheEdge;
             wall.cmpTransform.local.translateX(3);
             wall.cmpTransform.local.translateY(this.height - 2);
             this.appendChild(wall);
-            for (let i = 0; i <= this.height; i += 0.3) {
+            for (let i = 0; i <= this.height; i += 0.2) {
                 console.log(i);
                 floor = new EscapeTheEdge.Floor();
                 // floor.cmpTransform.local.scaleX(this.randNumb(0.5, 3));
                 floor.cmpTransform.local.scaleY(this.randNumb(0.08, 0.2));
-                floor.cmpTransform.local.translateX(this.randNumb(-0.8, 0.8));
-                floor.cmpTransform.local.translateY(this.randNumb(0.1, 2) + i);
+                floor.cmpTransform.local.translateX(this.randNumb(-3, 3));
+                floor.cmpTransform.local.translateY(this.randNumb(0.1, 1.5) + i);
                 this.appendChild(floor);
             }
             // for (let i: number = 2; i <= this.lenght; i += 2) {

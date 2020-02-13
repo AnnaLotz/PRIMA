@@ -117,11 +117,12 @@ namespace EscapeTheEdge {
             this.speed.y += Bobo.gravity.y * timeFrame;
             let distance: f.Vector3 = f.Vector3.SCALE(this.speed, timeFrame);
             let halfDist: f.Vector3 = new f.Vector3(distance.x / 2, distance.y / 2, distance.z / 2);
-            this.cmpTransform.local.translate(halfDist);
-
-            // this.checkCollision();
-            this.cmpTransform.local.translate(halfDist);
+            
+            this.cmpTransform.local.translate(distance);
             this.checkCollision(halfDist);
+            // console.log(distance.x, distance.y);
+            this.checkCollision(distance);
+            
 
             this.checkHit(characters);
             // this.checkHit(EnemyBullets);
