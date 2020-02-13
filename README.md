@@ -4,7 +4,7 @@ Repository für das Modul "Prototyping interaktiver Medien-Apps und Games"
 
 
 ## Abschlussaufgabe
-[Abschlussaufgabe_EscapeTheEdge](https://annalotz.github.io/PRIMA/EscapeTheEdge/Main.html)
+[Link zum Spiel EscapeTheEdge](https://annalotz.github.io/PRIMA/EscapeTheEdge/Main.html)
 
 | Nr | Bezeichnung           | Inhalt                                                                                                                                                                                                                                                                         |
 |---:|-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -23,6 +23,7 @@ Repository für das Modul "Prototyping interaktiver Medien-Apps und Games"
 | 10 | Maße & Positionen     | Maße, Skala und Positionen sind gut durchdacht. Wie groß sind Spielfiguren, wie ist die Welt angeordnet bezogen auf den Ursprung, wie sind Spielelemente bezogen auf ihre lokalen Koordinatensysteme definiert?                                                                |
 | 11 | Event-System          | Das Event-System wird verwendet. Wer sendet wem Informationen oder Methodenaufrufe und wofür?                                                                                                                                                                                  |
 
+## Alte Aufgaben
 [L01_HelloWorld](https://annalotz.github.io/PRIMA/L01_HelloWorld/test.html)
 
 [L02_FirstFudge](https://annalotz.github.io/PRIMA/L02_FirstFudge/Main.html)
