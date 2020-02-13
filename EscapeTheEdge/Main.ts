@@ -1,4 +1,4 @@
-///<reference types="../Fudge/FudgeCore.js"/> 
+///<reference types="../EscapeTheEdge/FUDGE/FudgeCore.js"/>
 namespace EscapeTheEdge {
     import f = FudgeCore;
     import Sprite = L14_ScrollerFoundation.Sprite;

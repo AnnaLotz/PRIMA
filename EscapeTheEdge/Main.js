@@ -1,7 +1,7 @@
 "use strict";
-///<reference types="../Fudge/FudgeCore.js"/> 
+///<reference types="../EscapeTheEdge/FUDGE/FudgeCore.js"/>
 var EscapeTheEdge;
-///<reference types="../Fudge/FudgeCore.js"/> 
+///<reference types="../EscapeTheEdge/FUDGE/FudgeCore.js"/>
 (function (EscapeTheEdge) {
     var f = FudgeCore;
     let mover;
