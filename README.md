@@ -19,3 +19,5 @@ Repository für das Modul "Prototyping interaktiver Medien-Apps und Games"
 [L08_FudgeCraftNewCollision](https://annalotz.github.io/PRIMA/L08_FudgeCraft_Collision/Main.html)
 
 [L09_FudgeCraft_Camera](https://annalotz.github.io/PRIMA/L09_FudgeCraft_Camera/Main.html)
+
+[Abschlussaufgabe_EscapeTheEdge](https://annalotz.github.io/PRIMA/EscapeTheEdge/Main.html)
