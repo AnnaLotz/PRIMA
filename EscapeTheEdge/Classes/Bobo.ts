@@ -66,7 +66,8 @@ namespace EscapeTheEdge {
                     break;
                 case ACTION.WALK:
                     let direction: number = (_direction == DIRECTION.RIGHT ? 1 : -1);
-                    this.speed.x = this.speedMax.x; // * direction;
+                    if (this.cmpTransform.local.translation.x > -2.5 && this.cmpTransform.local.translation.x < 2.5)
+                        this.speed.x = this.speedMax.x; // * direction;
                     this.cmpTransform.local.rotation = f.Vector3.Y(90 - 90 * direction);
                     // console.log(direction);
                     break;
@@ -115,8 +116,15 @@ namespace EscapeTheEdge {
             let timeFrame: number = f.Loop.timeFrameGame / 1000;
             this.speed.y += Bobo.gravity.y * timeFrame;
             let distance: f.Vector3 = f.Vector3.SCALE(this.speed, timeFrame);
-            this.cmpTransform.local.translate(distance);
+            let halfDist: f.Vector3 = new f.Vector3(distance.x / 2, distance.y / 2, distance.z / 2);
+            this.cmpTransform.local.translate(halfDist);
 
+            // this.checkCollision();
+            this.cmpTransform.local.translate(halfDist);
+            this.checkCollision(halfDist);
+
+            this.checkHit(characters);
+            // this.checkHit(EnemyBullets);
 
             //mana abzeihen für größe
             if (this.size != SIZE.MEDIUM) {
@@ -129,9 +137,6 @@ namespace EscapeTheEdge {
                 this.mana = 100;
             }
 
-            this.checkCollision(distance);
-            this.checkHit(characters);
-            // this.checkHit(EnemyBullets);
             if (this.health <= 0) {
                 gameOver();
             } else if (this.health >= 100) {

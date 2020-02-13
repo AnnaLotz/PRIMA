@@ -28,12 +28,22 @@ var EscapeTheEdge;
             for (let floor of EscapeTheEdge.level.getChildren()) {
                 let rect = floor.getRectWorld();
                 //console.log(rect.toString());
-                let hit = rect.isInside(this.cmpTransform.local.translation.toVector2());
+                let fallingVec = this.cmpTransform.local.translation.toVector2();
+                fallingVec.add(_distance.toVector2());
+                let hit = rect.isInside(fallingVec);
                 if (hit) {
                     let translation = this.cmpTransform.local.translation;
-                    translation.y = rect.y;
+                    if (floor instanceof EscapeTheEdge.Wall) {
+                        console.log(floor);
+                        // translation.x = + rect.width;
+                        translation.x = rect.x + (floor.side == 1 ? -0.1 : +rect.width + 0.1);
+                        this.speed.x = 0;
+                    }
+                    else if (this.speed.y < 0) {
+                        translation.y = rect.y;
+                        this.speed.y = 0;
+                    }
                     this.cmpTransform.local.translation = translation;
-                    this.speed.y = 0;
                 }
             }
             // for (let floor of level.getChildren()) {
@@ -65,7 +75,7 @@ var EscapeTheEdge;
         } //close checkCollision
     } //close class
     Moveable.speedMax = new f.Vector2(1.5, 3); // units per second
-    Moveable.gravity = f.Vector2.Y(-3);
+    Moveable.gravity = f.Vector2.Y(-2);
     EscapeTheEdge.Moveable = Moveable;
 })(EscapeTheEdge || (EscapeTheEdge = {})); //close namespace
 //# sourceMappingURL=Moveable.js.map
