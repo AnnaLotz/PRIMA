@@ -18,8 +18,8 @@ namespace EscapeTheEdge {
 
     export class Bobo extends Moveable {
         public bullet: BoboBullet;
-        protected mana: number = 100;
-        protected health: number = 100;
+        public mana: number = 100;
+        public health: number = 100;
 
         // private static sprites: Sprite[];
         private speedMax: f.Vector2 = new f.Vector2(1.5, 5); // units per second
@@ -144,7 +144,7 @@ namespace EscapeTheEdge {
                     let boboPos: f.Vector3 = this.cmpTransform.local.translation;
                     let dif: f.Vector3 = f.Vector3.DIFFERENCE(evilPos, boboPos);
                     let distance: number = Math.abs(Math.sqrt(dif.x * dif.x + dif.y * dif.y + dif.z * dif.z));
-                    console.log(distance);
+                    // console.log(distance);
                     if (distance < 0.1) {
                         this.health -= 30;
 

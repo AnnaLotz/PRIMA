@@ -92,6 +92,8 @@ var EscapeTheEdge;
         updateCamera();
         EscapeTheEdge.viewport.draw();
         f.RenderManager.update();
+        document.getElementById("health").style.width = EscapeTheEdge.bobo.health + "%";
+        document.getElementById("mana").style.width = EscapeTheEdge.bobo.mana + "%";
         // crc2.strokeRect(-1, -1, canvas.width / 2, canvas.height + 2);
         // crc2.strokeRect(-1, 550, canvas.width + 2, canvas.height);
     } //close update

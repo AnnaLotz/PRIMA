@@ -96,7 +96,7 @@ namespace EscapeTheEdge {
                     let bulletPos: f.Vector3 = this.cmpTransform.local.translation;
                     let dif: f.Vector3 = f.Vector3.DIFFERENCE(enemyPos, bulletPos);
                     let distance: number = Math.abs(Math.sqrt(dif.x * dif.x + dif.y * dif.y + dif.z * dif.z));
-                    console.log(distance);
+                    // console.log(distance);
                     if (distance < 0.15) {
                         hitEnemy = true;
                         this.act(STATUS.EXPLODING);

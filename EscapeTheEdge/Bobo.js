@@ -129,7 +129,7 @@ var EscapeTheEdge;
                     let boboPos = this.cmpTransform.local.translation;
                     let dif = f.Vector3.DIFFERENCE(evilPos, boboPos);
                     let distance = Math.abs(Math.sqrt(dif.x * dif.x + dif.y * dif.y + dif.z * dif.z));
-                    console.log(distance);
+                    // console.log(distance);
                     if (distance < 0.1) {
                         this.health -= 30;
                     }
