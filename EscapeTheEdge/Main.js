@@ -85,7 +85,7 @@ var EscapeTheEdge;
     function updateCamera() {
         let cmpCam = mover.getChildrenByName("Camera")[0].getComponent(f.ComponentCamera);
         let boboPos = EscapeTheEdge.bobo.cmpTransform.local.translation;
-        cmpCam.pivot.translation = new f.Vector3(boboPos.x, boboPos.y / 5 + 0.8, cmpCam.pivot.translation.z);
+        cmpCam.pivot.translation = new f.Vector3(boboPos.x, boboPos.y + 0.8, cmpCam.pivot.translation.z);
     } //close updateCamera
     function removeNodeFromNode(_toRemove, _fromNode) {
         console.log("Removed" + _toRemove);

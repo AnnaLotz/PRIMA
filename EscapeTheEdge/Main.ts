@@ -122,7 +122,7 @@ namespace EscapeTheEdge {
     function updateCamera(): void {
         let cmpCam: f.ComponentCamera = mover.getChildrenByName("Camera")[0].getComponent(f.ComponentCamera);
         let boboPos: f.Vector3 = bobo.cmpTransform.local.translation;
-        cmpCam.pivot.translation = new f.Vector3(boboPos.x, boboPos.y / 5 + 0.8, cmpCam.pivot.translation.z);
+        cmpCam.pivot.translation = new f.Vector3(boboPos.x, boboPos.y + 0.8, cmpCam.pivot.translation.z);
     } //close updateCamera
 
     export function removeNodeFromNode(_toRemove: f.Node, _fromNode: f.Node): void {
