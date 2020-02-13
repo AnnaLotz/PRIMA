@@ -100,6 +100,11 @@ var EscapeTheEdge;
         let boboPos = EscapeTheEdge.bobo.cmpTransform.local.translation;
         cmpCam.pivot.translation = new f.Vector3(boboPos.x, boboPos.y / 3 + 1, cmpCam.pivot.translation.z);
     } //close updateCamera
+    function removeNodeFromNode(_toRemove, _fromNode) {
+        console.log("Removed" + _toRemove);
+        _fromNode.removeChild(_toRemove);
+    }
+    EscapeTheEdge.removeNodeFromNode = removeNodeFromNode;
     function handleKeyboard(_event) {
         keysPressed[_event.code] = (_event.type == "keydown");
         if (_event.code == f.KEYBOARD_CODE.SPACE && _event.type == "keydown")
@@ -130,5 +135,9 @@ var EscapeTheEdge;
             EscapeTheEdge.bobo.act(EscapeTheEdge.ACTION.IDLE);
         }
     } //close processInput
+    function gameOver() {
+        f.Loop.stop();
+    }
+    EscapeTheEdge.gameOver = gameOver;
 })(EscapeTheEdge || (EscapeTheEdge = {})); //close Namespace
 //# sourceMappingURL=Main.js.map

@@ -144,6 +144,12 @@ namespace EscapeTheEdge {
         cmpCam.pivot.translation = new f.Vector3(boboPos.x, boboPos.y / 3 + 1, cmpCam.pivot.translation.z);
     } //close updateCamera
 
+    export function removeNodeFromNode(_toRemove: f.Node, _fromNode: f.Node): void {
+        console.log("Removed" + _toRemove);
+        _fromNode.removeChild(_toRemove);
+
+    }
+
     function handleKeyboard(_event: KeyboardEvent): void {
         keysPressed[_event.code] = (_event.type == "keydown");
         if (_event.code == f.KEYBOARD_CODE.SPACE && _event.type == "keydown")
@@ -174,4 +180,8 @@ namespace EscapeTheEdge {
         }
 
     } //close processInput
+
+    export function gameOver(): void {
+        f.Loop.stop();
+    }
 } //close Namespace

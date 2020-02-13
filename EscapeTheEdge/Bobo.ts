@@ -19,7 +19,8 @@ namespace EscapeTheEdge {
     export class Bobo extends Moveable {
         public bullet: BoboBullet;
         protected mana: number = 100;
-        
+        protected health: number = 100;
+
         // private static sprites: Sprite[];
         private speedMax: f.Vector2 = new f.Vector2(1.5, 5); // units per second
         // private static gravity: f.Vector2 = f.Vector2.Y(-3);
@@ -32,23 +33,20 @@ namespace EscapeTheEdge {
         constructor(_name: string = "Bobo") {
             super(_name);
             this.addComponent(new f.ComponentTransform());
-
             for (let sprite of Bobo.sprites) {
                 let nodeSprite: NodeSprite = new NodeSprite(sprite.name, sprite);
                 nodeSprite.activate(false);
-
                 nodeSprite.addEventListener(
                     "showNext",
                     (_event: Event) => { (<NodeSprite>_event.currentTarget).showFrameNext(); },
                     true
                 );
-
                 this.appendChild(nodeSprite);
             }
-
             this.show(ACTION.IDLE);
             f.Loop.addEventListener(f.EVENT.LOOP_FRAME, this.update);
         } //close constructor
+
 
         public static generateSprites(_txtImage: f.TextureImage): void {
             Bobo.sprites = [];
@@ -100,13 +98,13 @@ namespace EscapeTheEdge {
                     this.speedMax = new f.Vector2(0.5, 10);
                     break;
             }
-
         } //close toSize
 
         public shoot(_direction: number): void {
             console.log("shoot " + _direction);
             this.bullet = new BoboBullet(_direction);
             items.appendChild(this.bullet);
+            this.mana -= 5;
         } //close shoot
 
         protected update = (_event: f.Eventƒ): void => {
@@ -129,9 +127,32 @@ namespace EscapeTheEdge {
             }
 
             this.checkCollision(distance);
+            this.checkHit(characters);
+            // this.checkHit(EnemyBullets);
+            if (this.health <= 0) {
+                gameOver();
+            } else if (this.health >= 100) {
+                this.health = 100;
+            }
         } //close update
 
-        
+        protected checkHit(_object: f.Node): void {
+            for (let object of _object.getChildren()) {
+                if (!(object instanceof Bobo)) {
+
+                    let evilPos: f.Vector3 = object.cmpTransform.local.translation;
+                    let boboPos: f.Vector3 = this.cmpTransform.local.translation;
+                    let dif: f.Vector3 = f.Vector3.DIFFERENCE(evilPos, boboPos);
+                    let distance: number = Math.abs(Math.sqrt(dif.x * dif.x + dif.y * dif.y + dif.z * dif.z));
+                    console.log(distance);
+                    if (distance < 0.1) {
+                        this.health -= 30;
+
+                    }
+                }
+
+            }
+        }
 
     } //close class
 

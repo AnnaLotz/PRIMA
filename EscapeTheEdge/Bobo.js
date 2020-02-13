@@ -23,6 +23,7 @@ var EscapeTheEdge;
         constructor(_name = "Bobo") {
             super(_name);
             this.mana = 100;
+            this.health = 100;
             // private static sprites: Sprite[];
             this.speedMax = new f.Vector2(1.5, 5); // units per second
             // private static gravity: f.Vector2 = f.Vector2.Y(-3);
@@ -48,6 +49,14 @@ var EscapeTheEdge;
                     this.mana = 100;
                 }
                 this.checkCollision(distance);
+                this.checkHit(EscapeTheEdge.characters);
+                // this.checkHit(EnemyBullets);
+                if (this.health <= 0) {
+                    EscapeTheEdge.gameOver();
+                }
+                else if (this.health >= 100) {
+                    this.health = 100;
+                }
             }; //close update
             this.addComponent(new f.ComponentTransform());
             for (let sprite of Bobo.sprites) {
@@ -111,7 +120,22 @@ var EscapeTheEdge;
             console.log("shoot " + _direction);
             this.bullet = new EscapeTheEdge.BoboBullet(_direction);
             EscapeTheEdge.items.appendChild(this.bullet);
+            this.mana -= 5;
         } //close shoot
+        checkHit(_object) {
+            for (let object of _object.getChildren()) {
+                if (!(object instanceof Bobo)) {
+                    let evilPos = object.cmpTransform.local.translation;
+                    let boboPos = this.cmpTransform.local.translation;
+                    let dif = f.Vector3.DIFFERENCE(evilPos, boboPos);
+                    let distance = Math.abs(Math.sqrt(dif.x * dif.x + dif.y * dif.y + dif.z * dif.z));
+                    console.log(distance);
+                    if (distance < 0.1) {
+                        this.health -= 30;
+                    }
+                }
+            }
+        }
     } //close class
     EscapeTheEdge.Bobo = Bobo;
 })(EscapeTheEdge || (EscapeTheEdge = {})); //close namespace

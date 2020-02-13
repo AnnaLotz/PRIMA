@@ -63,23 +63,36 @@ var EscapeTheEdge;
                 child.activate(child.name == _status);
         }
         removeBullet() {
-            EscapeTheEdge.items.removeChild(this);
+            EscapeTheEdge.removeNodeFromNode(this, EscapeTheEdge.items);
         } //close removeBullet
         checkHit() {
+            let hitEnemy = false;
             for (let enemy of EscapeTheEdge.characters.getChildren()) {
-                if (enemy instanceof EscapeTheEdge.Enemy) {
+                if (enemy instanceof EscapeTheEdge.Enemy && !hitEnemy && STATUS.FLYING) {
                     let enemyPos = enemy.cmpTransform.local.translation;
                     let bulletPos = this.cmpTransform.local.translation;
                     let dif = f.Vector3.DIFFERENCE(enemyPos, bulletPos);
                     let distance = Math.abs(Math.sqrt(dif.x * dif.x + dif.y * dif.y + dif.z * dif.z));
                     console.log(distance);
                     if (distance < 0.15) {
+                        hitEnemy = true;
                         this.act(STATUS.EXPLODING);
-                        window.setTimeout(this.kill, 2000);
-                        // this.kill(enemy);
+                        // window.setTimeout(this.kill, 2000, enemy);
+                        this.kill(enemy);
+                        f.Loop.removeEventListener("loopFrame" /* LOOP_FRAME */, this.update);
                         break;
                     }
                     // console.log(enemy);
+                }
+            }
+            for (let floor of EscapeTheEdge.level.getChildren()) {
+                let rect = floor.getRectWorld();
+                let hit = rect.isInside(this.cmpTransform.local.translation.toVector2());
+                if (hit) {
+                    console.log("HIT");
+                    this.removeBullet();
+                    f.Loop.removeEventListener("loopFrame" /* LOOP_FRAME */, this.update);
+                    break;
                 }
             }
         } // close checkHit

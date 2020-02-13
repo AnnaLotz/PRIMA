@@ -31,10 +31,13 @@ namespace EscapeTheEdge {
 
                 this.appendChild(nodeSprite);
             }
-
             this.show(STATUS.FLYING);
+
+
             f.Loop.addEventListener(f.EVENT.LOOP_FRAME, this.update);
+
         } //close constructor
+
 
         public static generateSprites(_txtImage: f.TextureImage): void {
             BoboBullet.sprites = [];
@@ -71,7 +74,7 @@ namespace EscapeTheEdge {
         }
 
         public removeBullet(): void {
-            items.removeChild(this);
+            removeNodeFromNode(this, items);
         } //close removeBullet
 
         protected update = (_event: f.Eventƒ): void => {
@@ -86,20 +89,35 @@ namespace EscapeTheEdge {
         } //close update
 
         protected checkHit(): void {
+            let hitEnemy: boolean = false;
             for (let enemy of characters.getChildren()) {
-                if (enemy instanceof Enemy) {
+                if (enemy instanceof Enemy && !hitEnemy && STATUS.FLYING) {
                     let enemyPos: f.Vector3 = enemy.cmpTransform.local.translation;
                     let bulletPos: f.Vector3 = this.cmpTransform.local.translation;
                     let dif: f.Vector3 = f.Vector3.DIFFERENCE(enemyPos, bulletPos);
                     let distance: number = Math.abs(Math.sqrt(dif.x * dif.x + dif.y * dif.y + dif.z * dif.z));
                     console.log(distance);
                     if (distance < 0.15) {
+                        hitEnemy = true;
                         this.act(STATUS.EXPLODING);
-                        window.setTimeout(this.kill, 2000);
-                        // this.kill(enemy);
+                        // window.setTimeout(this.kill, 2000, enemy);
+                        this.kill(enemy);
+
+                        f.Loop.removeEventListener(f.EVENT.LOOP_FRAME, this.update);
+
                         break;
                     }
                     // console.log(enemy);
+                }
+            }
+            for (let floor of level.getChildren()) {
+                let rect: f.Rectangle = (<Floor>floor).getRectWorld();
+                let hit: boolean = rect.isInside(this.cmpTransform.local.translation.toVector2());
+                if (hit) {
+                    console.log("HIT");
+                    this.removeBullet();
+                    f.Loop.removeEventListener(f.EVENT.LOOP_FRAME, this.update);
+                    break;
                 }
             }
         }// close checkHit
