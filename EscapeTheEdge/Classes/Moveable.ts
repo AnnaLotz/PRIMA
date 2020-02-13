@@ -36,35 +36,47 @@ namespace EscapeTheEdge {
 
 
         protected checkCollision(_distance?: f.Vector3): void {
+
             for (let floor of level.getChildren()) {
                 let rect: f.Rectangle = (<Floor>floor).getRectWorld();
                 //console.log(rect.toString());
                 let hit: boolean = rect.isInside(this.cmpTransform.local.translation.toVector2());
                 if (hit) {
-                    //rect Oberfläche prüfen:
-                    let rectTop: f.Rectangle = (<Floor>floor).getRectTopWorld();
-                    let hitTop: boolean = rectTop.isInside(this.cmpTransform.local.translation.toVector2());
-
-                    let rectBottom: f.Rectangle = (<Floor>floor).getRectBottomWorld();
-                    let hitBottom: boolean = rectBottom.isInside(this.cmpTransform.local.translation.toVector2());
-                    // console.log(hitBottom);
-                    
-                    if (hitTop) {
-                        if (this.speed.y < -0.01) {
-                            let translation: f.Vector3 = this.cmpTransform.local.translation;
-                            translation.y = rect.y;
-                            this.cmpTransform.local.translation = translation;
-                            this.speed.y = 0;
-                        }
-                    } else if (hitBottom) {
-                        
-                        this.cmpTransform.local.translateY(- _distance.y - 0.2);
-                        this.speed.y = 0;
-                    } else {
-                        this.cmpTransform.local.translateX(- _distance.x);
-                    }
+                    let translation: f.Vector3 = this.cmpTransform.local.translation;
+                    translation.y = rect.y;
+                    this.cmpTransform.local.translation = translation;
+                    this.speed.y = 0;
                 }
             }
+            // for (let floor of level.getChildren()) {
+            //     let rect: f.Rectangle = (<Floor>floor).getRectWorld();
+            //     //console.log(rect.toString());
+            //     let hit: boolean = rect.isInside(this.cmpTransform.local.translation.toVector2());
+            //     if (hit) {
+            //         //rect Oberfläche prüfen:
+            //         let rectTop: f.Rectangle = (<Floor>floor).getRectTopWorld();
+            //         let hitTop: boolean = rectTop.isInside(this.cmpTransform.local.translation.toVector2());
+
+            //         let rectBottom: f.Rectangle = (<Floor>floor).getRectBottomWorld();
+            //         let hitBottom: boolean = rectBottom.isInside(this.cmpTransform.local.translation.toVector2());
+            //         // console.log(hitBottom);
+
+            //         if (hitTop) {
+            //             if (this.speed.y < -0.01) {
+            //                 let translation: f.Vector3 = this.cmpTransform.local.translation;
+            //                 translation.y = rect.y;
+            //                 this.cmpTransform.local.translation = translation;
+            //                 this.speed.y = 0;
+            //             }
+            //         } else if (hitBottom) {
+            //             this.cmpTransform.local.translateY(- _distance.y);
+            //             this.speed.y = 0;
+            //         } else {
+            //             this.cmpTransform.local.translateX(- _distance.x);
+            //             this.speed.x = 0;
+            //         }
+            //     }
+
         } //close checkCollision
 
     } //close class

@@ -27,7 +27,7 @@ var EscapeTheEdge;
         mover = new f.Node("Mover");
         EscapeTheEdge.items = new f.Node("Items");
         EscapeTheEdge.characters = new f.Node("Characters");
-        EscapeTheEdge.level = createLevel();
+        EscapeTheEdge.level = new EscapeTheEdge.Level(1);
         EscapeTheEdge.rootNode.appendChild(EscapeTheEdge.level);
         EscapeTheEdge.rootNode.appendChild(mover);
         EscapeTheEdge.rootNode.appendChild(EscapeTheEdge.characters);
@@ -48,9 +48,9 @@ var EscapeTheEdge;
         let camera = new f.Node("Camera");
         let cmpCam = new f.ComponentCamera();
         camera.addComponent(cmpCam);
-        cmpCam.pivot.translateZ(5);
+        cmpCam.pivot.translateZ(3.5);
         cmpCam.pivot.lookAt(f.Vector3.ZERO());
-        cmpCam.pivot.translateY(1);
+        cmpCam.pivot.translateY(0.3);
         cmpCam.backgroundColor = f.Color.CSS("grey");
         mover.appendChild(camera);
         let cmpLightAmbient = new f.ComponentLight(new f.LightAmbient(f.Color.CSS("WHITE")));
@@ -74,26 +74,6 @@ var EscapeTheEdge;
         f.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, update);
         f.Loop.start(f.LOOP_MODE.TIME_GAME, 10);
     } //close startGame
-    function createLevel() {
-        let level = new f.Node("Level");
-        let floor = new EscapeTheEdge.Floor();
-        floor = new EscapeTheEdge.Floor();
-        floor.cmpTransform.local.scaleY(1);
-        floor.cmpTransform.local.scaleX(10);
-        // floor.cmpTransform.local.translateY(0);
-        // floor.cmpTransform.local.translateX(1.5);
-        level.appendChild(floor);
-        floor = new EscapeTheEdge.Floor();
-        floor.cmpTransform.local.scaleX(1);
-        floor.cmpTransform.local.translateY(3.5);
-        level.appendChild(floor);
-        floor = new EscapeTheEdge.Floor();
-        floor.cmpTransform.local.scaleX(2);
-        floor.cmpTransform.local.translateY(0.5);
-        floor.cmpTransform.local.translateX(2);
-        level.appendChild(floor);
-        return level;
-    } //close createLevel
     function update() {
         processInput();
         updateCamera();
@@ -105,7 +85,7 @@ var EscapeTheEdge;
     function updateCamera() {
         let cmpCam = mover.getChildrenByName("Camera")[0].getComponent(f.ComponentCamera);
         let boboPos = EscapeTheEdge.bobo.cmpTransform.local.translation;
-        cmpCam.pivot.translation = new f.Vector3(boboPos.x, boboPos.y / 5 + 1, cmpCam.pivot.translation.z);
+        cmpCam.pivot.translation = new f.Vector3(boboPos.x, boboPos.y / 5 + 0.8, cmpCam.pivot.translation.z);
     } //close updateCamera
     function removeNodeFromNode(_toRemove, _fromNode) {
         console.log("Removed" + _toRemove);
@@ -131,6 +111,8 @@ var EscapeTheEdge;
                 gamestate = GAMESTATE.RUNNING;
             }
         }
+        if (_event.code == f.KEYBOARD_CODE.R && _event.type == "keydown")
+            console.log("Restart");
         // console.log(_event.code);
     } //close handleKeyboard
     function processInput() {

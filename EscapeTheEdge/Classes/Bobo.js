@@ -71,7 +71,7 @@ var EscapeTheEdge;
         static generateSprites(_txtImage) {
             Bobo.sprites = [];
             let sprite = new EscapeTheEdge.Sprite(ACTION.WALK);
-            sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 1, 17, 17), 6, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
+            sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 0, 17, 17), 6, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
             Bobo.sprites.push(sprite);
             sprite = new EscapeTheEdge.Sprite(ACTION.IDLE);
             sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 18, 17, 17), 7, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
@@ -90,7 +90,7 @@ var EscapeTheEdge;
                     break;
                 case ACTION.JUMP:
                     // if (this.speed.y == 0) //für kein doppelSprung
-                    this.speed.y = 2;
+                    this.speed.y = this.speedMax.y;
                     break;
             }
             this.show(_action);
@@ -108,19 +108,21 @@ var EscapeTheEdge;
                     break;
                 case SIZE.SMALL:
                     this.cmpTransform.local.scaling = new f.Vector3(0.6, 0.6, 1);
-                    this.speedMax = new f.Vector2(5, 1);
+                    this.speedMax = new f.Vector2(3, 1.5);
                     break;
                 case SIZE.BIG:
                     this.cmpTransform.local.scaling = new f.Vector3(1.5, 1.5, 1);
-                    this.speedMax = new f.Vector2(0.5, 10);
+                    this.speedMax = new f.Vector2(0.5, 2.2);
                     break;
             }
         } //close toSize
         shoot(_direction) {
-            console.log("shoot " + _direction);
-            this.bullet = new EscapeTheEdge.BoboBullet(_direction);
-            EscapeTheEdge.items.appendChild(this.bullet);
-            this.mana -= 5;
+            if (this.mana >= 5) {
+                console.log("shoot " + _direction);
+                this.bullet = new EscapeTheEdge.BoboBullet(_direction);
+                EscapeTheEdge.items.appendChild(this.bullet);
+                this.mana -= 5;
+            }
         } //close shoot
         checkHit(_object) {
             for (let object of _object.getChildren()) {

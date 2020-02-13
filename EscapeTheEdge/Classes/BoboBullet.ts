@@ -15,7 +15,7 @@ namespace EscapeTheEdge {
             super(_name);
             this.addComponent(new f.ComponentTransform());
             this.direction = _direction;
-            this.speed = new f.Vector3(this.direction, 0, 0);
+            this.speed = new f.Vector3(this.direction * 1.8, 0, 0);
             this.cmpTransform.local.translation = bobo.cmpTransform.local.translation;
             this.cmpTransform.local.translateY(0.08);
 

@@ -6,7 +6,7 @@ namespace EscapeTheEdge {
     export let sprite: Sprite;
     export let viewport: f.Viewport;
     export let rootNode: f.Node;
-    export let level: f.Node;
+    export let level: Level;
     export let items: f.Node;
     let mover: f.Node;
     export let characters: f.Node;
@@ -42,7 +42,7 @@ namespace EscapeTheEdge {
         mover = new f.Node("Mover");
         items = new f.Node("Items");
         characters = new f.Node("Characters");
-        level = createLevel();
+        level = new Level(1);
         rootNode.appendChild(level);
         rootNode.appendChild(mover);
         rootNode.appendChild(characters);
@@ -70,9 +70,9 @@ namespace EscapeTheEdge {
         let camera: f.Node = new f.Node("Camera");
         let cmpCam: f.ComponentCamera = new f.ComponentCamera();
         camera.addComponent(cmpCam);
-        cmpCam.pivot.translateZ(5);
+        cmpCam.pivot.translateZ(3.5);
         cmpCam.pivot.lookAt(f.Vector3.ZERO());
-        cmpCam.pivot.translateY(1);
+        cmpCam.pivot.translateY(0.3);
         cmpCam.backgroundColor = f.Color.CSS("grey");
         mover.appendChild(camera);
 
@@ -106,31 +106,6 @@ namespace EscapeTheEdge {
 
     }//close startGame
 
-    function createLevel(): f.Node {
-
-        let level: f.Node = new f.Node("Level");
-        let floor: Floor = new Floor();
-
-        floor = new Floor();
-        floor.cmpTransform.local.scaleY(1);
-        floor.cmpTransform.local.scaleX(10);
-        // floor.cmpTransform.local.translateY(0);
-        // floor.cmpTransform.local.translateX(1.5);
-        level.appendChild(floor);
-
-        floor = new Floor();
-        floor.cmpTransform.local.scaleX(1);
-        floor.cmpTransform.local.translateY(3.5);
-        level.appendChild(floor);
-
-        floor = new Floor();
-        floor.cmpTransform.local.scaleX(2);
-        floor.cmpTransform.local.translateY(0.5);
-        floor.cmpTransform.local.translateX(2);
-        level.appendChild(floor);
-
-        return level;
-    } //close createLevel
 
 
     function update(): void {
@@ -147,7 +122,7 @@ namespace EscapeTheEdge {
     function updateCamera(): void {
         let cmpCam: f.ComponentCamera = mover.getChildrenByName("Camera")[0].getComponent(f.ComponentCamera);
         let boboPos: f.Vector3 = bobo.cmpTransform.local.translation;
-        cmpCam.pivot.translation = new f.Vector3(boboPos.x, boboPos.y / 5 + 1, cmpCam.pivot.translation.z);
+        cmpCam.pivot.translation = new f.Vector3(boboPos.x, boboPos.y / 5 + 0.8, cmpCam.pivot.translation.z);
     } //close updateCamera
 
     export function removeNodeFromNode(_toRemove: f.Node, _fromNode: f.Node): void {
@@ -174,6 +149,8 @@ namespace EscapeTheEdge {
                 gamestate = GAMESTATE.RUNNING;
             }
         }
+        if (_event.code == f.KEYBOARD_CODE.R && _event.type == "keydown") 
+            console.log("Restart");
 
         // console.log(_event.code);
     } //close handleKeyboard
