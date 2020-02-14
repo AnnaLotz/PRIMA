@@ -179,7 +179,7 @@ namespace EscapeTheEdge {
         document.getElementById("health").style.width = bobo.health + "%";
         document.getElementById("mana").style.width = bobo.mana + "%";
 
-        if(bobo.cmpTransform.local.translation.y >= level.height) {
+        if (bobo.cmpTransform.local.translation.y >= level.height) {
             win();
         }
     }//close update

@@ -8,7 +8,7 @@ namespace EscapeTheEdge {
 
         public constructor(_levelCount: number) {
             super("Level" + _levelCount);
-            this.height = 10;
+            this.height = 5;
             this.createLevel();
             // this.createGoal();
         } //close Constructor
@@ -49,14 +49,20 @@ namespace EscapeTheEdge {
                 floor.cmpTransform.local.translateX(randNumb(- 1.9, 1.9));
                 floor.cmpTransform.local.translateY(randNumb(-0.2, 0.2) + i);
                 floor.createMaterial(this.height);
-                if (randNumb(0, 10) < 2 && floor.cmpTransform.local.translation.y >= 0.8) {
-                // if (i == 0.4) {
+                if (randNumb(0, 10) < 2 && floor.cmpTransform.local.translation.y >= 0.8 && floor.cmpTransform.local.translation.y <= this.height - 0.2) {
+                    // if (i == 0.4) {
                     floor.createEnemy();
                 }
                 this.appendChild(floor);
             }
 
-
+            let goalLine: f.Node = new f.Node("GoalLine");
+            goalLine.addComponent(new f.ComponentTransform);
+            goalLine.addComponent(new f.ComponentMaterial(new f.Material("SolidWhite", f.ShaderUniColor, new f.CoatColored(new f.Color(1, 0.5, 0.2, 0.8)))));
+            goalLine.addComponent(new f.ComponentMesh(new f.MeshQuad()));
+            goalLine.cmpTransform.local.translate(new f.Vector3(0, this.height, -1));
+            goalLine.getComponent(f.ComponentMesh).pivot.scale(new f.Vector3(10, 0.1, 0));
+            rootNode.appendChild(goalLine);
 
         }//close createLevel
 
