@@ -5,8 +5,6 @@ var EscapeTheEdge;
 (function (EscapeTheEdge) {
     var f = FudgeCore;
     let mover;
-    let enemy;
-    let crc2;
     let GAMESTATE;
     (function (GAMESTATE) {
         GAMESTATE["STARTSCREEN"] = "Startscreen";
@@ -14,20 +12,69 @@ var EscapeTheEdge;
         GAMESTATE["PAUSE"] = "Pause";
     })(GAMESTATE || (GAMESTATE = {}));
     let gamestate = GAMESTATE.STARTSCREEN;
+    EscapeTheEdge.musicMuted = false;
+    EscapeTheEdge.soundMuted = false;
     let keysPressed = {};
     window.addEventListener("load", init);
     function init(_event) {
+        document.getElementById("startButton").addEventListener("click", startGame);
+        document.getElementById("controlButton").addEventListener("click", showControls);
+        document.getElementById("musicButton").addEventListener("click", toggleMusic);
+        document.getElementById("soundButton").addEventListener("click", toggleSounds);
+        document.getElementById("creditsButton").addEventListener("click", showCredits);
+        document.getElementById("backButton").addEventListener("click", showMenue);
+        showMenue();
         EscapeTheEdge.canvas = document.querySelector("canvas");
         f.RenderManager.initialize(true, false);
-        startGame(EscapeTheEdge.canvas);
     } //close init
-    function startGame(_canvas) {
-        EscapeTheEdge.styleGameCanvas(); //-> Style.ts
+    function showMenue() {
+        document.getElementById("gameWrapper").style.display = "none";
+        document.getElementById("controlPage").style.display = "none";
+        document.getElementById("creditsPage").style.display = "none";
+        document.getElementById("backButton").style.display = "none";
+        document.getElementById("menueButtons").style.display = "initial";
+    }
+    function showControls() {
+        document.getElementById("menueButtons").style.display = "none";
+        document.getElementById("controlPage").style.display = "initial";
+        document.getElementById("backButton").style.display = "initial";
+    } //close showControls
+    function toggleMusic() {
+        if (!EscapeTheEdge.musicMuted) {
+            EscapeTheEdge.musicMuted = true;
+            document.getElementById("musicButton").innerHTML = "Musik: aus";
+        }
+        else if (EscapeTheEdge.musicMuted) {
+            EscapeTheEdge.musicMuted = false;
+            document.getElementById("musicButton").innerHTML = "Musik: an";
+        }
+        // 
+    } //close toggleMusic
+    function toggleSounds() {
+        if (!EscapeTheEdge.soundMuted) {
+            EscapeTheEdge.soundMuted = true;
+            document.getElementById("soundButton").innerHTML = "Sounds: aus";
+        }
+        else if (EscapeTheEdge.soundMuted) {
+            EscapeTheEdge.soundMuted = false;
+            document.getElementById("soundButton").innerHTML = "Sounds: an";
+        }
+    } //close toggleSounds
+    function showCredits() {
+        document.getElementById("menueButtons").style.display = "none";
+        document.getElementById("creditsPage").style.display = "initial";
+        document.getElementById("backButton").style.display = "initial";
+    }
+    function startGame() {
+        // styleGameCanvas(); //-> Style.ts
+        document.getElementById("stats").style.width = EscapeTheEdge.canvas.width + "px";
+        document.getElementById("menue").style.display = "none";
+        document.getElementById("gameWrapper").style.display = "initial";
         EscapeTheEdge.rootNode = new f.Node("RootNode");
         mover = new f.Node("Mover");
         EscapeTheEdge.items = new f.Node("Items");
         EscapeTheEdge.characters = new f.Node("Characters");
-        crc2 = _canvas.getContext("2d");
+        // crc2 = _canvas.getContext("2d");
         let img = document.querySelector("img");
         let txtFigures = new f.TextureImage();
         txtFigures.image = img;
@@ -64,7 +111,7 @@ var EscapeTheEdge;
         EscapeTheEdge.rootNode.appendChild(light);
         // mover.appendChild(light);
         EscapeTheEdge.viewport = new f.Viewport();
-        EscapeTheEdge.viewport.initialize("Viewport", EscapeTheEdge.rootNode, camera.getComponent(f.ComponentCamera), _canvas);
+        EscapeTheEdge.viewport.initialize("Viewport", EscapeTheEdge.rootNode, camera.getComponent(f.ComponentCamera), EscapeTheEdge.canvas);
         //starting game
         EscapeTheEdge.Sound.init();
         EscapeTheEdge.Sound.playMusic();
@@ -102,19 +149,18 @@ var EscapeTheEdge;
             EscapeTheEdge.bobo.shoot(-1);
         if (_event.code == f.KEYBOARD_CODE.ARROW_RIGHT && _event.type == "keydown")
             EscapeTheEdge.bobo.shoot(1);
-        if (_event.code == f.KEYBOARD_CODE.ESC && _event.type == "keydown") {
-            if (gamestate == GAMESTATE.RUNNING) {
-                f.Loop.stop();
-                gamestate = GAMESTATE.PAUSE;
-            }
-            else {
-                //ERROR!!
-                f.Loop.start(f.LOOP_MODE.TIME_GAME, 10);
-                gamestate = GAMESTATE.RUNNING;
-            }
-        }
-        if (_event.code == f.KEYBOARD_CODE.R && _event.type == "keydown")
-            console.log("Restart");
+        // if (_event.code == f.KEYBOARD_CODE.ESC && _event.type == "keydown") {
+        //     if (gamestate == GAMESTATE.RUNNING) {
+        //         f.Loop.stop();
+        //         gamestate = GAMESTATE.PAUSE;
+        //     } else {
+        //         //ERROR!!
+        //         f.Loop.start(f.LOOP_MODE.TIME_GAME, 10);
+        //         gamestate = GAMESTATE.RUNNING;
+        //     }
+        // }
+        // if (_event.code == f.KEYBOARD_CODE.R && _event.type == "keydown")
+        //     console.log("Restart");
         // console.log(_event.code);
     } //close handleKeyboard
     function processInput() {
@@ -138,6 +184,7 @@ var EscapeTheEdge;
         }
     } //close processInput
     function gameOver() {
+        EscapeTheEdge.Sound.stopMusic();
         f.Loop.stop();
     }
     EscapeTheEdge.gameOver = gameOver;

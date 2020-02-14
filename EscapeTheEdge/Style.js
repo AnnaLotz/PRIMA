@@ -9,7 +9,6 @@ var EscapeTheEdge;
         // manaHolder.style.width = canvas.width / 1.5 + "px";
         // manaHolder.style.marginLeft = canvas.width / 3 + "px" ;
         // canvas.style.display = "none";
-        document.getElementById("stats").style.width = EscapeTheEdge.canvas.width + "px";
     }
     EscapeTheEdge.styleGameCanvas = styleGameCanvas;
 })(EscapeTheEdge || (EscapeTheEdge = {}));

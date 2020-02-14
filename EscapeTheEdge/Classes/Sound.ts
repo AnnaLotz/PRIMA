@@ -5,6 +5,8 @@ namespace EscapeTheEdge {
     }
     export class Sound {
         private static sounds: Sounds = {};
+        
+        
 
         public static init(): void {
             let audioElements: NodeListOf<HTMLAudioElement> = document.querySelectorAll("audio");
@@ -13,19 +15,23 @@ namespace EscapeTheEdge {
         }
 
         public static play(_id: string): void {
-            // if (soundMuted == false) {
-              Sound.sounds[_id].volume = 0.3;
+            if (!soundMuted) {
+              Sound.sounds[_id].volume = 0.5;
               Sound.sounds[_id].play();
-            // }
+            }
           } //close play
 
         public static playMusic(): void {
-            // if (soundMuted == false) {
+            if (!musicMuted) {
                 Sound.sounds["gameMusic"].loop = true;
-                Sound.sounds["gameMusic"].volume = 0.2;
+                Sound.sounds["gameMusic"].volume = 0.3;
                 Sound.sounds["gameMusic"].play();
-            // }
+            }
         } //close playMusic
+        
+        public static stopMusic(): void {
+            Sound.sounds["gameMusic"].muted = true;
+        } //close stopMusic
     } //close class
 
 } //close Namespace

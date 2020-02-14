@@ -11,8 +11,7 @@ namespace EscapeTheEdge {
     let mover: f.Node;
     export let characters: f.Node;
     export let bobo: Bobo;
-    let enemy: Enemy;
-    let crc2: CanvasRenderingContext2D;
+    // let crc2: CanvasRenderingContext2D;
     export let canvas: HTMLCanvasElement;
     enum GAMESTATE {
         STARTSCREEN = "Startscreen",
@@ -20,6 +19,8 @@ namespace EscapeTheEdge {
         PAUSE = "Pause"
     }
     let gamestate: GAMESTATE = GAMESTATE.STARTSCREEN;
+    export let musicMuted: boolean = false;
+    export let soundMuted: boolean = false;
 
     interface KeyPressed {
         [code: string]: boolean;
@@ -31,20 +32,75 @@ namespace EscapeTheEdge {
 
     function init(_event: Event): void {
 
+        document.getElementById("startButton").addEventListener("click", startGame);
+        document.getElementById("controlButton").addEventListener("click", showControls);
+        document.getElementById("musicButton").addEventListener("click", toggleMusic);
+        document.getElementById("soundButton").addEventListener("click", toggleSounds);
+        document.getElementById("creditsButton").addEventListener("click", showCredits);
+        document.getElementById("backButton").addEventListener("click", showMenue);
+        showMenue();
+
         canvas = document.querySelector("canvas");
         f.RenderManager.initialize(true, false);
-        startGame(canvas);
     }//close init
 
-    function startGame(_canvas: HTMLCanvasElement): void {
-        styleGameCanvas(); //-> Style.ts
-        
+    function showMenue(): void {
+        document.getElementById("gameWrapper").style.display = "none";
+        document.getElementById("controlPage").style.display = "none";
+        document.getElementById("creditsPage").style.display = "none";
+        document.getElementById("backButton").style.display = "none";
+        document.getElementById("menueButtons").style.display = "initial";
+
+    }
+
+    function showControls(): void {
+        document.getElementById("menueButtons").style.display = "none";
+        document.getElementById("controlPage").style.display = "initial";
+        document.getElementById("backButton").style.display = "initial";
+    } //close showControls
+
+    function toggleMusic(): void {
+        if (!musicMuted) {
+            musicMuted = true;
+            document.getElementById("musicButton").innerHTML = "Musik: aus";
+        } else if (musicMuted) {
+            musicMuted = false;
+            document.getElementById("musicButton").innerHTML = "Musik: an";
+        }
+        // 
+    } //close toggleMusic
+
+    function toggleSounds(): void {
+        if (!soundMuted) {
+            soundMuted = true;
+            document.getElementById("soundButton").innerHTML = "Sounds: aus";
+        } else if (soundMuted) {
+            soundMuted = false;
+            document.getElementById("soundButton").innerHTML = "Sounds: an";
+        }
+    } //close toggleSounds
+
+    function showCredits(): void {
+        document.getElementById("menueButtons").style.display = "none";
+        document.getElementById("creditsPage").style.display = "initial";
+        document.getElementById("backButton").style.display = "initial";
+    }
+
+
+    function startGame(): void {
+        // styleGameCanvas(); //-> Style.ts
+        document.getElementById("stats").style.width = canvas.width + "px";
+        document.getElementById("menue").style.display = "none";
+        document.getElementById("gameWrapper").style.display = "initial";
+
+
+
 
         rootNode = new f.Node("RootNode");
         mover = new f.Node("Mover");
         items = new f.Node("Items");
         characters = new f.Node("Characters");
-        crc2 = _canvas.getContext("2d");
+        // crc2 = _canvas.getContext("2d");
         let img: HTMLImageElement = document.querySelector("img");
         let txtFigures: f.TextureImage = new f.TextureImage();
         txtFigures.image = img;
@@ -92,7 +148,7 @@ namespace EscapeTheEdge {
         // mover.appendChild(light);
 
         viewport = new f.Viewport();
-        viewport.initialize("Viewport", rootNode, camera.getComponent(f.ComponentCamera), _canvas);
+        viewport.initialize("Viewport", rootNode, camera.getComponent(f.ComponentCamera), canvas);
 
         //starting game
 
@@ -126,7 +182,7 @@ namespace EscapeTheEdge {
     function updateCamera(): void {
         let cmpCam: f.ComponentCamera = mover.getChildrenByName("Camera")[0].getComponent(f.ComponentCamera);
         let boboPos: f.Vector3 = bobo.cmpTransform.local.translation;
-        cmpCam.pivot.translation = new f.Vector3(boboPos.x / 2 , boboPos.y + 0.8, cmpCam.pivot.translation.z);
+        cmpCam.pivot.translation = new f.Vector3(boboPos.x / 2, boboPos.y + 0.8, cmpCam.pivot.translation.z);
     } //close updateCamera
 
     export function removeNodeFromNode(_toRemove: f.Node, _fromNode: f.Node): void {
@@ -143,18 +199,18 @@ namespace EscapeTheEdge {
         if (_event.code == f.KEYBOARD_CODE.ARROW_RIGHT && _event.type == "keydown")
             bobo.shoot(1);
 
-        if (_event.code == f.KEYBOARD_CODE.ESC && _event.type == "keydown") {
-            if (gamestate == GAMESTATE.RUNNING) {
-                f.Loop.stop();
-                gamestate = GAMESTATE.PAUSE;
-            } else {
-                //ERROR!!
-                f.Loop.start(f.LOOP_MODE.TIME_GAME, 10);
-                gamestate = GAMESTATE.RUNNING;
-            }
-        }
-        if (_event.code == f.KEYBOARD_CODE.R && _event.type == "keydown")
-            console.log("Restart");
+        // if (_event.code == f.KEYBOARD_CODE.ESC && _event.type == "keydown") {
+        //     if (gamestate == GAMESTATE.RUNNING) {
+        //         f.Loop.stop();
+        //         gamestate = GAMESTATE.PAUSE;
+        //     } else {
+        //         //ERROR!!
+        //         f.Loop.start(f.LOOP_MODE.TIME_GAME, 10);
+        //         gamestate = GAMESTATE.RUNNING;
+        //     }
+        // }
+        // if (_event.code == f.KEYBOARD_CODE.R && _event.type == "keydown")
+        //     console.log("Restart");
 
         // console.log(_event.code);
     } //close handleKeyboard
@@ -179,6 +235,7 @@ namespace EscapeTheEdge {
     } //close processInput
 
     export function gameOver(): void {
+        Sound.stopMusic();
         f.Loop.stop();
     }
 

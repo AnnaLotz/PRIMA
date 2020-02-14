@@ -9,7 +9,7 @@ namespace EscapeTheEdge {
         // manaHolder.style.marginLeft = canvas.width / 3 + "px" ;
         // canvas.style.display = "none";
 
-        document.getElementById("stats").style.width = canvas.width + "px";
+        
 
     }
 }

@@ -8,18 +8,21 @@ var EscapeTheEdge;
                 Sound.sounds[element.id] = element;
         }
         static play(_id) {
-            // if (soundMuted == false) {
-            Sound.sounds[_id].volume = 0.3;
-            Sound.sounds[_id].play();
-            // }
+            if (!EscapeTheEdge.soundMuted) {
+                Sound.sounds[_id].volume = 0.5;
+                Sound.sounds[_id].play();
+            }
         } //close play
         static playMusic() {
-            // if (soundMuted == false) {
-            Sound.sounds["gameMusic"].loop = true;
-            Sound.sounds["gameMusic"].volume = 0.2;
-            Sound.sounds["gameMusic"].play();
-            // }
+            if (!EscapeTheEdge.musicMuted) {
+                Sound.sounds["gameMusic"].loop = true;
+                Sound.sounds["gameMusic"].volume = 0.3;
+                Sound.sounds["gameMusic"].play();
+            }
         } //close playMusic
+        static stopMusic() {
+            Sound.sounds["gameMusic"].muted = true;
+        } //close stopMusic
     } //close class
     Sound.sounds = {};
     EscapeTheEdge.Sound = Sound;
