@@ -62,6 +62,7 @@ var EscapeTheEdge;
                 }
             }; //close update
             this.addComponent(new f.ComponentTransform());
+            this.cmpTransform.local.translateX(-1);
             for (let sprite of Bobo.sprites) {
                 let nodeSprite = new EscapeTheEdge.NodeSprite(sprite.name, sprite);
                 nodeSprite.activate(false);
@@ -141,7 +142,7 @@ var EscapeTheEdge;
                     }
                 }
             }
-        }
+        } //close checkHit
     } //close class
     EscapeTheEdge.Bobo = Bobo;
 })(EscapeTheEdge || (EscapeTheEdge = {})); //close namespace

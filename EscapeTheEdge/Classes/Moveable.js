@@ -44,10 +44,11 @@ var EscapeTheEdge;
                         translation.y = rect.y;
                         this.speed.y = 0;
                         this.cmpTransform.local.translation = translation;
-                        break;
+                        return true;
                     }
                 }
             }
+            return false;
             // for (let floor of level.getChildren()) {
             //     let rect: f.Rectangle = (<Floor>floor).getRectWorld();
             //     //console.log(rect.toString());
@@ -77,7 +78,7 @@ var EscapeTheEdge;
         } //close checkCollision
     } //close class
     Moveable.speedMax = new f.Vector2(1.5, 3); // units per second
-    Moveable.gravity = f.Vector2.Y(-2);
+    Moveable.gravity = f.Vector2.Y(-3);
     EscapeTheEdge.Moveable = Moveable;
 })(EscapeTheEdge || (EscapeTheEdge = {})); //close namespace
 //# sourceMappingURL=Moveable.js.map

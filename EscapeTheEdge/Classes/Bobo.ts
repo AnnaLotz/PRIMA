@@ -33,6 +33,7 @@ namespace EscapeTheEdge {
         constructor(_name: string = "Bobo") {
             super(_name);
             this.addComponent(new f.ComponentTransform());
+            this.cmpTransform.local.translateX(-1);
             for (let sprite of Bobo.sprites) {
                 let nodeSprite: NodeSprite = new NodeSprite(sprite.name, sprite);
                 nodeSprite.activate(false);
@@ -123,7 +124,6 @@ namespace EscapeTheEdge {
             // console.log(distance.x, distance.y);
             this.checkCollision(distance);
             
-
             this.checkHit(characters);
             // this.checkHit(EnemyBullets);
 
@@ -161,7 +161,7 @@ namespace EscapeTheEdge {
                 }
 
             }
-        }
+        } //close checkHit
 
     } //close class
 

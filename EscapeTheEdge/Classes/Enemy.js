@@ -2,26 +2,14 @@
 var EscapeTheEdge;
 (function (EscapeTheEdge) {
     var f = FudgeCore;
-    let ENEMYACTION;
-    (function (ENEMYACTION) {
-        ENEMYACTION["IDLE"] = "Idle";
-        ENEMYACTION["WALK"] = "Walk";
-        ENEMYACTION["JUMP"] = "Jump";
-    })(ENEMYACTION = EscapeTheEdge.ENEMYACTION || (EscapeTheEdge.ENEMYACTION = {}));
-    let ENEMYDIRECTION;
-    (function (ENEMYDIRECTION) {
-        ENEMYDIRECTION[ENEMYDIRECTION["LEFT"] = 0] = "LEFT";
-        ENEMYDIRECTION[ENEMYDIRECTION["RIGHT"] = 1] = "RIGHT";
-    })(ENEMYDIRECTION = EscapeTheEdge.ENEMYDIRECTION || (EscapeTheEdge.ENEMYDIRECTION = {}));
     class Enemy extends EscapeTheEdge.Moveable {
-        // private static sprites: Sprite[];
-        // private static speedMax: f.Vector2 = new f.Vector2(1.5, 5); // units per second
-        // private static gravity: f.Vector2 = f.Vector2.Y(-3);
-        // private action: ACTION;
-        // private time: f.Time = new f.Time();
-        // public speed: f.Vector3 = f.Vector3.ZERO();
-        constructor(_name = "Enemy") {
+        constructor(_floor, _name = "Enemy") {
             super(_name);
+            // private static gravity: f.Vector2 = f.Vector2.Y(-3);
+            // private action: ACTION;
+            // private time: f.Time = new f.Time();
+            // public speed: f.Vector3 = f.Vector3.ZERO();
+            this.direction = EscapeTheEdge.DIRECTION.RIGHT;
             this.update = (_event) => {
                 this.broadcastEvent(new CustomEvent("showNext"));
                 let timeFrame = f.Loop.timeFrameGame / 1000;
@@ -29,7 +17,12 @@ var EscapeTheEdge;
                 let distance = f.Vector3.SCALE(this.speed, timeFrame);
                 this.cmpTransform.local.translate(distance);
                 this.checkCollision(distance);
+                if (this.outOfWalkingRange())
+                    this.changeDirection();
             }; //close update
+            this.floor = _floor;
+            // this.walkRadius = _floorWidth;
+            // console.log(this.walkRadius);
             this.addComponent(new f.ComponentTransform());
             for (let sprite of Enemy.sprites) {
                 let nodeSprite = new EscapeTheEdge.NodeSprite(sprite.name, sprite);
@@ -37,8 +30,8 @@ var EscapeTheEdge;
                 nodeSprite.addEventListener("showNext", (_event) => { _event.currentTarget.showFrameNext(); }, true);
                 this.appendChild(nodeSprite);
             }
-            this.cmpTransform.local.scaling = new f.Vector3(1, 1, 1);
-            this.show(EscapeTheEdge.ACTION.IDLE);
+            this.speed.x = Enemy.speedMax.x;
+            this.act(EscapeTheEdge.ACTION.WALK, EscapeTheEdge.DIRECTION.RIGHT);
             f.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, this.update);
         } //close constructor
         static generateSprites(_txtImage) {
@@ -51,23 +44,54 @@ var EscapeTheEdge;
             Enemy.sprites.push(sprite); //(1, 68, 17, 14), 2
         } //close generateSprites
         act(_action, _direction) {
-            switch (_action) {
-                case EscapeTheEdge.ACTION.IDLE:
-                    this.speed.x = 0;
-                    break;
-                case EscapeTheEdge.ACTION.WALK:
-                    let direction = (_direction == EscapeTheEdge.DIRECTION.RIGHT ? 1 : -1);
-                    this.speed.x = Enemy.speedMax.x; // * direction;
+            let direction = (_direction == EscapeTheEdge.DIRECTION.RIGHT ? 1 : -1);
+            switch (_direction) {
+                case EscapeTheEdge.DIRECTION.LEFT:
+                    this.direction = EscapeTheEdge.DIRECTION.LEFT;
                     this.cmpTransform.local.rotation = f.Vector3.Y(90 - 90 * direction);
-                    // console.log(direction);
+                    console.log(this.speed.x);
                     break;
-                case EscapeTheEdge.ACTION.JUMP:
-                    this.speed.y = 2;
+                case EscapeTheEdge.DIRECTION.RIGHT:
+                    this.direction = EscapeTheEdge.DIRECTION.RIGHT;
+                    this.cmpTransform.local.rotation = f.Vector3.Y(90 - 90 * direction);
                     break;
             }
             this.show(_action);
         } //close act
+        changeDirection() {
+            if (this.direction == EscapeTheEdge.DIRECTION.LEFT)
+                this.act(EscapeTheEdge.ACTION.WALK, EscapeTheEdge.DIRECTION.RIGHT);
+            else if (this.direction == EscapeTheEdge.DIRECTION.RIGHT)
+                this.act(EscapeTheEdge.ACTION.WALK, EscapeTheEdge.DIRECTION.LEFT);
+        } //close changedirection
+        checkCollision(_distance) {
+            let rect = this.floor.getRectWorld();
+            let fallingVec = this.cmpTransform.local.translation.toVector2();
+            fallingVec.subtract(_distance.toVector2());
+            let hit = rect.isInside(fallingVec);
+            if (hit) {
+                let translation = this.cmpTransform.local.translation;
+                translation.y = rect.y;
+                this.speed.y = 0;
+                this.cmpTransform.local.translation = translation;
+                return true;
+            }
+            return false;
+        } //close checkCollision
+        outOfWalkingRange() {
+            // let hitNothing: boolean = true;
+            let rect = (this.floor).getTopRectWorld();
+            let hit = rect.isInside(this.cmpTransform.local.translation.toVector2());
+            if (hit) {
+                // hitNothing = false;
+                return false;
+            }
+            console.log("Out of walking range");
+            return true;
+        }
     } //close class
+    // private static sprites: Sprite[];
+    Enemy.speedMax = new f.Vector2(0.2, 2); // units per second
     EscapeTheEdge.Enemy = Enemy;
 })(EscapeTheEdge || (EscapeTheEdge = {})); //close namespace
 //# sourceMappingURL=Enemy.js.map

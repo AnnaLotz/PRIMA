@@ -5,7 +5,7 @@ namespace EscapeTheEdge {
     export class Moveable extends f.Node {
         protected static sprites: Sprite[];
         protected static speedMax: f.Vector2 = new f.Vector2(1.5, 3); // units per second
-        protected static gravity: f.Vector2 = f.Vector2.Y(-2);
+        protected static gravity: f.Vector2 = f.Vector2.Y(-3);
         // private action: ACTION;
         // private time: f.Time = new f.Time();
         public speed: f.Vector3 = f.Vector3.ZERO();
@@ -35,32 +35,32 @@ namespace EscapeTheEdge {
         } //close update
 
 
-        protected checkCollision(_distance?: f.Vector3): void {
-
+        protected checkCollision(_distance: f.Vector3): boolean {
             for (let floor of level.getChildren()) {
                 let rect: f.Rectangle = (<Floor>floor).getRectWorld();
                 //console.log(rect.toString());
                 let fallingVec: f.Vector2 = this.cmpTransform.local.translation.toVector2();
                 fallingVec.subtract(_distance.toVector2());
-                
-                let hit: boolean = rect.isInside(fallingVec);  
+                let hit: boolean = rect.isInside(fallingVec);
                 if (hit) {
                     let translation: f.Vector3 = this.cmpTransform.local.translation;
                     if (floor instanceof Wall) {
+
                         // console.log(floor);
                         // translation.x = + rect.width;
                         translation.x = rect.x + (floor.side == 1 ? - 0.1 : + rect.width + 0.1);
                         this.speed.x = 0;
                         this.cmpTransform.local.translation = translation;
-                    } else if ( this.speed.y < 0) {
+
+                    } else if (this.speed.y < 0) {
                         translation.y = rect.y;
                         this.speed.y = 0;
                         this.cmpTransform.local.translation = translation;
-                        break;
+                        return true;
                     }
-                    
                 }
             }
+            return false;
 
             // for (let floor of level.getChildren()) {
             //     let rect: f.Rectangle = (<Floor>floor).getRectWorld();

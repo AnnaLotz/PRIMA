@@ -42,15 +42,6 @@ namespace EscapeTheEdge {
         mover = new f.Node("Mover");
         items = new f.Node("Items");
         characters = new f.Node("Characters");
-        level = new Level(1);
-        rootNode.appendChild(level);
-        rootNode.appendChild(mover);
-        rootNode.appendChild(characters);
-        rootNode.appendChild(items);
-
-
-        mover.addComponent(new f.ComponentTransform());
-
         crc2 = _canvas.getContext("2d");
         let img: HTMLImageElement = document.querySelector("img");
         let txtFigures: f.TextureImage = new f.TextureImage();
@@ -60,17 +51,26 @@ namespace EscapeTheEdge {
         characters.appendChild(bobo);
 
         Enemy.generateSprites(txtFigures);
-        enemy = new Enemy("Enemy");
-        characters.appendChild(enemy);
-        enemy.cmpTransform.local.translateX(-1.5);
+        // enemy = new Enemy("Enemy");
+        // characters.appendChild(enemy);
+        // enemy.cmpTransform.local.translateX(-1.5);
 
         BoboBullet.generateSprites(txtFigures);
+        level = new Level(1);
+        rootNode.appendChild(level);
+        rootNode.appendChild(mover);
+        rootNode.appendChild(characters);
+        rootNode.appendChild(items);
+
+        mover.addComponent(new f.ComponentTransform());
+
+        
 
 
         let camera: f.Node = new f.Node("Camera");
         let cmpCam: f.ComponentCamera = new f.ComponentCamera();
         camera.addComponent(cmpCam);
-        cmpCam.pivot.translateZ(3.5);
+        cmpCam.pivot.translateZ(5);
         cmpCam.pivot.lookAt(f.Vector3.ZERO());
         cmpCam.pivot.translateY(0.3);
         cmpCam.backgroundColor = f.Color.CSS("grey");
@@ -93,7 +93,7 @@ namespace EscapeTheEdge {
         viewport.initialize("Viewport", rootNode, camera.getComponent(f.ComponentCamera), _canvas);
 
         //starting game
-
+        
         f.RenderManager.update();
         viewport.draw();
 
