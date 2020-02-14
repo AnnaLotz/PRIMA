@@ -125,6 +125,7 @@ namespace EscapeTheEdge {
         }// close checkHit
 
         protected kill(_enemy: Enemy): void {
+            Sound.play("enemyDeath");
             characters.removeChild(_enemy);
             this.removeBullet();
         }

@@ -38,6 +38,7 @@ namespace EscapeTheEdge {
 
     function startGame(_canvas: HTMLCanvasElement): void {
         styleGameCanvas(); //-> Style.ts
+        
 
         rootNode = new f.Node("RootNode");
         mover = new f.Node("Mover");
@@ -95,6 +96,8 @@ namespace EscapeTheEdge {
 
         //starting game
 
+        Sound.init();
+        Sound.playMusic();
         f.RenderManager.update();
         viewport.draw();
 

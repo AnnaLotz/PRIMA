@@ -74,6 +74,7 @@ namespace EscapeTheEdge {
                     break;
                 case ACTION.JUMP:
                     // if (this.speed.y == 0) //für kein doppelSprung
+                    Sound.play("boboJump");
                     this.speed.y = this.speedMax.y;
                     break;
             }
@@ -92,10 +93,12 @@ namespace EscapeTheEdge {
                     this.speedMax = new f.Vector2(1, 2);
                     break;
                 case SIZE.SMALL:
+                    Sound.play("boboShrink");
                     this.cmpTransform.local.scaling = new f.Vector3(0.6, 0.6, 1);
                     this.speedMax = new f.Vector2(5, 2);
                     break;
                 case SIZE.BIG:
+                    Sound.play("boboGrow");
                     this.cmpTransform.local.scaling = new f.Vector3(1.5, 1.5, 1);
                     this.speedMax = new f.Vector2(0.5, 2.2);
                     break;
@@ -104,6 +107,7 @@ namespace EscapeTheEdge {
 
         public shoot(_direction: number): void {
             if (this.mana >= 5) {
+                Sound.play("boboShoot");
                 console.log("shoot " + _direction);
                 this.bullet = new BoboBullet(_direction);
                 items.appendChild(this.bullet);
@@ -139,6 +143,7 @@ namespace EscapeTheEdge {
             }
 
             if (this.health <= 0) {
+                Sound.play("boboDeath");
                 gameOver();
             } else if (this.health >= 100) {
                 this.health = 100;

@@ -66,6 +66,8 @@ var EscapeTheEdge;
         EscapeTheEdge.viewport = new f.Viewport();
         EscapeTheEdge.viewport.initialize("Viewport", EscapeTheEdge.rootNode, camera.getComponent(f.ComponentCamera), _canvas);
         //starting game
+        EscapeTheEdge.Sound.init();
+        EscapeTheEdge.Sound.playMusic();
         f.RenderManager.update();
         EscapeTheEdge.viewport.draw();
         document.addEventListener("keydown", handleKeyboard);

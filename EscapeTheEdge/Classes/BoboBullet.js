@@ -100,6 +100,7 @@ var EscapeTheEdge;
             }
         } // close checkHit
         kill(_enemy) {
+            EscapeTheEdge.Sound.play("enemyDeath");
             EscapeTheEdge.characters.removeChild(_enemy);
             this.removeBullet();
         }

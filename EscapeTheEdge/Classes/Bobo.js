@@ -55,6 +55,7 @@ var EscapeTheEdge;
                     this.mana = 100;
                 }
                 if (this.health <= 0) {
+                    EscapeTheEdge.Sound.play("boboDeath");
                     EscapeTheEdge.gameOver();
                 }
                 else if (this.health >= 100) {
@@ -95,6 +96,7 @@ var EscapeTheEdge;
                     break;
                 case ACTION.JUMP:
                     // if (this.speed.y == 0) //für kein doppelSprung
+                    EscapeTheEdge.Sound.play("boboJump");
                     this.speed.y = this.speedMax.y;
                     break;
             }
@@ -112,10 +114,12 @@ var EscapeTheEdge;
                     this.speedMax = new f.Vector2(1, 2);
                     break;
                 case SIZE.SMALL:
+                    EscapeTheEdge.Sound.play("boboShrink");
                     this.cmpTransform.local.scaling = new f.Vector3(0.6, 0.6, 1);
                     this.speedMax = new f.Vector2(5, 2);
                     break;
                 case SIZE.BIG:
+                    EscapeTheEdge.Sound.play("boboGrow");
                     this.cmpTransform.local.scaling = new f.Vector3(1.5, 1.5, 1);
                     this.speedMax = new f.Vector2(0.5, 2.2);
                     break;
@@ -123,6 +127,7 @@ var EscapeTheEdge;
         } //close toSize
         shoot(_direction) {
             if (this.mana >= 5) {
+                EscapeTheEdge.Sound.play("boboShoot");
                 console.log("shoot " + _direction);
                 this.bullet = new EscapeTheEdge.BoboBullet(_direction);
                 EscapeTheEdge.items.appendChild(this.bullet);
