@@ -27,7 +27,7 @@ var EscapeTheEdge;
         showMenue();
         EscapeTheEdge.canvas = document.querySelector("canvas");
         f.RenderManager.initialize(true, false);
-        startGame();
+        // startGame();
     } //close init
     function showMenue() {
         document.getElementById("gameWrapper").style.display = "none";

@@ -43,7 +43,7 @@ namespace EscapeTheEdge {
 
         canvas = document.querySelector("canvas");
         f.RenderManager.initialize(true, false);
-        startGame();
+        // startGame();
     }//close init
 
     function showMenue(): void {
