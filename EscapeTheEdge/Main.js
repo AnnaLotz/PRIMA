@@ -139,5 +139,9 @@ var EscapeTheEdge;
         f.Loop.stop();
     }
     EscapeTheEdge.gameOver = gameOver;
+    function randNumb(_min, _max) {
+        return Math.random() * (_max - _min) + _min;
+    }
+    EscapeTheEdge.randNumb = randNumb;
 })(EscapeTheEdge || (EscapeTheEdge = {})); //close Namespace
 //# sourceMappingURL=Main.js.map

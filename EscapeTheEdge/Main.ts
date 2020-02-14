@@ -64,7 +64,7 @@ namespace EscapeTheEdge {
 
         mover.addComponent(new f.ComponentTransform());
 
-        
+
 
 
         let camera: f.Node = new f.Node("Camera");
@@ -93,7 +93,7 @@ namespace EscapeTheEdge {
         viewport.initialize("Viewport", rootNode, camera.getComponent(f.ComponentCamera), _canvas);
 
         //starting game
-        
+
         f.RenderManager.update();
         viewport.draw();
 
@@ -149,7 +149,7 @@ namespace EscapeTheEdge {
                 gamestate = GAMESTATE.RUNNING;
             }
         }
-        if (_event.code == f.KEYBOARD_CODE.R && _event.type == "keydown") 
+        if (_event.code == f.KEYBOARD_CODE.R && _event.type == "keydown")
             console.log("Restart");
 
         // console.log(_event.code);
@@ -176,5 +176,9 @@ namespace EscapeTheEdge {
 
     export function gameOver(): void {
         f.Loop.stop();
+    }
+
+    export function randNumb(_min: number, _max: number): number {
+        return Math.random() * (_max - _min) + _min;
     }
 } //close Namespace

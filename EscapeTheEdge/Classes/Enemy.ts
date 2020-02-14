@@ -8,7 +8,7 @@ namespace EscapeTheEdge {
         // private action: ACTION;
         // private time: f.Time = new f.Time();
         // public speed: f.Vector3 = f.Vector3.ZERO();
-        direction: DIRECTION = DIRECTION.RIGHT;
+        direction: DIRECTION;
         floor: Floor;
 
         constructor(_floor: Floor, _name: string = "Enemy") {
@@ -31,8 +31,13 @@ namespace EscapeTheEdge {
                 this.appendChild(nodeSprite);
             }
 
-            this.speed.x = Enemy.speedMax.x;
-            this.act(ACTION.WALK, DIRECTION.RIGHT);
+            this.speed.x = randNumb(0.1, Enemy.speedMax.x);
+
+            if (randNumb(0, 1) < 0.5)
+                this.direction = DIRECTION.LEFT;
+            else
+                this.direction = DIRECTION.LEFT;
+            this.act(ACTION.WALK, this.direction);
             f.Loop.addEventListener(f.EVENT.LOOP_FRAME, this.update);
         } //close constructor
 
@@ -53,7 +58,7 @@ namespace EscapeTheEdge {
                 case DIRECTION.LEFT:
                     this.direction = DIRECTION.LEFT;
                     this.cmpTransform.local.rotation = f.Vector3.Y(90 - 90 * direction);
-                    console.log(this.speed.x);
+                    // console.log(this.speed.x);
                     break;
                 case DIRECTION.RIGHT:
                     this.direction = DIRECTION.RIGHT;
@@ -82,7 +87,7 @@ namespace EscapeTheEdge {
             if (this.direction == DIRECTION.LEFT)
                 this.act(ACTION.WALK, DIRECTION.RIGHT);
             else if (this.direction == DIRECTION.RIGHT)
-                this.act(ACTION.WALK, DIRECTION.LEFT)
+                this.act(ACTION.WALK, DIRECTION.LEFT);
         } //close changedirection
 
         protected checkCollision(_distance: f.Vector3): boolean {
@@ -110,7 +115,7 @@ namespace EscapeTheEdge {
                 return false;
 
             }
-            console.log("Out of walking range");
+            // console.log("Out of walking range");
             return true;
         }
     } //close class

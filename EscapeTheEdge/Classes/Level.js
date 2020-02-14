@@ -33,11 +33,11 @@ var EscapeTheEdge;
             for (let i = 0; i <= this.height; i += 0.2) {
                 floor = new EscapeTheEdge.Floor();
                 // floor.cmpTransform.local.scaleX(this.randNumb(0.5, 3));
-                floor.cmpTransform.local.scaleY(this.randNumb(0.08, 0.17));
-                floor.cmpTransform.local.translateX(this.randNumb(-1.9, 1.9));
-                floor.cmpTransform.local.translateY(this.randNumb(-0.2, 0.2) + i);
-                // if (this.randNumb(0, 10) < 1 && floor.cmpTransform.local.translation.y >= 1) {
-                if (i == 0.4) {
+                floor.cmpTransform.local.scaleY(EscapeTheEdge.randNumb(0.08, 0.17));
+                floor.cmpTransform.local.translateX(EscapeTheEdge.randNumb(-1.9, 1.9));
+                floor.cmpTransform.local.translateY(EscapeTheEdge.randNumb(-0.2, 0.2) + i);
+                if (EscapeTheEdge.randNumb(0, 10) < 1 && floor.cmpTransform.local.translation.y >= 1) {
+                    // if (i == 0.4) {
                     floor.createEnemy();
                 }
                 this.appendChild(floor);
@@ -52,9 +52,6 @@ var EscapeTheEdge;
             //     this.appendChild(floor);
             // }
         } //close createLevel
-        randNumb(_min, _max) {
-            return Math.random() * (_max - _min) + _min;
-        }
     } //close class
     EscapeTheEdge.Level = Level;
 })(EscapeTheEdge || (EscapeTheEdge = {})); //close Namespace

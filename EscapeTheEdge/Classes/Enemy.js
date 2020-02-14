@@ -5,11 +5,6 @@ var EscapeTheEdge;
     class Enemy extends EscapeTheEdge.Moveable {
         constructor(_floor, _name = "Enemy") {
             super(_name);
-            // private static gravity: f.Vector2 = f.Vector2.Y(-3);
-            // private action: ACTION;
-            // private time: f.Time = new f.Time();
-            // public speed: f.Vector3 = f.Vector3.ZERO();
-            this.direction = EscapeTheEdge.DIRECTION.RIGHT;
             this.update = (_event) => {
                 this.broadcastEvent(new CustomEvent("showNext"));
                 let timeFrame = f.Loop.timeFrameGame / 1000;
@@ -30,8 +25,12 @@ var EscapeTheEdge;
                 nodeSprite.addEventListener("showNext", (_event) => { _event.currentTarget.showFrameNext(); }, true);
                 this.appendChild(nodeSprite);
             }
-            this.speed.x = Enemy.speedMax.x;
-            this.act(EscapeTheEdge.ACTION.WALK, EscapeTheEdge.DIRECTION.RIGHT);
+            this.speed.x = EscapeTheEdge.randNumb(0.1, Enemy.speedMax.x);
+            if (EscapeTheEdge.randNumb(0, 1) < 0.5)
+                this.direction = EscapeTheEdge.DIRECTION.LEFT;
+            else
+                this.direction = EscapeTheEdge.DIRECTION.LEFT;
+            this.act(EscapeTheEdge.ACTION.WALK, this.direction);
             f.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, this.update);
         } //close constructor
         static generateSprites(_txtImage) {
@@ -49,7 +48,7 @@ var EscapeTheEdge;
                 case EscapeTheEdge.DIRECTION.LEFT:
                     this.direction = EscapeTheEdge.DIRECTION.LEFT;
                     this.cmpTransform.local.rotation = f.Vector3.Y(90 - 90 * direction);
-                    console.log(this.speed.x);
+                    // console.log(this.speed.x);
                     break;
                 case EscapeTheEdge.DIRECTION.RIGHT:
                     this.direction = EscapeTheEdge.DIRECTION.RIGHT;
@@ -86,7 +85,7 @@ var EscapeTheEdge;
                 // hitNothing = false;
                 return false;
             }
-            console.log("Out of walking range");
+            // console.log("Out of walking range");
             return true;
         }
     } //close class
