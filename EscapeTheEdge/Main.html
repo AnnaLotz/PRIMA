@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Escape The Edge</title>
+    <script src="Style.js"></script>
     <script src="../EscapeTheEdge/FUDGE/FudgeCore.js"></script>
     <script src="Classes/SpriteGenerator.js"></script>
     <script src="Classes/Moveable.js"></script>
@@ -23,11 +24,13 @@
 <body>
     <canvas width="1000" height="700">
     </canvas>
-    <div id="health-holder">
-        <div id="health"></div>
-    </div>
-    <div id="mana-holder">
-        <div id="mana"></div>
+    <div id="stats">
+        <div id="health-holder" class="holder">
+            <div id="health"></div>
+        </div>
+        <div id="mana-holder" class="holder">
+            <div id="mana"></div>
+        </div>
     </div>
     <img src="../Sprites/FiguresNew144px.png">
     <!-- <p>Made by Anna Lotz with FUDGE</p> -->

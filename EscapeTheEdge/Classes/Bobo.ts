@@ -93,7 +93,7 @@ namespace EscapeTheEdge {
                     break;
                 case SIZE.SMALL:
                     this.cmpTransform.local.scaling = new f.Vector3(0.6, 0.6, 1);
-                    this.speedMax = new f.Vector2(3, 1.5);
+                    this.speedMax = new f.Vector2(5, 2);
                     break;
                 case SIZE.BIG:
                     this.cmpTransform.local.scaling = new f.Vector3(1.5, 1.5, 1);
@@ -118,12 +118,12 @@ namespace EscapeTheEdge {
             this.speed.y += Bobo.gravity.y * timeFrame;
             let distance: f.Vector3 = f.Vector3.SCALE(this.speed, timeFrame);
             let halfDist: f.Vector3 = new f.Vector3(distance.x / 2, distance.y / 2, distance.z / 2);
-            
+
             this.cmpTransform.local.translate(distance);
             this.checkCollision(halfDist);
             // console.log(distance.x, distance.y);
             this.checkCollision(distance);
-            
+
             this.checkHit(characters);
             // this.checkHit(EnemyBullets);
 
@@ -154,7 +154,7 @@ namespace EscapeTheEdge {
                     let dif: f.Vector3 = f.Vector3.DIFFERENCE(evilPos, boboPos);
                     let distance: number = Math.abs(Math.sqrt(dif.x * dif.x + dif.y * dif.y + dif.z * dif.z));
                     // console.log(distance);
-                    if (distance < 0.1) {
+                    if (distance < 0.15) {
                         this.health -= 30;
 
                     }

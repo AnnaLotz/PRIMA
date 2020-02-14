@@ -7,7 +7,6 @@ var EscapeTheEdge;
     let mover;
     let enemy;
     let crc2;
-    let canvas;
     let GAMESTATE;
     (function (GAMESTATE) {
         GAMESTATE["STARTSCREEN"] = "Startscreen";
@@ -18,11 +17,12 @@ var EscapeTheEdge;
     let keysPressed = {};
     window.addEventListener("load", init);
     function init(_event) {
-        canvas = document.querySelector("canvas");
+        EscapeTheEdge.canvas = document.querySelector("canvas");
         f.RenderManager.initialize(true, false);
-        startGame(canvas);
+        startGame(EscapeTheEdge.canvas);
     } //close init
     function startGame(_canvas) {
+        EscapeTheEdge.styleGameCanvas(); //-> Style.ts
         EscapeTheEdge.rootNode = new f.Node("RootNode");
         mover = new f.Node("Mover");
         EscapeTheEdge.items = new f.Node("Items");
@@ -85,7 +85,7 @@ var EscapeTheEdge;
     function updateCamera() {
         let cmpCam = mover.getChildrenByName("Camera")[0].getComponent(f.ComponentCamera);
         let boboPos = EscapeTheEdge.bobo.cmpTransform.local.translation;
-        cmpCam.pivot.translation = new f.Vector3(boboPos.x, boboPos.y + 0.8, cmpCam.pivot.translation.z);
+        cmpCam.pivot.translation = new f.Vector3(boboPos.x / 2, boboPos.y + 0.8, cmpCam.pivot.translation.z);
     } //close updateCamera
     function removeNodeFromNode(_toRemove, _fromNode) {
         console.log("Removed" + _toRemove);

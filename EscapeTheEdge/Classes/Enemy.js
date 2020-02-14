@@ -90,7 +90,7 @@ var EscapeTheEdge;
         }
     } //close class
     // private static sprites: Sprite[];
-    Enemy.speedMax = new f.Vector2(0.2, 2); // units per second
+    Enemy.speedMax = new f.Vector2(0.8, 2); // units per second
     EscapeTheEdge.Enemy = Enemy;
 })(EscapeTheEdge || (EscapeTheEdge = {})); //close namespace
 //# sourceMappingURL=Enemy.js.map

@@ -3,7 +3,7 @@ namespace EscapeTheEdge {
 
     export class Enemy extends Moveable {
         // private static sprites: Sprite[];
-        protected static speedMax: f.Vector2 = new f.Vector2(0.2, 2); // units per second
+        protected static speedMax: f.Vector2 = new f.Vector2(0.8, 2); // units per second
         // private static gravity: f.Vector2 = f.Vector2.Y(-3);
         // private action: ACTION;
         // private time: f.Time = new f.Time();

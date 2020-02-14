@@ -4,22 +4,36 @@ body {
 img {
     display: none;
 }
-#health-holder {
+canvas {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+#stats {
+    margin: auto;
+    /* width: 50%; */
+    background-color: rgba(0, 0, 255, 0.224);
+}
+.holder {
     position: relative;
-    margin-left: 50px;
-    margin-top: -40px;
-    width: 400px;
-    height: 20px;
+    margin-left: auto;
+    margin-right: auto;
     border: black solid 1px;
+    height: 20px;
+    width: 90%;
+    margin-top: -40px;
+}
+#health-holder {
+    padding-left: 10;
+    margin-left: 10;
+    /* margin-top: -40px; */
     background:#82624f
 }
 #mana-holder {
-    position: relative;
-    margin-left: 550px;
-    margin-top: -20px;
-    width: 400px;
-    height: 20px;
-    border: black solid 1px;
+    padding-right: 10;
+    /* margin-left: 55%; */
     background:#4d4967
 }
 

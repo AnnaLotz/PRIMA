@@ -113,7 +113,7 @@ var EscapeTheEdge;
                     break;
                 case SIZE.SMALL:
                     this.cmpTransform.local.scaling = new f.Vector3(0.6, 0.6, 1);
-                    this.speedMax = new f.Vector2(3, 1.5);
+                    this.speedMax = new f.Vector2(5, 2);
                     break;
                 case SIZE.BIG:
                     this.cmpTransform.local.scaling = new f.Vector3(1.5, 1.5, 1);
@@ -137,7 +137,7 @@ var EscapeTheEdge;
                     let dif = f.Vector3.DIFFERENCE(evilPos, boboPos);
                     let distance = Math.abs(Math.sqrt(dif.x * dif.x + dif.y * dif.y + dif.z * dif.z));
                     // console.log(distance);
-                    if (distance < 0.1) {
+                    if (distance < 0.15) {
                         this.health -= 30;
                     }
                 }
