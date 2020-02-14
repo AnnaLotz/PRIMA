@@ -73,9 +73,10 @@ namespace EscapeTheEdge {
                     // console.log(direction);
                     break;
                 case ACTION.JUMP:
-                    // if (this.speed.y == 0) //für kein doppelSprung
+                    // if (this.speed.y == 0) { //für kein doppelSprung 
                     Sound.play("boboJump");
                     this.speed.y = this.speedMax.y;
+                    // }
                     break;
             }
             this.show(_action);

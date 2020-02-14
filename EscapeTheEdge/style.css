@@ -28,7 +28,7 @@ h1 {
     text-align: center;
 }
 
-#menue button {
+button {
     display: block;
     text-align: center;
     width: 20%;
@@ -44,7 +44,7 @@ h1 {
     transition-duration: 0.2s;
 }
 
-#startMenue button:hover {
+button:hover {
     background-color: black;
     color: #f89642;
 }
@@ -97,4 +97,12 @@ canvas {
     background:#285eff;
     -webkit-transition: width 500ms
 }
+
+#endScreen {
+    margin: auto;
+    text-align: center;
+    padding-top: 10%;
+}
+
+
     

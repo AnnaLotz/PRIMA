@@ -6,12 +6,18 @@ var EscapeTheEdge;
         constructor() {
             super("Floor");
             this.addComponent(new f.ComponentTransform());
-            this.addComponent(new f.ComponentMaterial(Floor.material));
+            // this.addComponent(new f.ComponentMaterial(Floor.material));
             let cmpMesh = new f.ComponentMesh(Floor.mesh);
             //cmpMesh.pivot.translateY(-0.5);
             cmpMesh.pivot = Floor.pivot;
             this.addComponent(cmpMesh);
         } //close constructor
+        createMaterial(_levelHeight) {
+            if (this.cmpTransform.local.translation.y >= _levelHeight / 1.2)
+                this.addComponent(new f.ComponentMaterial(Floor.goalMaterial));
+            else
+                this.addComponent(new f.ComponentMaterial(Floor.material));
+        }
         createEnemy() {
             let enemy = new EscapeTheEdge.Enemy(this);
             this.enemy = enemy;
@@ -47,6 +53,7 @@ var EscapeTheEdge;
     } //close class
     Floor.mesh = new f.MeshSprite();
     Floor.material = new f.Material("Floor", f.ShaderUniColor, new f.CoatColored(new f.Color(0.18, 0.18, 0.18, 1)));
+    Floor.goalMaterial = new f.Material("Floor", f.ShaderUniColor, new f.CoatColored(new f.Color(1, 0.9, 0.25, 0.8)));
     Floor.pivot = f.Matrix4x4.TRANSLATION(f.Vector3.Y(-0.5));
     EscapeTheEdge.Floor = Floor;
 })(EscapeTheEdge || (EscapeTheEdge = {})); //close namespace

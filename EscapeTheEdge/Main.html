@@ -37,10 +37,13 @@
 
         <div id="controlPage">
             <h2>Steuerung</h2>
-            <p>Oh nein, der kleine Bobo hat sich verirrt und sitzt nun alleine in der eckigen Unterwelt fest! Hilf ihm, wieder in das runde Land und zu seiner Familie zurück zu kehren.</p>
+            <p>Oh nein, der kleine Bobo hat sich verirrt und sitzt nun alleine in der eckigen Unterwelt fest! Hilf ihm,
+                wieder in das runde Land und zu seiner Familie zurück zu kehren.</p>
             <p>Bewege dich mit <em>"A/D" und Leertaste</em> hin und her.</p>
-            <p>Mit <em>"Pfeiltaste hoch/runter"</em> kannst du deine Größe verändern und daduch höher oder weiter springen. Aber pass auf, du verlierst in diesem Zustand ständig Mana!</p>
-            <p>Mit <em>"Pfeiltaste rechts/links"</em> kannst du kleine Geschosse verschießen und dich gegen Gegner wehren, aber auch dies kostet dich Mana!</p>
+            <p>Mit <em>"Pfeiltaste hoch/runter"</em> kannst du deine Größe verändern und daduch höher oder weiter
+                springen. Aber pass auf, du verlierst in diesem Zustand ständig Mana!</p>
+            <p>Mit <em>"Pfeiltaste rechts/links"</em> kannst du kleine Geschosse verschießen und dich gegen Gegner
+                wehren, aber auch dies kostet dich Mana!</p>
         </div>
 
         <div id="creditsPage">
@@ -53,6 +56,8 @@
 
         <button id="backButton">Zurück</button>
     </div>
+
+
     <div id="gameWrapper">
         <canvas width="1000" height="700">
         </canvas>
@@ -66,6 +71,18 @@
         </div>
         <img src="../Sprites/FiguresNew144px.png">
         <!-- <p>Made by Anna Lotz with FUDGE</p> -->
+    </div>
+    <div id="endScreen">
+        <div id="deathScreen">
+            <h1>GAME OVER</h1>
+            <p>Erreichte Höhe: <span id="score"></span> </p>
+        </div>
+
+        <div id="winScreen">
+            <h1>Du hast gewonnen!</h1>
+            <p>Lust auf noch eine Runde?</p>
+        </div>
+        <button id="playAgain">Play again</button>
     </div>
 
     <audio id="gameMusic" src="Sounds/music/Long Away Home.mp3" type="audio/mpeg"></audio>

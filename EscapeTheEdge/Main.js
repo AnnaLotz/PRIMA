@@ -5,13 +5,13 @@ var EscapeTheEdge;
 (function (EscapeTheEdge) {
     var f = FudgeCore;
     let mover;
-    let GAMESTATE;
-    (function (GAMESTATE) {
-        GAMESTATE["STARTSCREEN"] = "Startscreen";
-        GAMESTATE["RUNNING"] = "Running";
-        GAMESTATE["PAUSE"] = "Pause";
-    })(GAMESTATE || (GAMESTATE = {}));
-    let gamestate = GAMESTATE.STARTSCREEN;
+    let crc2;
+    // enum GAMESTATE {
+    //     STARTSCREEN = "Startscreen",
+    //     RUNNING = "Running",
+    //     PAUSE = "Pause"
+    // }
+    // let gamestate: GAMESTATE = GAMESTATE.STARTSCREEN;
     EscapeTheEdge.musicMuted = false;
     EscapeTheEdge.soundMuted = false;
     let keysPressed = {};
@@ -23,15 +23,18 @@ var EscapeTheEdge;
         document.getElementById("soundButton").addEventListener("click", toggleSounds);
         document.getElementById("creditsButton").addEventListener("click", showCredits);
         document.getElementById("backButton").addEventListener("click", showMenue);
+        document.getElementById("playAgain").addEventListener("click", playAgain);
         showMenue();
         EscapeTheEdge.canvas = document.querySelector("canvas");
         f.RenderManager.initialize(true, false);
+        startGame();
     } //close init
     function showMenue() {
         document.getElementById("gameWrapper").style.display = "none";
         document.getElementById("controlPage").style.display = "none";
         document.getElementById("creditsPage").style.display = "none";
         document.getElementById("backButton").style.display = "none";
+        document.getElementById("endScreen").style.display = "none";
         document.getElementById("menueButtons").style.display = "initial";
     }
     function showControls() {
@@ -74,7 +77,7 @@ var EscapeTheEdge;
         mover = new f.Node("Mover");
         EscapeTheEdge.items = new f.Node("Items");
         EscapeTheEdge.characters = new f.Node("Characters");
-        // crc2 = _canvas.getContext("2d");
+        crc2 = EscapeTheEdge.canvas.getContext("2d");
         let img = document.querySelector("img");
         let txtFigures = new f.TextureImage();
         txtFigures.image = img;
@@ -119,7 +122,7 @@ var EscapeTheEdge;
         EscapeTheEdge.viewport.draw();
         document.addEventListener("keydown", handleKeyboard);
         document.addEventListener("keyup", handleKeyboard);
-        gamestate = GAMESTATE.RUNNING;
+        // gamestate = GAMESTATE.RUNNING;
         f.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, update);
         f.Loop.start(f.LOOP_MODE.TIME_GAME, 10);
     } //close startGame
@@ -130,6 +133,9 @@ var EscapeTheEdge;
         f.RenderManager.update();
         document.getElementById("health").style.width = EscapeTheEdge.bobo.health + "%";
         document.getElementById("mana").style.width = EscapeTheEdge.bobo.mana + "%";
+        if (EscapeTheEdge.bobo.cmpTransform.local.translation.y >= EscapeTheEdge.level.height) {
+            win();
+        }
     } //close update
     function updateCamera() {
         let cmpCam = mover.getChildrenByName("Camera")[0].getComponent(f.ComponentCamera);
@@ -186,8 +192,23 @@ var EscapeTheEdge;
     function gameOver() {
         EscapeTheEdge.Sound.stopMusic();
         f.Loop.stop();
-    }
+        document.getElementById("gameWrapper").style.display = "none";
+        document.getElementById("endScreen").style.display = "initial";
+        document.getElementById("winScreen").style.display = "none";
+        document.getElementById("score").innerText = (Number(EscapeTheEdge.bobo.cmpTransform.local.translation.y.toFixed(1)) * 10).toString();
+    } //close gameOver
     EscapeTheEdge.gameOver = gameOver;
+    function win() {
+        f.Loop.stop();
+        EscapeTheEdge.Sound.play("win");
+        document.getElementById("gameWrapper").style.display = "none";
+        document.getElementById("endScreen").style.display = "initial";
+        document.getElementById("deathScreen").style.display = "none";
+    } //close win
+    EscapeTheEdge.win = win;
+    function playAgain() {
+        location.reload();
+    }
     function randNumb(_min, _max) {
         return Math.random() * (_max - _min) + _min;
     }
