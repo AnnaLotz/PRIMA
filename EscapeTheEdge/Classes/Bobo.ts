@@ -22,7 +22,7 @@ namespace EscapeTheEdge {
         public health: number = 100;
         manaCostToShoot: number;
         manaCostToResize: number;
-        
+
         protected enemyDamage: number;
 
         // private static sprites: Sprite[];
@@ -65,7 +65,7 @@ namespace EscapeTheEdge {
             Bobo.sprites.push(sprite);
         } //close generate Sprites
 
-        
+
 
         public act(_action: ACTION, _direction?: DIRECTION): void {
             switch (_action) {
@@ -80,10 +80,10 @@ namespace EscapeTheEdge {
                     // console.log(direction);
                     break;
                 case ACTION.JUMP:
-                    // if (this.speed.y == 0) { //für kein doppelSprung 
-                    Sound.play("boboJump");
-                    this.speed.y = this.speedMax.y;
-                    // }
+                    if (this.speed.y == 0) { //für kein doppelSprung 
+                        Sound.play("boboJump");
+                        this.speed.y = this.speedMax.y;
+                    }
                     break;
             }
             this.show(_action);
@@ -157,7 +157,7 @@ namespace EscapeTheEdge {
                 this.health = 100;
             }
         } //close update
-        
+
         protected fetchData(): void {
             this.enemyDamage = data[0].enemy[0].damageToBobo;
             this.manaCostToShoot = data[0].bobo[0].manaCostToShoot;
