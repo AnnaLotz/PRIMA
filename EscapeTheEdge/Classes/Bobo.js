@@ -45,7 +45,7 @@ var EscapeTheEdge;
                 // this.checkHit(EnemyBullets);
                 //mana abzeihen für größe
                 if (this.size != SIZE.MEDIUM) {
-                    this.mana -= 0.5;
+                    this.mana -= 0.4;
                     console.log("Mana: " + this.mana);
                 }
                 if (this.mana < 0) {
@@ -95,10 +95,10 @@ var EscapeTheEdge;
                     // console.log(direction);
                     break;
                 case ACTION.JUMP:
-                    // if (this.speed.y == 0) { //für kein doppelSprung 
-                    EscapeTheEdge.Sound.play("boboJump");
-                    this.speed.y = this.speedMax.y;
-                    // }
+                    if (this.speed.y == 0) { //für kein doppelSprung 
+                        EscapeTheEdge.Sound.play("boboJump");
+                        this.speed.y = this.speedMax.y;
+                    }
                     break;
             }
             this.show(_action);
@@ -127,12 +127,12 @@ var EscapeTheEdge;
             }
         } //close toSize
         shoot(_direction) {
-            if (this.mana >= 5) {
+            if (this.mana >= 2) {
                 EscapeTheEdge.Sound.play("boboShoot");
                 console.log("shoot " + _direction);
                 this.bullet = new EscapeTheEdge.BoboBullet(_direction);
                 EscapeTheEdge.items.appendChild(this.bullet);
-                this.mana -= 5;
+                this.mana -= 2;
             }
         } //close shoot
         checkHit(_object) {
@@ -144,7 +144,7 @@ var EscapeTheEdge;
                     let distance = Math.abs(Math.sqrt(dif.x * dif.x + dif.y * dif.y + dif.z * dif.z));
                     // console.log(distance);
                     if (distance < 0.15) {
-                        this.health -= 30;
+                        this.health -= 20;
                     }
                 }
             }

@@ -5,6 +5,7 @@ var EscapeTheEdge;
     class Enemy extends EscapeTheEdge.Moveable {
         constructor(_floor, _name = "Enemy") {
             super(_name);
+            this.spawnRate = 2;
             this.update = (_event) => {
                 this.broadcastEvent(new CustomEvent("showNext"));
                 let timeFrame = f.Loop.timeFrameGame / 1000;

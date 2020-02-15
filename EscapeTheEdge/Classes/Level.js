@@ -5,7 +5,7 @@ var EscapeTheEdge;
     class Level extends f.Node {
         constructor(_levelCount) {
             super("Level" + _levelCount);
-            this.height = 5;
+            this.height = 20;
             this.createLevel();
             // this.createGoal();
         } //close Constructor
@@ -21,17 +21,17 @@ var EscapeTheEdge;
             this.appendChild(floor);
             // floor.createEnemy();
             wall = new EscapeTheEdge.Wall(-1);
-            wall.cmpTransform.local.scaleY(this.height);
+            wall.cmpTransform.local.scaleY(this.height * 2);
             wall.cmpTransform.local.scaleX(2);
             wall.cmpTransform.local.translateX(-3);
-            wall.cmpTransform.local.translateY(this.height - 2);
+            wall.cmpTransform.local.translateY(this.height);
             wall.createMaterial(this.height * 2);
             this.appendChild(wall);
             wall = new EscapeTheEdge.Wall(1);
-            wall.cmpTransform.local.scaleY(this.height);
+            wall.cmpTransform.local.scaleY(this.height * 2);
             wall.cmpTransform.local.scaleX(2);
             wall.cmpTransform.local.translateX(3);
-            wall.cmpTransform.local.translateY(this.height - 2);
+            wall.cmpTransform.local.translateY(this.height);
             wall.createMaterial(this.height * 2);
             this.appendChild(wall);
             for (let i = 0; i <= this.height + 2; i += 0.25) {
@@ -49,9 +49,9 @@ var EscapeTheEdge;
             }
             let goalLine = new f.Node("GoalLine");
             goalLine.addComponent(new f.ComponentTransform);
-            goalLine.addComponent(new f.ComponentMaterial(new f.Material("SolidWhite", f.ShaderUniColor, new f.CoatColored(new f.Color(1, 0.5, 0.2, 0.8)))));
+            goalLine.addComponent(new f.ComponentMaterial(new f.Material("SolidWhite", f.ShaderUniColor, new f.CoatColored(new f.Color(1, 0.3, 0.2, 0.8)))));
             goalLine.addComponent(new f.ComponentMesh(new f.MeshQuad()));
-            goalLine.cmpTransform.local.translate(new f.Vector3(0, this.height, -1));
+            goalLine.cmpTransform.local.translate(new f.Vector3(0, this.height, -0.01));
             goalLine.getComponent(f.ComponentMesh).pivot.scale(new f.Vector3(10, 0.1, 0));
             EscapeTheEdge.rootNode.appendChild(goalLine);
         } //close createLevel

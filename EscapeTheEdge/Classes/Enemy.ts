@@ -10,6 +10,8 @@ namespace EscapeTheEdge {
         // public speed: f.Vector3 = f.Vector3.ZERO();
         direction: DIRECTION;
         floor: Floor;
+        public spawnRate: number = 2;
+
 
         constructor(_floor: Floor, _name: string = "Enemy") {
             super(_name);
