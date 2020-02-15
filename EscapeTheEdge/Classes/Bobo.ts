@@ -137,6 +137,7 @@ namespace EscapeTheEdge {
             this.checkCollision(distance);
 
             this.checkHit(characters);
+            this.checkHit(items);
             // this.checkHit(EnemyBullets);
 
             //mana abzeihen für größe
@@ -174,8 +175,13 @@ namespace EscapeTheEdge {
                     let distance: number = Math.abs(Math.sqrt(dif.x * dif.x + dif.y * dif.y + dif.z * dif.z));
                     // console.log(distance);
                     if (distance < 0.15) {
-                        this.health -= this.enemyDamage;
-
+                        if (object instanceof Enemy) {
+                            this.health -= this.enemyDamage;
+                        } else if (object instanceof Collectable) {
+                            this.mana += 10;
+                            console.log(this.mana);
+                            removeNodeFromNode(object, items);
+                        }
                     }
                 }
 

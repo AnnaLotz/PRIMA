@@ -42,6 +42,7 @@ var EscapeTheEdge;
                 // console.log(distance.x, distance.y);
                 this.checkCollision(distance);
                 this.checkHit(EscapeTheEdge.characters);
+                this.checkHit(EscapeTheEdge.items);
                 // this.checkHit(EnemyBullets);
                 //mana abzeihen für größe
                 if (this.size != SIZE.MEDIUM) {
@@ -150,7 +151,14 @@ var EscapeTheEdge;
                     let distance = Math.abs(Math.sqrt(dif.x * dif.x + dif.y * dif.y + dif.z * dif.z));
                     // console.log(distance);
                     if (distance < 0.15) {
-                        this.health -= this.enemyDamage;
+                        if (object instanceof EscapeTheEdge.Enemy) {
+                            this.health -= this.enemyDamage;
+                        }
+                        else if (object instanceof EscapeTheEdge.Collectable) {
+                            this.mana += 10;
+                            console.log(this.mana);
+                            EscapeTheEdge.removeNodeFromNode(object, EscapeTheEdge.items);
+                        }
                     }
                 }
             }

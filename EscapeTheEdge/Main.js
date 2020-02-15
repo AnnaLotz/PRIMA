@@ -33,17 +33,14 @@ var EscapeTheEdge;
         let response = await fetch("data.json");
         let offer = await response.text();
         EscapeTheEdge.data = JSON.parse(offer);
-        fetchData(EscapeTheEdge.data);
-        // Enemy.fetchData();
-        // Level.fetchData();
-        // Bobo.fetchData();
+        // fetchData(data);
     } //close loadFiles
     EscapeTheEdge.loadFilesWithResponse = loadFilesWithResponse;
-    function fetchData(_data) {
-        console.log(_data);
-        // console.log(data.enemy.spawnRate);
-        // console.log(data[0].enemy[0].speedMaxX);
-    }
+    // function fetchData(_data: Object[]): void {
+    //     console.log(_data);
+    //     // console.log(data.enemy.spawnRate);
+    //     // console.log(data[0].enemy[0].speedMaxX);
+    // }
     function startGame() {
         EscapeTheEdge.Sound.init();
         document.getElementById("stats").style.width = EscapeTheEdge.canvas.width + "px";
@@ -60,6 +57,7 @@ var EscapeTheEdge;
         EscapeTheEdge.Enemy.generateSprites(txtFigures);
         EscapeTheEdge.BoboBullet.generateSprites(txtFigures);
         EscapeTheEdge.Bobo.generateSprites(txtFigures);
+        EscapeTheEdge.Collectable.generateSprites(txtFigures);
         EscapeTheEdge.bobo = new EscapeTheEdge.Bobo("Bobo");
         EscapeTheEdge.characters.appendChild(EscapeTheEdge.bobo);
         EscapeTheEdge.level = new EscapeTheEdge.Level(1);
@@ -112,6 +110,9 @@ var EscapeTheEdge;
         let cmpCam = mover.getChildrenByName("Camera")[0].getComponent(f.ComponentCamera);
         let boboPos = EscapeTheEdge.bobo.cmpTransform.local.translation;
         cmpCam.pivot.translation = new f.Vector3(boboPos.x / 2, boboPos.y + 0.8, cmpCam.pivot.translation.z);
+        /****************************************
+         * Kamerahintrgrund oben heller machen? !!
+         */
     } //close updateCamera
     function removeNodeFromNode(_toRemove, _fromNode) {
         console.log("Removed" + _toRemove);

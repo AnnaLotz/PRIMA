@@ -63,18 +63,15 @@ namespace EscapeTheEdge {
         let response: Response = await fetch("data.json");
         let offer: string = await response.text();
         data = JSON.parse(offer);
-        fetchData(data);
-        // Enemy.fetchData();
-        // Level.fetchData();
-        // Bobo.fetchData();
+        // fetchData(data);
+        
     } //close loadFiles
 
-    function fetchData(_data: Object[]): void {
-        console.log(_data);
-        // console.log(data.enemy.spawnRate);
-        // console.log(data[0].enemy[0].speedMaxX);
-
-    }
+    // function fetchData(_data: Object[]): void {
+    //     console.log(_data);
+    //     // console.log(data.enemy.spawnRate);
+    //     // console.log(data[0].enemy[0].speedMaxX);
+    // }
 
     function startGame(): void {
         Sound.init();
@@ -94,6 +91,7 @@ namespace EscapeTheEdge {
         Enemy.generateSprites(txtFigures);
         BoboBullet.generateSprites(txtFigures);
         Bobo.generateSprites(txtFigures);
+        Collectable.generateSprites(txtFigures);
         bobo = new Bobo("Bobo");
         characters.appendChild(bobo);
 
@@ -162,6 +160,10 @@ namespace EscapeTheEdge {
         let cmpCam: f.ComponentCamera = mover.getChildrenByName("Camera")[0].getComponent(f.ComponentCamera);
         let boboPos: f.Vector3 = bobo.cmpTransform.local.translation;
         cmpCam.pivot.translation = new f.Vector3(boboPos.x / 2, boboPos.y + 0.8, cmpCam.pivot.translation.z);
+
+        /****************************************
+         * Kamerahintrgrund oben heller machen? !! 
+         */
     } //close updateCamera
 
     export function removeNodeFromNode(_toRemove: f.Node, _fromNode: f.Node): void {

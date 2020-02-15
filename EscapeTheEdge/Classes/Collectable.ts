@@ -6,7 +6,7 @@ namespace EscapeTheEdge {
         MANA = "Mana"
     }
 
-    class Collectable extends f.Node {
+    export class Collectable extends f.Node {
         protected static sprites: Sprite[];
         type: COLLECTABLETYPE; 
 
@@ -27,6 +27,8 @@ namespace EscapeTheEdge {
 
                 this.appendChild(nodeSprite);
             }
+            this.show();
+            f.Loop.addEventListener(f.EVENT.LOOP_FRAME, this.update);
             // this.show(STATUS.FLYING);
 
 
@@ -35,10 +37,23 @@ namespace EscapeTheEdge {
         } //close constructor
         public static generateSprites(_txtImage: f.TextureImage): void {
             Collectable.sprites = [];
-            // let sprite: Sprite = new Sprite(this.type);
-            sprite.generateByGrid(_txtImage, f.Rectangle.GET(2, 38, 6, 3), 1, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
-            // Collectable.sprites.push(sprite);
+            let sprite: Sprite = new Sprite("Collectable");
+            sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 132, 11, 11), 8, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
+            Collectable.sprites.push(sprite);
 
         } //close generate Sprites
+
+        public show(): void {
+            // if (_action == ACTION.JUMP)
+            //     return;
+            for (let child of this.getChildren())
+                child.activate(child.name == "Collectable");
+            // this.action = _action;
+        }
+
+        protected update = (_event: f.Eventƒ): void => {
+            this.broadcastEvent(new CustomEvent("showNext"));
+
+        } //close update
     }
 }

@@ -13,7 +13,7 @@ var EscapeTheEdge;
             this.addComponent(cmpMesh);
         } //close constructor
         createMaterial(_levelHeight) {
-            if (this.cmpTransform.local.translation.y >= _levelHeight / 1.3)
+            if (this.cmpTransform.local.translation.y >= _levelHeight - 5)
                 this.addComponent(new f.ComponentMaterial(Floor.goalMaterial));
             else
                 this.addComponent(new f.ComponentMaterial(Floor.material));
