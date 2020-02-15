@@ -20,6 +20,10 @@ namespace EscapeTheEdge {
         public bullet: BoboBullet;
         public mana: number = 100;
         public health: number = 100;
+        manaCostToShoot: number;
+        manaCostToResize: number;
+        
+        protected enemyDamage: number;
 
         // private static sprites: Sprite[];
         private speedMax: f.Vector2 = new f.Vector2(1.5, 5); // units per second
@@ -32,6 +36,7 @@ namespace EscapeTheEdge {
 
         constructor(_name: string = "Bobo") {
             super(_name);
+            this.fetchData();
             this.addComponent(new f.ComponentTransform());
             this.cmpTransform.local.translateX(-1);
             for (let sprite of Bobo.sprites) {
@@ -60,6 +65,8 @@ namespace EscapeTheEdge {
             Bobo.sprites.push(sprite);
         } //close generate Sprites
 
+        
+
         public act(_action: ACTION, _direction?: DIRECTION): void {
             switch (_action) {
                 case ACTION.IDLE:
@@ -73,10 +80,10 @@ namespace EscapeTheEdge {
                     // console.log(direction);
                     break;
                 case ACTION.JUMP:
-                    if (this.speed.y == 0) { //für kein doppelSprung 
-                        Sound.play("boboJump");
-                        this.speed.y = this.speedMax.y;
-                    }
+                    // if (this.speed.y == 0) { //für kein doppelSprung 
+                    Sound.play("boboJump");
+                    this.speed.y = this.speedMax.y;
+                    // }
                     break;
             }
             this.show(_action);
@@ -107,12 +114,12 @@ namespace EscapeTheEdge {
         } //close toSize
 
         public shoot(_direction: number): void {
-            if (this.mana >= 2) {
+            if (this.mana >= this.manaCostToShoot) {
                 Sound.play("boboShoot");
                 console.log("shoot " + _direction);
                 this.bullet = new BoboBullet(_direction);
                 items.appendChild(this.bullet);
-                this.mana -= 2;
+                this.mana -= this.manaCostToShoot;
             }
         } //close shoot
 
@@ -134,7 +141,7 @@ namespace EscapeTheEdge {
 
             //mana abzeihen für größe
             if (this.size != SIZE.MEDIUM) {
-                this.mana -= 0.4;
+                this.mana -= this.manaCostToResize;
                 console.log("Mana: " + this.mana);
             }
             if (this.mana < 0) {
@@ -150,6 +157,12 @@ namespace EscapeTheEdge {
                 this.health = 100;
             }
         } //close update
+        
+        protected fetchData(): void {
+            this.enemyDamage = data[0].enemy[0].damageToBobo;
+            this.manaCostToShoot = data[0].bobo[0].manaCostToShoot;
+            this.manaCostToResize = data[0].bobo[0].manaCostToResize;
+        }
 
         protected checkHit(_object: f.Node): void {
             for (let object of _object.getChildren()) {
@@ -161,7 +174,7 @@ namespace EscapeTheEdge {
                     let distance: number = Math.abs(Math.sqrt(dif.x * dif.x + dif.y * dif.y + dif.z * dif.z));
                     // console.log(distance);
                     if (distance < 0.15) {
-                        this.health -= 20;
+                        this.health -= this.enemyDamage;
 
                     }
                 }

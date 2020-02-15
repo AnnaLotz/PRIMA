@@ -2,16 +2,27 @@ namespace EscapeTheEdge {
     import f = FudgeCore;
 
     export class Level extends f.Node {
+        // static enemySpawnRateStatic: number;
+        enemySpawnRate: number = 0.2;
 
         level: Floor;
         height: number; //Durch json ändern?
 
         public constructor(_levelCount: number) {
             super("Level" + _levelCount);
+            // this.fetchData();
+            // this.enemySpawnRate = data[0].enemy[0].spawRate;
             this.height = 20;
             this.createLevel();
             // this.createGoal();
+            // this.enemySpawnRate = 0;
+
         } //close Constructor
+
+        // fetchData(): void {
+        //     this.enemySpawnRate = data[0].enemy[0].spawRate;
+        //     console.log(data[0].enemy[0].spawRate);
+        // }
 
         private createLevel(): void {
             let floor: Floor;
@@ -49,7 +60,7 @@ namespace EscapeTheEdge {
                 floor.cmpTransform.local.translateX(randNumb(- 1.9, 1.9));
                 floor.cmpTransform.local.translateY(randNumb(-0.2, 0.2) + i);
                 floor.createMaterial(this.height);
-                if (randNumb(0, 1) < 0.2 && floor.cmpTransform.local.translation.y >= 0.8 && floor.cmpTransform.local.translation.y <= this.height - 0.2) {
+                if (randNumb(0, 1) < this.enemySpawnRate && floor.cmpTransform.local.translation.y >= 0.8 && floor.cmpTransform.local.translation.y <= this.height - 0.2) {
                     // if (i == 0.4) {
                     floor.createEnemy();
                 }
@@ -65,6 +76,8 @@ namespace EscapeTheEdge {
             rootNode.appendChild(goalLine);
 
         }//close createLevel
+
+
 
         // private createGoal(): void {
 

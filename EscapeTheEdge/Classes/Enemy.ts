@@ -2,15 +2,11 @@ namespace EscapeTheEdge {
     import f = FudgeCore;
 
     export class Enemy extends Moveable {
-        // private static sprites: Sprite[];
-        protected static speedMax: f.Vector2 = new f.Vector2(0.8, 2); // units per second
-        // private static gravity: f.Vector2 = f.Vector2.Y(-3);
-        // private action: ACTION;
-        // private time: f.Time = new f.Time();
-        // public speed: f.Vector3 = f.Vector3.ZERO();
         direction: DIRECTION;
         floor: Floor;
-        public spawnRate: number = 2;
+        protected speedMax: f.Vector2;  // units per second
+
+
 
 
         constructor(_floor: Floor, _name: string = "Enemy") {
@@ -20,6 +16,7 @@ namespace EscapeTheEdge {
             // console.log(this.walkRadius);
             this.addComponent(new f.ComponentTransform());
 
+            this.fetchData();
             for (let sprite of Enemy.sprites) {
                 let nodeSprite: NodeSprite = new NodeSprite(sprite.name, sprite);
                 nodeSprite.activate(false);
@@ -32,7 +29,6 @@ namespace EscapeTheEdge {
 
                 this.appendChild(nodeSprite);
             }
-
             this.speed.x = randNumb(0.1, Enemy.speedMax.x);
 
             if (randNumb(0, 1) < 0.5)
@@ -42,6 +38,8 @@ namespace EscapeTheEdge {
             this.act(ACTION.WALK, this.direction);
             f.Loop.addEventListener(f.EVENT.LOOP_FRAME, this.update);
         } //close constructor
+
+
 
         public static generateSprites(_txtImage: f.TextureImage): void {
             Enemy.sprites = [];
@@ -53,6 +51,8 @@ namespace EscapeTheEdge {
             sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 54, 17, 13), 4, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
             Enemy.sprites.push(sprite); //(1, 68, 17, 14), 2
         } //close generateSprites
+
+
 
         public act(_action: ACTION, _direction: DIRECTION): void {
             let direction: number = (_direction == DIRECTION.RIGHT ? 1 : -1);
@@ -69,6 +69,10 @@ namespace EscapeTheEdge {
             }
             this.show(_action);
         } //close act
+
+        protected fetchData(): void {
+            this.speedMax = new f.Vector2(data[0].enemy[0].speedMaxX, 2);
+        }
 
         protected update = (_event: f.Eventƒ): void => {
             this.broadcastEvent(new CustomEvent("showNext"));

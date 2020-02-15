@@ -7,7 +7,9 @@ namespace EscapeTheEdge {
     }
 
     export class BoboBullet extends f.Node {
+        
         protected static sprites: Sprite[];
+        protected speedX: number;
         protected speed: f.Vector3;
         protected direction: number;
 
@@ -15,7 +17,8 @@ namespace EscapeTheEdge {
             super(_name);
             this.addComponent(new f.ComponentTransform());
             this.direction = _direction;
-            this.speed = new f.Vector3(this.direction * 1.8, 0, 0);
+            this.fetchData();
+            this.speed = new f.Vector3(this.direction * this.speedX, 0, 0);
             this.cmpTransform.local.translation = bobo.cmpTransform.local.translation;
             this.cmpTransform.local.translateY(0.08);
 
@@ -40,6 +43,7 @@ namespace EscapeTheEdge {
 
         } //close constructor
 
+        
 
         public static generateSprites(_txtImage: f.TextureImage): void {
             BoboBullet.sprites = [];
@@ -78,6 +82,10 @@ namespace EscapeTheEdge {
         public removeBullet(): void {
             removeNodeFromNode(this, items);
         } //close removeBullet
+
+        protected fetchData(): void {
+            this.speedX = data[0].bobo[0].bulletSpeed;
+        }
 
         protected update = (_event: f.Eventƒ): void => {
             this.broadcastEvent(new CustomEvent("showNext"));

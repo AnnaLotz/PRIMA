@@ -13,6 +13,7 @@ namespace EscapeTheEdge {
     export let bobo: Bobo;
     let crc2: CanvasRenderingContext2D;
     export let canvas: HTMLCanvasElement;
+    export let data: Object[];
     // enum GAMESTATE {
     //     STARTSCREEN = "Startscreen",
     //     RUNNING = "Running",
@@ -21,7 +22,18 @@ namespace EscapeTheEdge {
     // let gamestate: GAMESTATE = GAMESTATE.STARTSCREEN;
     export let musicMuted: boolean = true;
     export let soundMuted: boolean = false;
-    let data: Object[];
+
+    interface Object {
+        enemy: Object[];
+        speedMaxX: number;
+        // speedMaxY: number;
+        spawRate: number;
+        damageToBobo: number;
+        bobo: Object[];
+        bulletSpeed: number;
+        manaCostToShoot: number;
+        manaCostToResize: number;
+    }
 
     interface KeyPressed {
         [code: string]: boolean;
@@ -29,11 +41,12 @@ namespace EscapeTheEdge {
     let keysPressed: KeyPressed = {};
 
     loadFilesWithResponse();
-    fetchData(data);
     window.addEventListener("load", init);
 
 
     function init(_event: Event): void {
+
+        
         showMenue(); //-> style.ts
         document.getElementById("startButton").addEventListener("click", startGame);
         document.getElementById("controlButton").addEventListener("click", showControls);
@@ -47,15 +60,19 @@ namespace EscapeTheEdge {
     }//close init
 
     export async function loadFilesWithResponse(): Promise<void> {
-        let response: Response = await fetch("Data/data.json");
+        let response: Response = await fetch("data.json");
         let offer: string = await response.text();
         data = JSON.parse(offer);
+        fetchData(data);
+        // Enemy.fetchData();
+        // Level.fetchData();
+        // Bobo.fetchData();
     } //close loadFiles
 
     function fetchData(_data: Object[]): void {
         console.log(_data);
-        console.log(data);
-        console.log(_data[0].enemy.speedMaxX);
+        // console.log(data.enemy.spawnRate);
+        // console.log(data[0].enemy[0].speedMaxX);
 
     }
 

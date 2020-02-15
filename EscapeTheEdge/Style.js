@@ -8,7 +8,7 @@ var EscapeTheEdge;
         document.getElementById("backButton").style.display = "none";
         document.getElementById("endScreen").style.display = "none";
         document.getElementById("menueButtons").style.display = "initial";
-    }
+    } //close showMenue
     EscapeTheEdge.showMenue = showMenue;
     function showControls() {
         document.getElementById("menueButtons").style.display = "none";
@@ -29,7 +29,6 @@ var EscapeTheEdge;
             EscapeTheEdge.Sound.playMusic();
             EscapeTheEdge.Sound.sounds["gameMusic"].muted = false;
         }
-        // 
     } //close toggleMusic
     EscapeTheEdge.toggleMusic = toggleMusic;
     function toggleSounds() {
@@ -47,7 +46,7 @@ var EscapeTheEdge;
         document.getElementById("menueButtons").style.display = "none";
         document.getElementById("creditsPage").style.display = "initial";
         document.getElementById("backButton").style.display = "initial";
-    }
+    } //close showCredits
     EscapeTheEdge.showCredits = showCredits;
 })(EscapeTheEdge || (EscapeTheEdge = {})); //close Namespace
 //# sourceMappingURL=Style.js.map

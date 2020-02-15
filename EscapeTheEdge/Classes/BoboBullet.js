@@ -20,7 +20,8 @@ var EscapeTheEdge;
             }; //close update
             this.addComponent(new f.ComponentTransform());
             this.direction = _direction;
-            this.speed = new f.Vector3(this.direction * 1.8, 0, 0);
+            this.fetchData();
+            this.speed = new f.Vector3(this.direction * this.speedX, 0, 0);
             this.cmpTransform.local.translation = EscapeTheEdge.bobo.cmpTransform.local.translation;
             this.cmpTransform.local.translateY(0.08);
             for (let sprite of BoboBullet.sprites) {
@@ -68,6 +69,9 @@ var EscapeTheEdge;
         removeBullet() {
             EscapeTheEdge.removeNodeFromNode(this, EscapeTheEdge.items);
         } //close removeBullet
+        fetchData() {
+            this.speedX = EscapeTheEdge.data[0].bobo[0].bulletSpeed;
+        }
         checkHit() {
             let hitEnemy = false;
             for (let enemy of EscapeTheEdge.characters.getChildren()) {

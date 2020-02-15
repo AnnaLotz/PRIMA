@@ -5,7 +5,6 @@ var EscapeTheEdge;
     class Enemy extends EscapeTheEdge.Moveable {
         constructor(_floor, _name = "Enemy") {
             super(_name);
-            this.spawnRate = 2;
             this.update = (_event) => {
                 this.broadcastEvent(new CustomEvent("showNext"));
                 let timeFrame = f.Loop.timeFrameGame / 1000;
@@ -20,6 +19,7 @@ var EscapeTheEdge;
             // this.walkRadius = _floorWidth;
             // console.log(this.walkRadius);
             this.addComponent(new f.ComponentTransform());
+            this.fetchData();
             for (let sprite of Enemy.sprites) {
                 let nodeSprite = new EscapeTheEdge.NodeSprite(sprite.name, sprite);
                 nodeSprite.activate(false);
@@ -58,6 +58,9 @@ var EscapeTheEdge;
             }
             this.show(_action);
         } //close act
+        fetchData() {
+            this.speedMax = new f.Vector2(EscapeTheEdge.data[0].enemy[0].speedMaxX, 2);
+        }
         changeDirection() {
             if (this.direction == EscapeTheEdge.DIRECTION.LEFT)
                 this.act(EscapeTheEdge.ACTION.WALK, EscapeTheEdge.DIRECTION.RIGHT);
@@ -90,8 +93,6 @@ var EscapeTheEdge;
             return true;
         }
     } //close class
-    // private static sprites: Sprite[];
-    Enemy.speedMax = new f.Vector2(0.8, 2); // units per second
     EscapeTheEdge.Enemy = Enemy;
 })(EscapeTheEdge || (EscapeTheEdge = {})); //close namespace
 //# sourceMappingURL=Enemy.js.map

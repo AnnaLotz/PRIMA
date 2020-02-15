@@ -3,8 +3,6 @@
         "enemy": [
             {
                 "speedMaxX": 0.8,
-                "speedMaxY": 2,
-                "spawnrate": 0.2,
                 "damageToBobo": 20
             }
         ],

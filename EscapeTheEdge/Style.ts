@@ -6,8 +6,7 @@ namespace EscapeTheEdge {
         document.getElementById("backButton").style.display = "none";
         document.getElementById("endScreen").style.display = "none";
         document.getElementById("menueButtons").style.display = "initial";
-
-    }
+    } //close showMenue
 
     export function showControls(): void {
         document.getElementById("menueButtons").style.display = "none";
@@ -27,7 +26,6 @@ namespace EscapeTheEdge {
             Sound.playMusic();
             Sound.sounds["gameMusic"].muted = false;
         }
-        // 
     } //close toggleMusic
 
     export function toggleSounds(): void {
@@ -44,5 +42,5 @@ namespace EscapeTheEdge {
         document.getElementById("menueButtons").style.display = "none";
         document.getElementById("creditsPage").style.display = "initial";
         document.getElementById("backButton").style.display = "initial";
-    }
+    } //close showCredits
 }//close Namespace

@@ -14,10 +14,8 @@ var EscapeTheEdge;
     // let gamestate: GAMESTATE = GAMESTATE.STARTSCREEN;
     EscapeTheEdge.musicMuted = true;
     EscapeTheEdge.soundMuted = false;
-    let data;
     let keysPressed = {};
     loadFilesWithResponse();
-    fetchData(data);
     window.addEventListener("load", init);
     function init(_event) {
         EscapeTheEdge.showMenue(); //-> style.ts
@@ -32,15 +30,19 @@ var EscapeTheEdge;
         f.RenderManager.initialize(true, false);
     } //close init
     async function loadFilesWithResponse() {
-        let response = await fetch("Data/data.json");
+        let response = await fetch("data.json");
         let offer = await response.text();
-        data = JSON.parse(offer);
+        EscapeTheEdge.data = JSON.parse(offer);
+        fetchData(EscapeTheEdge.data);
+        // Enemy.fetchData();
+        // Level.fetchData();
+        // Bobo.fetchData();
     } //close loadFiles
     EscapeTheEdge.loadFilesWithResponse = loadFilesWithResponse;
     function fetchData(_data) {
         console.log(_data);
-        console.log(data);
-        console.log(_data[0].enemy.speedMaxX);
+        // console.log(data.enemy.spawnRate);
+        // console.log(data[0].enemy[0].speedMaxX);
     }
     function startGame() {
         EscapeTheEdge.Sound.init();

@@ -5,10 +5,19 @@ var EscapeTheEdge;
     class Level extends f.Node {
         constructor(_levelCount) {
             super("Level" + _levelCount);
+            // static enemySpawnRateStatic: number;
+            this.enemySpawnRate = 0.2;
+            // this.fetchData();
+            // this.enemySpawnRate = data[0].enemy[0].spawRate;
             this.height = 20;
             this.createLevel();
             // this.createGoal();
+            // this.enemySpawnRate = 0;
         } //close Constructor
+        // fetchData(): void {
+        //     this.enemySpawnRate = data[0].enemy[0].spawRate;
+        //     console.log(data[0].enemy[0].spawRate);
+        // }
         createLevel() {
             let floor;
             let wall;
@@ -41,7 +50,7 @@ var EscapeTheEdge;
                 floor.cmpTransform.local.translateX(EscapeTheEdge.randNumb(-1.9, 1.9));
                 floor.cmpTransform.local.translateY(EscapeTheEdge.randNumb(-0.2, 0.2) + i);
                 floor.createMaterial(this.height);
-                if (EscapeTheEdge.randNumb(0, 1) < 0.2 && floor.cmpTransform.local.translation.y >= 0.8 && floor.cmpTransform.local.translation.y <= this.height - 0.2) {
+                if (EscapeTheEdge.randNumb(0, 1) < this.enemySpawnRate && floor.cmpTransform.local.translation.y >= 0.8 && floor.cmpTransform.local.translation.y <= this.height - 0.2) {
                     // if (i == 0.4) {
                     floor.createEnemy();
                 }

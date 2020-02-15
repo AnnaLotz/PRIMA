@@ -45,7 +45,7 @@ var EscapeTheEdge;
                 // this.checkHit(EnemyBullets);
                 //mana abzeihen für größe
                 if (this.size != SIZE.MEDIUM) {
-                    this.mana -= 0.4;
+                    this.mana -= this.manaCostToResize;
                     console.log("Mana: " + this.mana);
                 }
                 if (this.mana < 0) {
@@ -62,6 +62,7 @@ var EscapeTheEdge;
                     this.health = 100;
                 }
             }; //close update
+            this.fetchData();
             this.addComponent(new f.ComponentTransform());
             this.cmpTransform.local.translateX(-1);
             for (let sprite of Bobo.sprites) {
@@ -95,10 +96,10 @@ var EscapeTheEdge;
                     // console.log(direction);
                     break;
                 case ACTION.JUMP:
-                    if (this.speed.y == 0) { //für kein doppelSprung 
-                        EscapeTheEdge.Sound.play("boboJump");
-                        this.speed.y = this.speedMax.y;
-                    }
+                    // if (this.speed.y == 0) { //für kein doppelSprung 
+                    EscapeTheEdge.Sound.play("boboJump");
+                    this.speed.y = this.speedMax.y;
+                    // }
                     break;
             }
             this.show(_action);
@@ -127,14 +128,19 @@ var EscapeTheEdge;
             }
         } //close toSize
         shoot(_direction) {
-            if (this.mana >= 2) {
+            if (this.mana >= this.manaCostToShoot) {
                 EscapeTheEdge.Sound.play("boboShoot");
                 console.log("shoot " + _direction);
                 this.bullet = new EscapeTheEdge.BoboBullet(_direction);
                 EscapeTheEdge.items.appendChild(this.bullet);
-                this.mana -= 2;
+                this.mana -= this.manaCostToShoot;
             }
         } //close shoot
+        fetchData() {
+            this.enemyDamage = EscapeTheEdge.data[0].enemy[0].damageToBobo;
+            this.manaCostToShoot = EscapeTheEdge.data[0].bobo[0].manaCostToShoot;
+            this.manaCostToResize = EscapeTheEdge.data[0].bobo[0].manaCostToResize;
+        }
         checkHit(_object) {
             for (let object of _object.getChildren()) {
                 if (!(object instanceof Bobo)) {
@@ -144,7 +150,7 @@ var EscapeTheEdge;
                     let distance = Math.abs(Math.sqrt(dif.x * dif.x + dif.y * dif.y + dif.z * dif.z));
                     // console.log(distance);
                     if (distance < 0.15) {
-                        this.health -= 20;
+                        this.health -= this.enemyDamage;
                     }
                 }
             }
