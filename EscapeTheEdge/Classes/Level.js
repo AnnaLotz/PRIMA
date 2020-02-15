@@ -41,7 +41,7 @@ var EscapeTheEdge;
                 floor.cmpTransform.local.translateX(EscapeTheEdge.randNumb(-1.9, 1.9));
                 floor.cmpTransform.local.translateY(EscapeTheEdge.randNumb(-0.2, 0.2) + i);
                 floor.createMaterial(this.height);
-                if (EscapeTheEdge.randNumb(0, 10) < 2 && floor.cmpTransform.local.translation.y >= 0.8 && floor.cmpTransform.local.translation.y <= this.height - 0.2) {
+                if (EscapeTheEdge.randNumb(0, 1) < 0.2 && floor.cmpTransform.local.translation.y >= 0.8 && floor.cmpTransform.local.translation.y <= this.height - 0.2) {
                     // if (i == 0.4) {
                     floor.createEnemy();
                 }

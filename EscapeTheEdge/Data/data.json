@@ -1,0 +1,19 @@
+[
+    {
+        "enemy": [
+            {
+                "speedMaxX": 0.8,
+                "speedMaxY": 2,
+                "spawnrate": 0.2,
+                "damageToBobo": 20
+            }
+        ],
+        "bobo": [
+            {
+                "bulletSpeed": 1.8,
+                "manaCostToShoot": 2,
+                "manaCostToResize": 0.4
+            }
+        ]
+    }
+]

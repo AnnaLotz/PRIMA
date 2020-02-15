@@ -21,17 +21,20 @@ namespace EscapeTheEdge {
     // let gamestate: GAMESTATE = GAMESTATE.STARTSCREEN;
     export let musicMuted: boolean = true;
     export let soundMuted: boolean = false;
+    let data: Object[];
 
     interface KeyPressed {
         [code: string]: boolean;
     }
     let keysPressed: KeyPressed = {};
 
+    loadFilesWithResponse();
+    fetchData(data);
     window.addEventListener("load", init);
 
 
     function init(_event: Event): void {
-
+        showMenue(); //-> style.ts
         document.getElementById("startButton").addEventListener("click", startGame);
         document.getElementById("controlButton").addEventListener("click", showControls);
         document.getElementById("musicButton").addEventListener("click", toggleMusic);
@@ -39,69 +42,28 @@ namespace EscapeTheEdge {
         document.getElementById("creditsButton").addEventListener("click", showCredits);
         document.getElementById("backButton").addEventListener("click", showMenue);
         document.getElementById("playAgain").addEventListener("click", playAgain);
-        showMenue();
-
         canvas = document.querySelector("canvas");
         f.RenderManager.initialize(true, false);
-        // startGame();
     }//close init
 
-    function showMenue(): void {
-        document.getElementById("gameWrapper").style.display = "none";
-        document.getElementById("controlPage").style.display = "none";
-        document.getElementById("creditsPage").style.display = "none";
-        document.getElementById("backButton").style.display = "none";
-        document.getElementById("endScreen").style.display = "none";
-        document.getElementById("menueButtons").style.display = "initial";
+    export async function loadFilesWithResponse(): Promise<void> {
+        let response: Response = await fetch("Data/data.json");
+        let offer: string = await response.text();
+        data = JSON.parse(offer);
+    } //close loadFiles
+
+    function fetchData(_data: Object[]): void {
+        console.log(_data);
+        console.log(data);
+        console.log(_data[0].enemy.speedMaxX);
 
     }
-
-    function showControls(): void {
-        document.getElementById("menueButtons").style.display = "none";
-        document.getElementById("controlPage").style.display = "initial";
-        document.getElementById("backButton").style.display = "initial";
-    } //close showControls
-
-    function toggleMusic(): void {
-        Sound.init();
-        if (!musicMuted) {
-            musicMuted = true;
-            document.getElementById("musicButton").innerHTML = "Musik: aus";
-            Sound.stopMusic();
-        } else if (musicMuted) {
-            musicMuted = false;
-            document.getElementById("musicButton").innerHTML = "Musik: an";
-            Sound.playMusic();
-            Sound.sounds["gameMusic"].muted = false;
-        }
-        // 
-    } //close toggleMusic
-
-    function toggleSounds(): void {
-        if (!soundMuted) {
-            soundMuted = true;
-            document.getElementById("soundButton").innerHTML = "Sounds: aus";
-        } else if (soundMuted) {
-            soundMuted = false;
-            document.getElementById("soundButton").innerHTML = "Sounds: an";
-        }
-    } //close toggleSounds
-
-    function showCredits(): void {
-        document.getElementById("menueButtons").style.display = "none";
-        document.getElementById("creditsPage").style.display = "initial";
-        document.getElementById("backButton").style.display = "initial";
-    }
-
 
     function startGame(): void {
         Sound.init();
-        // styleGameCanvas(); //-> Style.ts
         document.getElementById("stats").style.width = canvas.width + "px";
         document.getElementById("menue").style.display = "none";
         document.getElementById("gameWrapper").style.display = "initial";
-
-
 
 
         rootNode = new f.Node("RootNode");
@@ -112,25 +74,18 @@ namespace EscapeTheEdge {
         let img: HTMLImageElement = document.querySelector("img");
         let txtFigures: f.TextureImage = new f.TextureImage();
         txtFigures.image = img;
+        Enemy.generateSprites(txtFigures);
+        BoboBullet.generateSprites(txtFigures);
         Bobo.generateSprites(txtFigures);
         bobo = new Bobo("Bobo");
         characters.appendChild(bobo);
 
-        Enemy.generateSprites(txtFigures);
-        // enemy = new Enemy("Enemy");
-        // characters.appendChild(enemy);
-        // enemy.cmpTransform.local.translateX(-1.5);
-
-        BoboBullet.generateSprites(txtFigures);
         level = new Level(1);
         rootNode.appendChild(level);
         rootNode.appendChild(mover);
         rootNode.appendChild(characters);
         rootNode.appendChild(items);
-
         mover.addComponent(new f.ComponentTransform());
-
-
 
 
         let camera: f.Node = new f.Node("Camera");
@@ -145,7 +100,6 @@ namespace EscapeTheEdge {
 
         let cmpLightAmbient: f.ComponentLight = new f.ComponentLight(new f.LightAmbient(f.Color.CSS("WHITE")));
         rootNode.addComponent(cmpLightAmbient);
-
         let light: f.Node = new f.Node("Light");
         let cmpLight: f.ComponentLight;
         cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.CSS("WHITE")));
@@ -160,7 +114,6 @@ namespace EscapeTheEdge {
 
         //starting game
 
-        // Sound.playMusic();
         f.RenderManager.update();
         viewport.draw();
 
