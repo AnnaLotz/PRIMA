@@ -4,7 +4,7 @@ namespace EscapeTheEdge {
         [id: string]: HTMLAudioElement;
     }
     export class Sound {
-        private static sounds: Sounds = {};
+         static sounds: Sounds = {};
         
         
 

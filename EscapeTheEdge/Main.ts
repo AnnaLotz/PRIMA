@@ -19,7 +19,7 @@ namespace EscapeTheEdge {
     //     PAUSE = "Pause"
     // }
     // let gamestate: GAMESTATE = GAMESTATE.STARTSCREEN;
-    export let musicMuted: boolean = false;
+    export let musicMuted: boolean = true;
     export let soundMuted: boolean = false;
 
     interface KeyPressed {
@@ -63,12 +63,16 @@ namespace EscapeTheEdge {
     } //close showControls
 
     function toggleMusic(): void {
+        Sound.init();
         if (!musicMuted) {
             musicMuted = true;
             document.getElementById("musicButton").innerHTML = "Musik: aus";
+            Sound.stopMusic();
         } else if (musicMuted) {
             musicMuted = false;
             document.getElementById("musicButton").innerHTML = "Musik: an";
+            Sound.playMusic();
+            Sound.sounds["gameMusic"].muted = false;
         }
         // 
     } //close toggleMusic
@@ -91,6 +95,7 @@ namespace EscapeTheEdge {
 
 
     function startGame(): void {
+        Sound.init();
         // styleGameCanvas(); //-> Style.ts
         document.getElementById("stats").style.width = canvas.width + "px";
         document.getElementById("menue").style.display = "none";
@@ -155,8 +160,7 @@ namespace EscapeTheEdge {
 
         //starting game
 
-        Sound.init();
-        Sound.playMusic();
+        // Sound.playMusic();
         f.RenderManager.update();
         viewport.draw();
 

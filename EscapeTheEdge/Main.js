@@ -12,7 +12,7 @@ var EscapeTheEdge;
     //     PAUSE = "Pause"
     // }
     // let gamestate: GAMESTATE = GAMESTATE.STARTSCREEN;
-    EscapeTheEdge.musicMuted = false;
+    EscapeTheEdge.musicMuted = true;
     EscapeTheEdge.soundMuted = false;
     let keysPressed = {};
     window.addEventListener("load", init);
@@ -43,13 +43,17 @@ var EscapeTheEdge;
         document.getElementById("backButton").style.display = "initial";
     } //close showControls
     function toggleMusic() {
+        EscapeTheEdge.Sound.init();
         if (!EscapeTheEdge.musicMuted) {
             EscapeTheEdge.musicMuted = true;
             document.getElementById("musicButton").innerHTML = "Musik: aus";
+            EscapeTheEdge.Sound.stopMusic();
         }
         else if (EscapeTheEdge.musicMuted) {
             EscapeTheEdge.musicMuted = false;
             document.getElementById("musicButton").innerHTML = "Musik: an";
+            EscapeTheEdge.Sound.playMusic();
+            EscapeTheEdge.Sound.sounds["gameMusic"].muted = false;
         }
         // 
     } //close toggleMusic
@@ -69,6 +73,7 @@ var EscapeTheEdge;
         document.getElementById("backButton").style.display = "initial";
     }
     function startGame() {
+        EscapeTheEdge.Sound.init();
         // styleGameCanvas(); //-> Style.ts
         document.getElementById("stats").style.width = EscapeTheEdge.canvas.width + "px";
         document.getElementById("menue").style.display = "none";
@@ -116,8 +121,7 @@ var EscapeTheEdge;
         EscapeTheEdge.viewport = new f.Viewport();
         EscapeTheEdge.viewport.initialize("Viewport", EscapeTheEdge.rootNode, camera.getComponent(f.ComponentCamera), EscapeTheEdge.canvas);
         //starting game
-        EscapeTheEdge.Sound.init();
-        EscapeTheEdge.Sound.playMusic();
+        // Sound.playMusic();
         f.RenderManager.update();
         EscapeTheEdge.viewport.draw();
         document.addEventListener("keydown", handleKeyboard);
