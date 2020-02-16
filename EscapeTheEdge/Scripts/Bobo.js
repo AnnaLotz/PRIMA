@@ -138,7 +138,6 @@ var EscapeTheEdge;
             //mana abzeihen für größe
             if (this.size != SIZE.MEDIUM) {
                 this.mana -= this.manaCostToResize;
-                console.log("Mana: " + this.mana);
             }
             if (this.mana < 0) {
                 this.mana = 0;

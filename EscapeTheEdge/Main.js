@@ -98,7 +98,6 @@ var EscapeTheEdge;
          */
     } //close updateCamera
     function removeNodeFromNode(_toRemove, _fromNode) {
-        console.log("Removed" + _toRemove);
         _fromNode.removeChild(_toRemove);
     }
     EscapeTheEdge.removeNodeFromNode = removeNodeFromNode;

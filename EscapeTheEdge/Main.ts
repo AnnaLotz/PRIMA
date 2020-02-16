@@ -138,7 +138,6 @@ namespace EscapeTheEdge {
     } //close updateCamera
 
     export function removeNodeFromNode(_toRemove: f.Node, _fromNode: f.Node): void {
-        console.log("Removed" + _toRemove);
         _fromNode.removeChild(_toRemove);
     }
 
