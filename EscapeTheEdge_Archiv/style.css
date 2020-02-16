@@ -1,0 +1,108 @@
+* {
+    font-family: 'Comfortaa', cursive;
+}
+
+a {
+    color: #f89642;
+}
+
+p {
+    color: white;
+    padding-left: 15%;
+    padding-right: 15%;
+}
+em {
+    color: #f89642;
+}
+body {
+    background-color: #2a4a61;
+    /* font-family: 'Comfortaa', cursive; */
+}
+h1 {
+    font-size: 4em;
+    color: white;
+    /* text-align: center; */
+}
+#menue {
+    margin: auto;
+    text-align: center;
+}
+
+button {
+    display: block;
+    text-align: center;
+    width: 20%;
+    height: 10%;
+    margin: 1em;
+    padding: 1em;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #f89642;
+    border: none;
+    color: black;
+    font-size: 1em;
+    transition-duration: 0.2s;
+}
+
+button:hover {
+    background-color: black;
+    color: #f89642;
+}
+
+
+img {
+    display: none;
+}
+canvas {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+#stats {
+    margin: auto;
+    /* width: 50%; */
+    background-color: rgba(0, 0, 255, 0.224);
+}
+.holder {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    border: black solid 1px;
+    height: 20px;
+    width: 90%;
+    margin-top: -40px;
+}
+#health-holder {
+    padding-left: 10;
+    margin-left: 10;
+    /* margin-top: -40px; */
+    background:#82624f
+}
+#mana-holder {
+    padding-right: 10;
+    /* margin-left: 55%; */
+    background:#4d4967
+}
+#health {
+    width:0;
+    height:100%;
+    background:#ff4f1e;
+    -webkit-transition: width 500ms
+}
+#mana {
+    width:0;
+    height:100%;
+    background:#285eff;
+    -webkit-transition: width 500ms
+}
+
+#endScreen {
+    margin: auto;
+    text-align: center;
+    padding-top: 10%;
+}
+
+
+    

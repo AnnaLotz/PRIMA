@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Escape The Edge</title>
+    <script src="Scripts/Style.js"></script>
+    <script src="Scripts/Sound.js"></script>
+    <script src="FUDGE/FudgeCore.js"></script>
+    <script src="Scripts/SpriteGenerator.js"></script>
+    <script src="Scripts/Moveable.js"></script>
+    <script src="Scripts/Bobo.js"></script>
+    <script src="Scripts/Enemy.js"></script>
+    <script src="Scripts/BoboBullet.js"></script>
+    <script src="Scripts/Collectable.js"></script>
+    <script src="Scripts/Floor.js"></script>
+    <script src="Scripts/Wall.js"></script>
+    <script src="Scripts/Level.js"></script>
+    <script src="Main.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa&display=swap" rel="stylesheet">
+    
+</head>
+
+<body>
+    <div id="menue">
+        <h1>Escape The Edge</h1>
+        <div id="menueButtons">
+
+            <button id="startButton">Spielen</button>
+            <button id="controlButton">Steuerung</button>
+            <button id="musicButton">Musik: aus</button>
+            <button id="soundButton">Sounds: an</button>
+            <button id="creditsButton">Credits</button>
+        </div>
+
+        <div id="controlPage">
+            <h2>Steuerung</h2>
+            <p>Oh nein, der kleine Bobo hat sich verirrt und sitzt nun alleine in der eckigen Unterwelt fest! Hilf ihm,
+                wieder in das runde Land und zu seiner Familie zurück zu kehren.</p>
+            <p>Bewege dich mit <em>"A/D" und Leertaste</em> hin und her.</p>
+            <p>Mit <em>"Pfeiltaste hoch/runter"</em> kannst du deine Größe verändern und daduch höher oder weiter
+                springen. Aber pass auf, du verlierst in diesem Zustand ständig Mana!</p>
+            <p>Mit <em>"Pfeiltaste rechts/links"</em> kannst du kleine Geschosse verschießen und dich gegen Gegner
+                wehren, aber auch dies kostet dich Mana! Wenn dich ein Gegner berührt verlierst du Leben.</p>
+            <p>Auf manchen Plattformen liegen zusätzlich kleine Blaue Kugeln. Wenn du diese einsammelst, kannst du deinen Mana-Stand wieder etwas erhöhen!</p>
+        </div>
+
+        <div id="creditsPage">
+            <h2>Credits</h2>
+            <p>Idee und Umsetzung: Anna Lotz</p>
+            <p>Erstellt mit FUDGE - Furtwangen University Didactic Game Editor</p>
+            <p>HFU MKB5 - Modul PRIMA WS19/20</p>
+            <p>Sounds und Sprites: <a href="https://opengameart.org/" target="_blank">openGameArt.org</a></p>
+        </div>
+
+        <button id="backButton">Zurück</button>
+    </div>
+
+
+    <div id="gameWrapper">
+        <canvas width="1000" height="700">
+        </canvas>
+        <div id="stats">
+            <div id="health-holder" class="holder">
+                <div id="health"></div>
+            </div>
+            <div id="mana-holder" class="holder">
+                <div id="mana"></div>
+            </div>
+        </div>
+        <img src="Sprites/FiguresNew144px.png">
+    </div>
+    <div id="endScreen">
+        <div id="deathScreen">
+            <h1>GAME OVER</h1>
+            <p>Erreichte Höhe: <span id="score"></span> </p>
+        </div>
+
+        <div id="winScreen">
+            <h1>Du hast gewonnen!</h1>
+            <p>Lust auf noch eine Runde?</p>
+        </div>
+        <button id="playAgain">Hauptmenü</button>
+    </div>
+
+    <audio id="gameMusic" src="Sounds/music/Long Away Home.mp3" type="audio/mpeg"></audio>
+    <audio id="boboJump" src="Sounds/boboJump.mp3" type="audio/mpeg"></audio>
+    <audio id="boboShoot" src="Sounds/boboShoot.mp3" type="audio/mpeg"></audio>
+    <audio id="boboGrow" src="Sounds/grow.mp3" type="audio/mpeg"></audio>
+    <audio id="boboShrink" src="Sounds/shrink.mp3" type="audio/mpeg"></audio>
+    <audio id="boboDeath" src="Sounds/boboDeath.mp3" type="audio/mpeg"></audio>
+    <audio id="boboDeath2" src="Sounds/boboDeath2.mp3" type="audio/mpeg"></audio>
+    <audio id="enemyDeath" src="Sounds/enemyDeath.mp3" type="audio/mpeg"></audio>
+    <audio id="win" src="Sounds/win.mp3" type="audio/mpeg"></audio>
+</body>
+
+</html>

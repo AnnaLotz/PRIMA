@@ -1,0 +1,12 @@
+
+Installation:
+- NodeJs herunterladen und installieren
+- in der Eingabeaufforderung (cmd) in das Archiv des Spiels navigieren
+- hier "npm install serve" eingeben und installieren lassen
+- "npx serve" eingeben und auf die angegebene Seite vom localhost gehen
+- hier die Main.html auswählen
+
+Zum Spielen:
+Steuerung mit a/d und Leertaste
+Mit Pfeiltaste hoch/runter kann die Größe verändert werden
+Mit Pfeiltaste links/rechts kann man schießen
