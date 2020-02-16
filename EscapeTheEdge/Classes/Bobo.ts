@@ -6,7 +6,6 @@ namespace EscapeTheEdge {
         WALK = "Walk",
         JUMP = "Jump"
     }
-
     export enum SIZE {
         SMALL = "Small",
         MEDIUM = "Medium",
@@ -22,15 +21,8 @@ namespace EscapeTheEdge {
         public health: number = 100;
         manaCostToShoot: number;
         manaCostToResize: number;
-
         protected enemyDamage: number;
-
-        // private static sprites: Sprite[];
         private speedMax: f.Vector2 = new f.Vector2(1.5, 5); // units per second
-        // private static gravity: f.Vector2 = f.Vector2.Y(-3);
-        // private action: ACTION;
-        // private time: f.Time = new f.Time();
-        // public speed: f.Vector3 = f.Vector3.ZERO();
         private size: SIZE = SIZE.MEDIUM;
 
 
@@ -138,26 +130,11 @@ namespace EscapeTheEdge {
 
             this.checkHit(characters);
             this.checkHit(items);
-            // this.checkHit(EnemyBullets);
+            this.handleHealthAndMana();
 
-            //mana abzeihen für größe
-            if (this.size != SIZE.MEDIUM) {
-                this.mana -= this.manaCostToResize;
-                console.log("Mana: " + this.mana);
-            }
-            if (this.mana < 0) {
-                this.mana = 0;
-            } else if (this.mana > 100) {
-                this.mana = 100;
-            }
 
-            if (this.health <= 0) {
-                Sound.play("boboDeath");
-                gameOver();
-            } else if (this.health >= 100) {
-                this.health = 100;
-            }
         } //close update
+
 
         protected fetchData(): void {
             this.enemyDamage = data[0].enemy[0].damageToBobo;
@@ -178,7 +155,7 @@ namespace EscapeTheEdge {
                         if (object instanceof Enemy) {
                             this.health -= this.enemyDamage;
                         } else if (object instanceof Collectable) {
-                            this.mana += 10;
+                            this.mana += 5;
                             console.log(this.mana);
                             removeNodeFromNode(object, items);
                         }
@@ -187,6 +164,28 @@ namespace EscapeTheEdge {
 
             }
         } //close checkHit
+
+
+        private handleHealthAndMana(): void {
+            //mana abzeihen für größe
+            if (this.size != SIZE.MEDIUM) {
+                this.mana -= this.manaCostToResize;
+                console.log("Mana: " + this.mana);
+            }
+            if (this.mana < 0) {
+                this.mana = 0;
+            } else if (this.mana > 100) {
+                this.mana = 100;
+            }
+
+            if (this.health <= 0) {
+                Sound.play("boboDeath");
+                gameOver();
+            } else if (this.health >= 100) {
+                this.health = 100;
+            }
+        } //close healthandMana
+
 
     } //close class
 

@@ -6,8 +6,6 @@ namespace EscapeTheEdge {
     export class Sound {
          static sounds: Sounds = {};
         
-        
-
         public static init(): void {
             let audioElements: NodeListOf<HTMLAudioElement> = document.querySelectorAll("audio");
             for (let element of audioElements)

@@ -17,13 +17,13 @@ var EscapeTheEdge;
                 this.addComponent(new f.ComponentMaterial(Floor.goalMaterial));
             else
                 this.addComponent(new f.ComponentMaterial(Floor.material));
-        }
+        } //close createMaterial
         createEnemy() {
             let enemy = new EscapeTheEdge.Enemy(this);
             this.enemy = enemy;
             enemy.cmpTransform.local.translation = this.cmpTransform.local.translation;
             EscapeTheEdge.characters.appendChild(enemy);
-        }
+        } //close createEnemy
         getRectWorld() {
             let rect = f.Rectangle.GET(0, 0, 100, 100);
             let topleft = new f.Vector3(-0.5, 0.5, 0);

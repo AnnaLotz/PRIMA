@@ -24,12 +24,7 @@ var EscapeTheEdge;
             super(_name);
             this.mana = 100;
             this.health = 100;
-            // private static sprites: Sprite[];
             this.speedMax = new f.Vector2(1.5, 5); // units per second
-            // private static gravity: f.Vector2 = f.Vector2.Y(-3);
-            // private action: ACTION;
-            // private time: f.Time = new f.Time();
-            // public speed: f.Vector3 = f.Vector3.ZERO();
             this.size = SIZE.MEDIUM;
             this.update = (_event) => {
                 this.broadcastEvent(new CustomEvent("showNext"));
@@ -43,25 +38,7 @@ var EscapeTheEdge;
                 this.checkCollision(distance);
                 this.checkHit(EscapeTheEdge.characters);
                 this.checkHit(EscapeTheEdge.items);
-                // this.checkHit(EnemyBullets);
-                //mana abzeihen für größe
-                if (this.size != SIZE.MEDIUM) {
-                    this.mana -= this.manaCostToResize;
-                    console.log("Mana: " + this.mana);
-                }
-                if (this.mana < 0) {
-                    this.mana = 0;
-                }
-                else if (this.mana > 100) {
-                    this.mana = 100;
-                }
-                if (this.health <= 0) {
-                    EscapeTheEdge.Sound.play("boboDeath");
-                    EscapeTheEdge.gameOver();
-                }
-                else if (this.health >= 100) {
-                    this.health = 100;
-                }
+                this.handleHealthAndMana();
             }; //close update
             this.fetchData();
             this.addComponent(new f.ComponentTransform());
@@ -155,7 +132,7 @@ var EscapeTheEdge;
                             this.health -= this.enemyDamage;
                         }
                         else if (object instanceof EscapeTheEdge.Collectable) {
-                            this.mana += 10;
+                            this.mana += 5;
                             console.log(this.mana);
                             EscapeTheEdge.removeNodeFromNode(object, EscapeTheEdge.items);
                         }
@@ -163,6 +140,26 @@ var EscapeTheEdge;
                 }
             }
         } //close checkHit
+        handleHealthAndMana() {
+            //mana abzeihen für größe
+            if (this.size != SIZE.MEDIUM) {
+                this.mana -= this.manaCostToResize;
+                console.log("Mana: " + this.mana);
+            }
+            if (this.mana < 0) {
+                this.mana = 0;
+            }
+            else if (this.mana > 100) {
+                this.mana = 100;
+            }
+            if (this.health <= 0) {
+                EscapeTheEdge.Sound.play("boboDeath");
+                EscapeTheEdge.gameOver();
+            }
+            else if (this.health >= 100) {
+                this.health = 100;
+            }
+        } //close healthandMana
     } //close class
     EscapeTheEdge.Bobo = Bobo;
 })(EscapeTheEdge || (EscapeTheEdge = {})); //close namespace

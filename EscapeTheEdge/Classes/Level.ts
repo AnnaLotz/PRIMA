@@ -10,7 +10,7 @@ namespace EscapeTheEdge {
 
         public constructor(_levelCount: number) {
             super("Level" + _levelCount);
-            this.height = 20;
+            this.height = 40;
             this.createLevel();
 
         } //close Constructor
@@ -49,7 +49,7 @@ namespace EscapeTheEdge {
                 floor = new Floor();
                 // floor.cmpTransform.local.scaleX(this.randNumb(0.5, 3));
                 floor.cmpTransform.local.scaleY(randNumb(0.08, 0.17));
-                floor.cmpTransform.local.translateX(randNumb(- 1.9, 1.9));
+                floor.cmpTransform.local.translateX(randNumb(- 1.85, 1.85));
                 floor.cmpTransform.local.translateY(randNumb(-0.2, 0.2) + i);
                 floor.createMaterial(this.height);
                 if (randNumb(0, 1) < this.enemySpawnRate && floor.cmpTransform.local.translation.y >= 0.6 && floor.cmpTransform.local.translation.y <= this.height - 0.2) {
@@ -74,17 +74,5 @@ namespace EscapeTheEdge {
 
         }//close createLevel
 
-
-
-        // private createGoal(): void {
-
-        //     let goalNode: f.Node = new f.Node("Goal");
-        //     goalNode.addComponent(new f.ComponentTransform);
-        //     let material: f.Material = new f.Material("Goal", f.ShaderUniColor, new f.CoatColored(new f.Color(0.8, 0.2, 0.2, 0.5)));
-        //     goalNode.addComponent(new f.ComponentMaterial(material));
-        //     goalNode.cmpTransform.local.scale(new f.Vector3(1, this.height, 0));
-        //     rootNode.appendChild(goalNode);
-
-        // }
     } //close class
 } //close Namespace

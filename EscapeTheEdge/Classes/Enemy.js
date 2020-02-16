@@ -16,8 +16,6 @@ var EscapeTheEdge;
                     this.changeDirection();
             }; //close update
             this.floor = _floor;
-            // this.walkRadius = _floorWidth;
-            // console.log(this.walkRadius);
             this.addComponent(new f.ComponentTransform());
             this.fetchData();
             for (let sprite of Enemy.sprites) {
@@ -59,7 +57,7 @@ var EscapeTheEdge;
             this.show(_action);
         } //close act
         fetchData() {
-            this.speedMax = new f.Vector2(EscapeTheEdge.data[0].enemy[0].speedMaxX, 2);
+            this.speedMax = new f.Vector2(EscapeTheEdge.data[0].enemy[0].speedMaxX, 3);
         }
         changeDirection() {
             if (this.direction == EscapeTheEdge.DIRECTION.LEFT)

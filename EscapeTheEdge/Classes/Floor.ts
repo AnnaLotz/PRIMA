@@ -20,19 +20,19 @@ namespace EscapeTheEdge {
 
         } //close constructor
 
-        createMaterial(_levelHeight: number): void {
+        public createMaterial(_levelHeight: number): void {
             if (this.cmpTransform.local.translation.y >= _levelHeight - 5)
                 this.addComponent(new f.ComponentMaterial(Floor.goalMaterial));
             else
                 this.addComponent(new f.ComponentMaterial(Floor.material));
-        }
+        } //close createMaterial
 
         public createEnemy(): void {
             let enemy: Enemy = new Enemy(this);
             this.enemy = enemy;
             enemy.cmpTransform.local.translation = this.cmpTransform.local.translation;
             characters.appendChild(enemy);
-        }
+        } //close createEnemy
 
         public getRectWorld(): f.Rectangle {
             let rect: f.Rectangle = f.Rectangle.GET(0, 0, 100, 100);
@@ -68,8 +68,6 @@ namespace EscapeTheEdge {
             return rect;
 
         } //close getTopRectWorld
-
-
 
     } //close class
 } //close namespace

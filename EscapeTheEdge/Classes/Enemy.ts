@@ -7,13 +7,9 @@ namespace EscapeTheEdge {
         protected speedMax: f.Vector2;  // units per second
 
 
-
-
         constructor(_floor: Floor, _name: string = "Enemy") {
             super(_name);
             this.floor = _floor;
-            // this.walkRadius = _floorWidth;
-            // console.log(this.walkRadius);
             this.addComponent(new f.ComponentTransform());
 
             this.fetchData();
@@ -71,8 +67,9 @@ namespace EscapeTheEdge {
         } //close act
 
         protected fetchData(): void {
-            this.speedMax = new f.Vector2(data[0].enemy[0].speedMaxX, 2);
+            this.speedMax = new f.Vector2(data[0].enemy[0].speedMaxX, 3);
         }
+
 
         protected update = (_event: f.Eventƒ): void => {
             this.broadcastEvent(new CustomEvent("showNext"));
@@ -80,12 +77,12 @@ namespace EscapeTheEdge {
             let timeFrame: number = f.Loop.timeFrameGame / 1000;
             this.speed.y += Enemy.gravity.y * timeFrame;
             let distance: f.Vector3 = f.Vector3.SCALE(this.speed, timeFrame);
-
             this.cmpTransform.local.translate(distance);
             this.checkCollision(distance);
             if (this.outOfWalkingRange())
                 this.changeDirection();
 
+            
 
         } //close update
 

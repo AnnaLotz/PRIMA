@@ -48,13 +48,9 @@ var EscapeTheEdge;
         act(_status, _direction) {
             switch (_status) {
                 case STATUS.FLYING:
-                    // let direction: number = (_direction == DIRECTION.RIGHT ? 1 : -1);
-                    // this.speed.x = this.speedMax.x; // * direction;
                     this.cmpTransform.local.rotation = f.Vector3.Y(90 - 90 * this.direction);
-                    // console.log(direction);
                     break;
                 case STATUS.EXPLODING:
-                    // if (this.speed.y == 0) //für kein doppelSprung
                     this.speed = f.Vector3.ZERO();
                     break;
             }

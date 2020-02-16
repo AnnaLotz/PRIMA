@@ -6,8 +6,6 @@ namespace EscapeTheEdge {
         protected static sprites: Sprite[];
         protected static speedMax: f.Vector2 = new f.Vector2(1.5, 3); // units per second
         protected static gravity: f.Vector2 = f.Vector2.Y(-3);
-        // private action: ACTION;
-        // private time: f.Time = new f.Time();
         public speed: f.Vector3 = f.Vector3.ZERO();
 
         constructor(_name: string = "Bobo") {
