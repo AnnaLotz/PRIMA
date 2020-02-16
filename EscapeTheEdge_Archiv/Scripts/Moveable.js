@@ -21,7 +21,7 @@ var EscapeTheEdge_Archiv;
                 child.activate(child.name == _action);
         } //close show
         checkCollision(_distance) {
-            for (let floor of level.getChildren()) {
+            for (let floor of EscapeTheEdge_Archiv.level.getChildren()) {
                 let rect = floor.getRectWorld();
                 let fallingVec = this.cmpTransform.local.translation.toVector2();
                 fallingVec.subtract(_distance.toVector2());

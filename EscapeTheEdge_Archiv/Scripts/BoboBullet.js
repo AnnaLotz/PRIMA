@@ -21,7 +21,7 @@ var EscapeTheEdge_Archiv;
             this.direction = _direction;
             this.fetchData();
             this.speed = new f.Vector3(this.direction * this.speedX, 0, 0);
-            this.cmpTransform.local.translation = bobo.cmpTransform.local.translation;
+            this.cmpTransform.local.translation = EscapeTheEdge_Archiv.bobo.cmpTransform.local.translation;
             this.cmpTransform.local.translateY(0.08);
             for (let sprite of BoboBullet.sprites) {
                 let nodeSprite = new EscapeTheEdge_Archiv.NodeSprite(sprite.name, sprite);
@@ -62,14 +62,14 @@ var EscapeTheEdge_Archiv;
                 child.activate(child.name == _status);
         } //close show
         removeBullet() {
-            removeNodeFromNode(this, items);
+            EscapeTheEdge_Archiv.removeNodeFromNode(this, EscapeTheEdge_Archiv.items);
         } //close removeBullet
         fetchData() {
-            this.speedX = data[0].bobo[0].bulletSpeed;
+            this.speedX = EscapeTheEdge_Archiv.data[0].bobo[0].bulletSpeed;
         }
         checkHit() {
             let hitEnemy = false;
-            for (let enemy of characters.getChildren()) {
+            for (let enemy of EscapeTheEdge_Archiv.characters.getChildren()) {
                 if (enemy instanceof EscapeTheEdge_Archiv.Enemy && !hitEnemy && STATUS.FLYING) {
                     let enemyPos = enemy.cmpTransform.local.translation;
                     let bulletPos = this.cmpTransform.local.translation;
@@ -85,7 +85,7 @@ var EscapeTheEdge_Archiv;
                     }
                 }
             }
-            for (let floor of level.getChildren()) {
+            for (let floor of EscapeTheEdge_Archiv.level.getChildren()) {
                 let rect = floor.getRectWorld();
                 let hit = rect.isInside(this.cmpTransform.local.translation.toVector2());
                 if (hit) {
@@ -98,7 +98,7 @@ var EscapeTheEdge_Archiv;
         } // close checkHit
         kill(_enemy) {
             EscapeTheEdge_Archiv.Sound.play("enemyDeath");
-            characters.removeChild(_enemy);
+            EscapeTheEdge_Archiv.characters.removeChild(_enemy);
             this.removeBullet();
         } //close kill
     } //close class

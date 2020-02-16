@@ -35,19 +35,19 @@ var EscapeTheEdge_Archiv;
             this.appendChild(wall);
             for (let i = 0; i <= this.height + 2; i += 0.25) {
                 floor = new EscapeTheEdge_Archiv.Floor();
-                floor.cmpTransform.local.scaleX(randNumb(0.8, 1.2));
-                floor.cmpTransform.local.scaleY(randNumb(0.1, 0.17));
-                floor.cmpTransform.local.translateX(randNumb(-1.85, 1.85));
-                floor.cmpTransform.local.translateY(randNumb(-0.2, 0.2) + i);
+                floor.cmpTransform.local.scaleX(EscapeTheEdge_Archiv.randNumb(0.8, 1.2));
+                floor.cmpTransform.local.scaleY(EscapeTheEdge_Archiv.randNumb(0.1, 0.17));
+                floor.cmpTransform.local.translateX(EscapeTheEdge_Archiv.randNumb(-1.85, 1.85));
+                floor.cmpTransform.local.translateY(EscapeTheEdge_Archiv.randNumb(-0.2, 0.2) + i);
                 floor.createMaterial(this.height);
-                if (randNumb(0, 1) < this.enemySpawnRate && floor.cmpTransform.local.translation.y >= 0.6 && floor.cmpTransform.local.translation.y <= this.height - 0.2) {
+                if (EscapeTheEdge_Archiv.randNumb(0, 1) < this.enemySpawnRate && floor.cmpTransform.local.translation.y >= 0.6 && floor.cmpTransform.local.translation.y <= this.height - 0.2) {
                     floor.createEnemy();
                 }
-                else if (randNumb(0, 1) < 0.05) {
+                else if (EscapeTheEdge_Archiv.randNumb(0, 1) < 0.05) {
                     let collectable = new EscapeTheEdge_Archiv.Collectable(EscapeTheEdge_Archiv.COLLECTABLETYPE.MANA);
                     collectable.cmpTransform.local.translation = floor.cmpTransform.local.translation;
                     collectable.cmpTransform.local.translation.y += 0.8;
-                    items.appendChild(collectable);
+                    EscapeTheEdge_Archiv.items.appendChild(collectable);
                 }
                 this.appendChild(floor);
             }
@@ -57,7 +57,7 @@ var EscapeTheEdge_Archiv;
             goalLine.addComponent(new f.ComponentMesh(new f.MeshQuad()));
             goalLine.cmpTransform.local.translate(new f.Vector3(0, this.height, -0.01));
             goalLine.getComponent(f.ComponentMesh).pivot.scale(new f.Vector3(10, 0.1, 0));
-            rootNode.appendChild(goalLine);
+            EscapeTheEdge_Archiv.rootNode.appendChild(goalLine);
         } //close createLevel
     } //close class
     EscapeTheEdge_Archiv.Level = Level;

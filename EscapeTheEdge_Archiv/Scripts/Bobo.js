@@ -35,8 +35,8 @@ var EscapeTheEdge_Archiv;
                 this.cmpTransform.local.translate(distance);
                 this.checkCollision(halfDist);
                 this.checkCollision(distance);
-                this.checkHit(characters);
-                this.checkHit(items);
+                this.checkHit(EscapeTheEdge_Archiv.characters);
+                this.checkHit(EscapeTheEdge_Archiv.items);
                 this.handleHealthAndMana();
             }; //close update
             this.fetchData();
@@ -106,14 +106,14 @@ var EscapeTheEdge_Archiv;
             if (this.mana >= this.manaCostToShoot) {
                 EscapeTheEdge_Archiv.Sound.play("boboShoot");
                 this.bullet = new EscapeTheEdge_Archiv.BoboBullet(_direction);
-                items.appendChild(this.bullet);
+                EscapeTheEdge_Archiv.items.appendChild(this.bullet);
                 this.mana -= this.manaCostToShoot;
             }
         } //close shoot
         fetchData() {
-            this.enemyDamage = data[0].enemy[0].damageToBobo;
-            this.manaCostToShoot = data[0].bobo[0].manaCostToShoot;
-            this.manaCostToResize = data[0].bobo[0].manaCostToResize;
+            this.enemyDamage = EscapeTheEdge_Archiv.data[0].enemy[0].damageToBobo;
+            this.manaCostToShoot = EscapeTheEdge_Archiv.data[0].bobo[0].manaCostToShoot;
+            this.manaCostToResize = EscapeTheEdge_Archiv.data[0].bobo[0].manaCostToResize;
         }
         checkHit(_object) {
             for (let object of _object.getChildren()) {
@@ -128,7 +128,7 @@ var EscapeTheEdge_Archiv;
                         }
                         else if (object instanceof EscapeTheEdge_Archiv.Collectable) {
                             this.mana += 5;
-                            removeNodeFromNode(object, items);
+                            EscapeTheEdge_Archiv.removeNodeFromNode(object, EscapeTheEdge_Archiv.items);
                         }
                     }
                 }
@@ -148,7 +148,7 @@ var EscapeTheEdge_Archiv;
             }
             if (this.health <= 0) {
                 EscapeTheEdge_Archiv.Sound.play("boboDeath");
-                gameOver();
+                EscapeTheEdge_Archiv.gameOver();
             }
             else if (this.health >= 100) {
                 this.health = 100;

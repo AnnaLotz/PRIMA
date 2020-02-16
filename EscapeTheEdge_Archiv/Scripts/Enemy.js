@@ -28,8 +28,8 @@ var EscapeTheEdge_Archiv;
                 nodeSprite.addEventListener("showNext", (_event) => { _event.currentTarget.showFrameNext(); }, true);
                 this.appendChild(nodeSprite);
             }
-            this.speed.x = randNumb(0.1, Enemy.speedMax.x);
-            if (randNumb(0, 1) < 0.5)
+            this.speed.x = EscapeTheEdge_Archiv.randNumb(0.1, Enemy.speedMax.x);
+            if (EscapeTheEdge_Archiv.randNumb(0, 1) < 0.5)
                 this.direction = EscapeTheEdge_Archiv.DIRECTION.LEFT;
             else
                 this.direction = EscapeTheEdge_Archiv.DIRECTION.LEFT;
@@ -57,7 +57,7 @@ var EscapeTheEdge_Archiv;
             this.show(_action);
         } //close act
         fetchData() {
-            this.speedMax = new f.Vector2(data[0].enemy[0].speedMaxX, 2);
+            this.speedMax = new f.Vector2(EscapeTheEdge_Archiv.data[0].enemy[0].speedMaxX, 2);
         }
         changeDirection() {
             if (this.direction == EscapeTheEdge_Archiv.DIRECTION.LEFT)

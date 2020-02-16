@@ -1,56 +1,56 @@
 "use strict";
-///<reference types="../EscapeTheEdge/FUDGE/FudgeCore.js"/>
-var EscapeTheEdge;
-///<reference types="../EscapeTheEdge/FUDGE/FudgeCore.js"/>
-(function (EscapeTheEdge) {
+///<reference types="../EscapeTheEdge_Archiv/FUDGE/FudgeCore.js"/>
+var EscapeTheEdge_Archiv;
+///<reference types="../EscapeTheEdge_Archiv/FUDGE/FudgeCore.js"/>
+(function (EscapeTheEdge_Archiv) {
     var f = FudgeCore;
     let mover;
-    EscapeTheEdge.musicMuted = true;
-    EscapeTheEdge.soundMuted = false;
+    EscapeTheEdge_Archiv.musicMuted = true;
+    EscapeTheEdge_Archiv.soundMuted = false;
     let keysPressed = {};
     loadFilesWithResponse();
     window.addEventListener("load", init);
     function init(_event) {
-        EscapeTheEdge.showMenue(); //-> style.ts
+        EscapeTheEdge_Archiv.showMenue(); //-> style.ts
         document.getElementById("startButton").addEventListener("click", startGame);
-        document.getElementById("controlButton").addEventListener("click", EscapeTheEdge.showControls);
-        document.getElementById("musicButton").addEventListener("click", EscapeTheEdge.toggleMusic);
-        document.getElementById("soundButton").addEventListener("click", EscapeTheEdge.toggleSounds);
-        document.getElementById("creditsButton").addEventListener("click", EscapeTheEdge.showCredits);
-        document.getElementById("backButton").addEventListener("click", EscapeTheEdge.showMenue);
+        document.getElementById("controlButton").addEventListener("click", EscapeTheEdge_Archiv.showControls);
+        document.getElementById("musicButton").addEventListener("click", EscapeTheEdge_Archiv.toggleMusic);
+        document.getElementById("soundButton").addEventListener("click", EscapeTheEdge_Archiv.toggleSounds);
+        document.getElementById("creditsButton").addEventListener("click", EscapeTheEdge_Archiv.showCredits);
+        document.getElementById("backButton").addEventListener("click", EscapeTheEdge_Archiv.showMenue);
         document.getElementById("playAgain").addEventListener("click", playAgain);
-        EscapeTheEdge.canvas = document.querySelector("canvas");
+        EscapeTheEdge_Archiv.canvas = document.querySelector("canvas");
         f.RenderManager.initialize(true, false);
     } //close init
     async function loadFilesWithResponse() {
         let response = await fetch("Scripts/data.json");
         let offer = await response.text();
-        EscapeTheEdge.data = JSON.parse(offer);
+        EscapeTheEdge_Archiv.data = JSON.parse(offer);
     } //close loadFiles
-    EscapeTheEdge.loadFilesWithResponse = loadFilesWithResponse;
+    EscapeTheEdge_Archiv.loadFilesWithResponse = loadFilesWithResponse;
     function startGame() {
-        EscapeTheEdge.Sound.init();
-        document.getElementById("stats").style.width = EscapeTheEdge.canvas.width + "px";
+        EscapeTheEdge_Archiv.Sound.init();
+        document.getElementById("stats").style.width = EscapeTheEdge_Archiv.canvas.width + "px";
         document.getElementById("menue").style.display = "none";
         document.getElementById("gameWrapper").style.display = "initial";
-        EscapeTheEdge.rootNode = new f.Node("RootNode");
+        EscapeTheEdge_Archiv.rootNode = new f.Node("RootNode");
         mover = new f.Node("Mover");
-        EscapeTheEdge.items = new f.Node("Items");
-        EscapeTheEdge.characters = new f.Node("Characters");
+        EscapeTheEdge_Archiv.items = new f.Node("Items");
+        EscapeTheEdge_Archiv.characters = new f.Node("Characters");
         let img = document.querySelector("img");
         let txtFigures = new f.TextureImage();
         txtFigures.image = img;
-        EscapeTheEdge.Enemy.generateSprites(txtFigures);
-        EscapeTheEdge.BoboBullet.generateSprites(txtFigures);
-        EscapeTheEdge.Bobo.generateSprites(txtFigures);
-        EscapeTheEdge.Collectable.generateSprites(txtFigures);
-        EscapeTheEdge.bobo = new EscapeTheEdge.Bobo("Bobo");
-        EscapeTheEdge.characters.appendChild(EscapeTheEdge.bobo);
-        EscapeTheEdge.level = new EscapeTheEdge.Level(1);
-        EscapeTheEdge.rootNode.appendChild(EscapeTheEdge.level);
-        EscapeTheEdge.rootNode.appendChild(mover);
-        EscapeTheEdge.rootNode.appendChild(EscapeTheEdge.characters);
-        EscapeTheEdge.rootNode.appendChild(EscapeTheEdge.items);
+        EscapeTheEdge_Archiv.Enemy.generateSprites(txtFigures);
+        EscapeTheEdge_Archiv.BoboBullet.generateSprites(txtFigures);
+        EscapeTheEdge_Archiv.Bobo.generateSprites(txtFigures);
+        EscapeTheEdge_Archiv.Collectable.generateSprites(txtFigures);
+        EscapeTheEdge_Archiv.bobo = new EscapeTheEdge_Archiv.Bobo("Bobo");
+        EscapeTheEdge_Archiv.characters.appendChild(EscapeTheEdge_Archiv.bobo);
+        EscapeTheEdge_Archiv.level = new EscapeTheEdge_Archiv.Level(1);
+        EscapeTheEdge_Archiv.rootNode.appendChild(EscapeTheEdge_Archiv.level);
+        EscapeTheEdge_Archiv.rootNode.appendChild(mover);
+        EscapeTheEdge_Archiv.rootNode.appendChild(EscapeTheEdge_Archiv.characters);
+        EscapeTheEdge_Archiv.rootNode.appendChild(EscapeTheEdge_Archiv.items);
         mover.addComponent(new f.ComponentTransform());
         let camera = new f.Node("Camera");
         let cmpCam = new f.ComponentCamera();
@@ -61,7 +61,7 @@ var EscapeTheEdge;
         cmpCam.backgroundColor = new f.Color(0.4, 0.4, 0.4, 1);
         mover.appendChild(camera);
         let cmpLightAmbient = new f.ComponentLight(new f.LightAmbient(f.Color.CSS("WHITE")));
-        EscapeTheEdge.rootNode.addComponent(cmpLightAmbient);
+        EscapeTheEdge_Archiv.rootNode.addComponent(cmpLightAmbient);
         let light = new f.Node("Light");
         let cmpLight;
         cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.CSS("WHITE")));
@@ -69,11 +69,11 @@ var EscapeTheEdge;
         cmpLight.pivot.lookAt(new f.Vector3(0, 0, 0));
         light.addComponent(cmpLight);
         mover.appendChild(light);
-        EscapeTheEdge.viewport = new f.Viewport();
-        EscapeTheEdge.viewport.initialize("Viewport", EscapeTheEdge.rootNode, camera.getComponent(f.ComponentCamera), EscapeTheEdge.canvas);
+        EscapeTheEdge_Archiv.viewport = new f.Viewport();
+        EscapeTheEdge_Archiv.viewport.initialize("Viewport", EscapeTheEdge_Archiv.rootNode, camera.getComponent(f.ComponentCamera), EscapeTheEdge_Archiv.canvas);
         //starting game
         f.RenderManager.update();
-        EscapeTheEdge.viewport.draw();
+        EscapeTheEdge_Archiv.viewport.draw();
         document.addEventListener("keydown", handleKeyboard);
         document.addEventListener("keyup", handleKeyboard);
         f.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, update);
@@ -82,16 +82,16 @@ var EscapeTheEdge;
     function update() {
         processInput();
         updateCamera();
-        EscapeTheEdge.viewport.draw();
+        EscapeTheEdge_Archiv.viewport.draw();
         f.RenderManager.update();
-        document.getElementById("health").style.width = EscapeTheEdge.bobo.health + "%";
-        document.getElementById("mana").style.width = EscapeTheEdge.bobo.mana + "%";
-        if (EscapeTheEdge.bobo.cmpTransform.local.translation.y >= EscapeTheEdge.level.height)
+        document.getElementById("health").style.width = EscapeTheEdge_Archiv.bobo.health + "%";
+        document.getElementById("mana").style.width = EscapeTheEdge_Archiv.bobo.mana + "%";
+        if (EscapeTheEdge_Archiv.bobo.cmpTransform.local.translation.y >= EscapeTheEdge_Archiv.level.height)
             win();
     } //close update
     function updateCamera() {
         let cmpCam = mover.getChildrenByName("Camera")[0].getComponent(f.ComponentCamera);
-        let boboPos = EscapeTheEdge.bobo.cmpTransform.local.translation;
+        let boboPos = EscapeTheEdge_Archiv.bobo.cmpTransform.local.translation;
         cmpCam.pivot.translation = new f.Vector3(boboPos.x / 2, boboPos.y + 0.8, cmpCam.pivot.translation.z);
         /****************************************
          * Kamerahintrgrund oben heller machen? !!
@@ -101,53 +101,53 @@ var EscapeTheEdge;
         console.log("Removed" + _toRemove);
         _fromNode.removeChild(_toRemove);
     }
-    EscapeTheEdge.removeNodeFromNode = removeNodeFromNode;
+    EscapeTheEdge_Archiv.removeNodeFromNode = removeNodeFromNode;
     function handleKeyboard(_event) {
         keysPressed[_event.code] = (_event.type == "keydown");
         if (_event.code == f.KEYBOARD_CODE.SPACE && _event.type == "keydown")
-            EscapeTheEdge.bobo.act(EscapeTheEdge.ACTION.JUMP);
+            EscapeTheEdge_Archiv.bobo.act(EscapeTheEdge_Archiv.ACTION.JUMP);
         if (_event.code == f.KEYBOARD_CODE.ARROW_LEFT && _event.type == "keydown")
-            EscapeTheEdge.bobo.shoot(-1);
+            EscapeTheEdge_Archiv.bobo.shoot(-1);
         if (_event.code == f.KEYBOARD_CODE.ARROW_RIGHT && _event.type == "keydown")
-            EscapeTheEdge.bobo.shoot(1);
+            EscapeTheEdge_Archiv.bobo.shoot(1);
     } //close handleKeyboard
     function processInput() {
         if (keysPressed[f.KEYBOARD_CODE.ARROW_DOWN])
-            EscapeTheEdge.bobo.toSize(EscapeTheEdge.SIZE.SMALL);
+            EscapeTheEdge_Archiv.bobo.toSize(EscapeTheEdge_Archiv.SIZE.SMALL);
         else if (keysPressed[f.KEYBOARD_CODE.ARROW_UP])
-            EscapeTheEdge.bobo.toSize(EscapeTheEdge.SIZE.BIG);
+            EscapeTheEdge_Archiv.bobo.toSize(EscapeTheEdge_Archiv.SIZE.BIG);
         else
-            EscapeTheEdge.bobo.toSize(EscapeTheEdge.SIZE.MEDIUM);
+            EscapeTheEdge_Archiv.bobo.toSize(EscapeTheEdge_Archiv.SIZE.MEDIUM);
         if (keysPressed[f.KEYBOARD_CODE.A])
-            EscapeTheEdge.bobo.act(EscapeTheEdge.ACTION.WALK, EscapeTheEdge.DIRECTION.LEFT);
+            EscapeTheEdge_Archiv.bobo.act(EscapeTheEdge_Archiv.ACTION.WALK, EscapeTheEdge_Archiv.DIRECTION.LEFT);
         else if (keysPressed[f.KEYBOARD_CODE.D])
-            EscapeTheEdge.bobo.act(EscapeTheEdge.ACTION.WALK, EscapeTheEdge.DIRECTION.RIGHT);
+            EscapeTheEdge_Archiv.bobo.act(EscapeTheEdge_Archiv.ACTION.WALK, EscapeTheEdge_Archiv.DIRECTION.RIGHT);
         else
-            EscapeTheEdge.bobo.act(EscapeTheEdge.ACTION.IDLE);
+            EscapeTheEdge_Archiv.bobo.act(EscapeTheEdge_Archiv.ACTION.IDLE);
     } //close processInput
     function gameOver() {
-        EscapeTheEdge.Sound.stopMusic();
+        EscapeTheEdge_Archiv.Sound.stopMusic();
         f.Loop.stop();
         document.getElementById("gameWrapper").style.display = "none";
         document.getElementById("endScreen").style.display = "initial";
         document.getElementById("winScreen").style.display = "none";
-        document.getElementById("score").innerText = (Number(EscapeTheEdge.bobo.cmpTransform.local.translation.y.toFixed(1)) * 10).toString();
+        document.getElementById("score").innerText = (Number(EscapeTheEdge_Archiv.bobo.cmpTransform.local.translation.y.toFixed(1)) * 10).toString();
     } //close gameOver
-    EscapeTheEdge.gameOver = gameOver;
+    EscapeTheEdge_Archiv.gameOver = gameOver;
     function win() {
         f.Loop.stop();
-        EscapeTheEdge.Sound.play("win");
+        EscapeTheEdge_Archiv.Sound.play("win");
         document.getElementById("gameWrapper").style.display = "none";
         document.getElementById("endScreen").style.display = "initial";
         document.getElementById("deathScreen").style.display = "none";
     } //close win
-    EscapeTheEdge.win = win;
+    EscapeTheEdge_Archiv.win = win;
     function playAgain() {
         location.reload();
     }
     function randNumb(_min, _max) {
         return Math.random() * (_max - _min) + _min;
     }
-    EscapeTheEdge.randNumb = randNumb;
-})(EscapeTheEdge || (EscapeTheEdge = {})); //close Namespace
+    EscapeTheEdge_Archiv.randNumb = randNumb;
+})(EscapeTheEdge_Archiv || (EscapeTheEdge_Archiv = {})); //close Namespace
 //# sourceMappingURL=Main.js.map

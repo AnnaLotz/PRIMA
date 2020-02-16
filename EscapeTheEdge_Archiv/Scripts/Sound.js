@@ -8,13 +8,13 @@ var EscapeTheEdge_Archiv;
                 Sound.sounds[element.id] = element;
         }
         static play(_id) {
-            if (!soundMuted) {
+            if (!EscapeTheEdge_Archiv.soundMuted) {
                 Sound.sounds[_id].volume = 0.5;
                 Sound.sounds[_id].play();
             }
         } //close play
         static playMusic() {
-            if (!musicMuted) {
+            if (!EscapeTheEdge_Archiv.musicMuted) {
                 Sound.sounds["gameMusic"].loop = true;
                 Sound.sounds["gameMusic"].volume = 0.3;
                 Sound.sounds["gameMusic"].play();

@@ -6,7 +6,7 @@ Repository für das Modul "Prototyping interaktiver Medien-Apps und Games"
 ## Abschlussaufgabe
 Link zum Spiel [EscapeTheEdge](https://annalotz.github.io/PRIMA/EscapeTheEdge/Main.html)
 Code und Designdokument [auf Github](https://github.com/AnnaLotz/PRIMA/tree/master/EscapeTheEdge)
-<!-- Archiv [Download]() -->
+Archiv [Download](https://github.com/AnnaLotz/PRIMA/raw/master/EscapeTheEdge_Archiv.zip)
 
 | Nr | Bezeichnung           | Inhalt                                                                                                                                                                                                                                                                         |
 |---:|-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|

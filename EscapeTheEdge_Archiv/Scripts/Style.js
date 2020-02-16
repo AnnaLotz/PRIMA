@@ -18,13 +18,13 @@ var EscapeTheEdge_Archiv;
     EscapeTheEdge_Archiv.showControls = showControls;
     function toggleMusic() {
         EscapeTheEdge_Archiv.Sound.init();
-        if (!musicMuted) {
-            musicMuted = true;
+        if (!EscapeTheEdge_Archiv.musicMuted) {
+            EscapeTheEdge_Archiv.musicMuted = true;
             document.getElementById("musicButton").innerHTML = "Musik: aus";
             EscapeTheEdge_Archiv.Sound.stopMusic();
         }
-        else if (musicMuted) {
-            musicMuted = false;
+        else if (EscapeTheEdge_Archiv.musicMuted) {
+            EscapeTheEdge_Archiv.musicMuted = false;
             document.getElementById("musicButton").innerHTML = "Musik: an";
             EscapeTheEdge_Archiv.Sound.playMusic();
             EscapeTheEdge_Archiv.Sound.sounds["gameMusic"].muted = false;
@@ -32,12 +32,12 @@ var EscapeTheEdge_Archiv;
     } //close toggleMusic
     EscapeTheEdge_Archiv.toggleMusic = toggleMusic;
     function toggleSounds() {
-        if (!soundMuted) {
-            soundMuted = true;
+        if (!EscapeTheEdge_Archiv.soundMuted) {
+            EscapeTheEdge_Archiv.soundMuted = true;
             document.getElementById("soundButton").innerHTML = "Sounds: aus";
         }
-        else if (soundMuted) {
-            soundMuted = false;
+        else if (EscapeTheEdge_Archiv.soundMuted) {
+            EscapeTheEdge_Archiv.soundMuted = false;
             document.getElementById("soundButton").innerHTML = "Sounds: an";
         }
     } //close toggleSounds
