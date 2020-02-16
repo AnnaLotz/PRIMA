@@ -1,7 +1,7 @@
 ///<reference types="../EscapeTheEdge/FUDGE/FudgeCore.js"/>
 namespace EscapeTheEdge {
     import f = FudgeCore;
-    import Sprite = L14_ScrollerFoundation.Sprite;
+    import Sprite = EscapeTheEdge.Sprite;
     export let sprite: Sprite;
     export let viewport: f.Viewport;
     export let rootNode: f.Node;

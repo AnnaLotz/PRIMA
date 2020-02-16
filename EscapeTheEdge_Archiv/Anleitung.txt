@@ -10,3 +10,6 @@ Zum Spielen:
 Steuerung mit a/d und Leertaste
 Mit Pfeiltaste hoch/runter kann die Größe verändert werden
 Mit Pfeiltaste links/rechts kann man schießen
+
+
+ALternativ kann "Escape The Edge" auch online unter folgendem Link gespielt werden: https://annalotz.github.io/PRIMA/EscapeTheEdge/Main.html

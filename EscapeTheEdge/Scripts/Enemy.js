@@ -10,8 +10,12 @@ var EscapeTheEdge;
                 let timeFrame = f.Loop.timeFrameGame / 1000;
                 this.speed.y += Enemy.gravity.y * timeFrame;
                 let distance = f.Vector3.SCALE(this.speed, timeFrame);
+                let halfDist = new f.Vector3(distance.x / 2, distance.y / 2, distance.z / 2);
                 this.cmpTransform.local.translate(distance);
+                this.checkCollision(halfDist);
                 this.checkCollision(distance);
+                //enemies fallen trotzdem oft herunter... 
+                //vllt. weil die Rects zu weit entfernt sind und nicht berechnet werden?
                 if (this.outOfWalkingRange())
                     this.changeDirection();
             }; //close update
