@@ -67,12 +67,11 @@ namespace EscapeTheEdge {
                 case ACTION.WALK:
                     let direction: number = (_direction == DIRECTION.RIGHT ? 1 : -1);
                     if (this.cmpTransform.local.translation.x > -2.5 && this.cmpTransform.local.translation.x < 2.5)
-                        this.speed.x = this.speedMax.x; // * direction;
+                        this.speed.x = this.speedMax.x;
                     this.cmpTransform.local.rotation = f.Vector3.Y(90 - 90 * direction);
-                    // console.log(direction);
                     break;
                 case ACTION.JUMP:
-                    if (this.speed.y == 0) { //für kein doppelSprung 
+                    if (this.speed.y == 0) { //für keinen doppelSprung 
                         Sound.play("boboJump");
                         this.speed.y = this.speedMax.y;
                     }
@@ -86,7 +85,6 @@ namespace EscapeTheEdge {
                 _size = SIZE.MEDIUM;
             }
             this.size = _size;
-            // console.log(this.size);
             switch (_size) {
                 case SIZE.MEDIUM:
                     this.cmpTransform.local.scaling = new f.Vector3(1, 1, 1);
@@ -108,7 +106,6 @@ namespace EscapeTheEdge {
         public shoot(_direction: number): void {
             if (this.mana >= this.manaCostToShoot) {
                 Sound.play("boboShoot");
-                console.log("shoot " + _direction);
                 this.bullet = new BoboBullet(_direction);
                 items.appendChild(this.bullet);
                 this.mana -= this.manaCostToShoot;
@@ -117,7 +114,6 @@ namespace EscapeTheEdge {
 
         protected update = (_event: f.Eventƒ): void => {
             this.broadcastEvent(new CustomEvent("showNext"));
-
             let timeFrame: number = f.Loop.timeFrameGame / 1000;
             this.speed.y += Bobo.gravity.y * timeFrame;
             let distance: f.Vector3 = f.Vector3.SCALE(this.speed, timeFrame);
@@ -125,14 +121,10 @@ namespace EscapeTheEdge {
 
             this.cmpTransform.local.translate(distance);
             this.checkCollision(halfDist);
-            // console.log(distance.x, distance.y);
             this.checkCollision(distance);
-
             this.checkHit(characters);
             this.checkHit(items);
             this.handleHealthAndMana();
-
-
         } //close update
 
 
@@ -145,26 +137,21 @@ namespace EscapeTheEdge {
         protected checkHit(_object: f.Node): void {
             for (let object of _object.getChildren()) {
                 if (!(object instanceof Bobo)) {
-
                     let evilPos: f.Vector3 = object.cmpTransform.local.translation;
                     let boboPos: f.Vector3 = this.cmpTransform.local.translation;
                     let dif: f.Vector3 = f.Vector3.DIFFERENCE(evilPos, boboPos);
                     let distance: number = Math.abs(Math.sqrt(dif.x * dif.x + dif.y * dif.y + dif.z * dif.z));
-                    // console.log(distance);
                     if (distance < 0.15) {
                         if (object instanceof Enemy) {
                             this.health -= this.enemyDamage;
                         } else if (object instanceof Collectable) {
                             this.mana += 5;
-                            console.log(this.mana);
                             removeNodeFromNode(object, items);
                         }
                     }
                 }
-
             }
         } //close checkHit
-
 
         private handleHealthAndMana(): void {
             //mana abzeihen für größe
@@ -186,7 +173,5 @@ namespace EscapeTheEdge {
             }
         } //close healthandMana
 
-
     } //close class
-
 } //close namespace

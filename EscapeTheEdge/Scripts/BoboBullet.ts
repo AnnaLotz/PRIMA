@@ -25,26 +25,21 @@ namespace EscapeTheEdge {
             for (let sprite of BoboBullet.sprites) {
                 let nodeSprite: NodeSprite = new NodeSprite(sprite.name, sprite);
                 nodeSprite.activate(false);
-
                 nodeSprite.addEventListener(
                     "showNext",
                     (_event: Event) => { (<NodeSprite>_event.currentTarget).showFrameNext(); },
                     true
                 );
-
                 this.appendChild(nodeSprite);
             }
             this.show(STATUS.FLYING);
-
             setTimeout(() => {
                 this.removeBullet();
             },         5000);
             f.Loop.addEventListener(f.EVENT.LOOP_FRAME, this.update);
-
         } //close constructor
 
         
-
         public static generateSprites(_txtImage: f.TextureImage): void {
             BoboBullet.sprites = [];
             let sprite: Sprite = new Sprite(STATUS.FLYING);
@@ -55,6 +50,7 @@ namespace EscapeTheEdge {
             sprite.generateByGrid(_txtImage, f.Rectangle.GET(2, 42, 4, 4), 3, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
             BoboBullet.sprites.push(sprite);
         } //close generate Sprites
+
 
         public act(_status: STATUS, _direction?: DIRECTION): void {
             switch (_status) {
@@ -68,16 +64,19 @@ namespace EscapeTheEdge {
             this.show(_status);
         } //close act
 
+
         public show(_status: STATUS): void {
             if (_status == STATUS.EXPLODING)
                 return;
             for (let child of this.getChildren())
                 child.activate(child.name == _status);
-        }
+        } //close show
+
 
         public removeBullet(): void {
             removeNodeFromNode(this, items);
         } //close removeBullet
+
 
         protected fetchData(): void {
             this.speedX = data[0].bobo[0].bulletSpeed;
@@ -85,14 +84,12 @@ namespace EscapeTheEdge {
 
         protected update = (_event: f.Eventƒ): void => {
             this.broadcastEvent(new CustomEvent("showNext"));
-
             let timeFrame: number = f.Loop.timeFrameGame / 1000;
-            // this.speed.y += Bobo.gravity.y * timeFrame;
             let distance: f.Vector3 = f.Vector3.SCALE(this.speed, timeFrame);
             this.cmpTransform.local.translate(distance);
-
             this.checkHit();
         } //close update
+
 
         protected checkHit(): void {
             let hitEnemy: boolean = false;
@@ -106,11 +103,8 @@ namespace EscapeTheEdge {
                     if (distance < 0.15) {
                         hitEnemy = true;
                         this.act(STATUS.EXPLODING);
-                        // window.setTimeout(this.kill, 2000, enemy);
                         this.kill(enemy);
-
                         f.Loop.removeEventListener(f.EVENT.LOOP_FRAME, this.update);
-
                         break;
                     }
                 }
@@ -127,12 +121,12 @@ namespace EscapeTheEdge {
             }
         }// close checkHit
 
+
         protected kill(_enemy: Enemy): void {
             Sound.play("enemyDeath");
             characters.removeChild(_enemy);
             this.removeBullet();
-        }
-
+        } //close kill
 
     } //close class
 } //close Namespace

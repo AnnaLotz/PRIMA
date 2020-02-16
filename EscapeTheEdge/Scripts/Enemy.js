@@ -37,9 +37,6 @@ var EscapeTheEdge;
             let sprite = new EscapeTheEdge.Sprite(EscapeTheEdge.ACTION.WALK);
             sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 54, 17, 13), 6, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
             Enemy.sprites.push(sprite);
-            sprite = new EscapeTheEdge.Sprite(EscapeTheEdge.ACTION.IDLE);
-            sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 54, 17, 13), 4, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
-            Enemy.sprites.push(sprite); //(1, 68, 17, 14), 2
         } //close generateSprites
         act(_action, _direction) {
             let direction = (_direction == EscapeTheEdge.DIRECTION.RIGHT ? 1 : -1);
@@ -47,7 +44,6 @@ var EscapeTheEdge;
                 case EscapeTheEdge.DIRECTION.LEFT:
                     this.direction = EscapeTheEdge.DIRECTION.LEFT;
                     this.cmpTransform.local.rotation = f.Vector3.Y(90 - 90 * direction);
-                    // console.log(this.speed.x);
                     break;
                 case EscapeTheEdge.DIRECTION.RIGHT:
                     this.direction = EscapeTheEdge.DIRECTION.RIGHT;
@@ -80,16 +76,13 @@ var EscapeTheEdge;
             return false;
         } //close checkCollision
         outOfWalkingRange() {
-            // let hitNothing: boolean = true;
             let rect = (this.floor).getTopRectWorld();
             let hit = rect.isInside(this.cmpTransform.local.translation.toVector2());
             if (hit) {
-                // hitNothing = false;
                 return false;
             }
-            // console.log("Out of walking range");
             return true;
-        }
+        } //close outofwalkingRange
     } //close class
     EscapeTheEdge.Enemy = Enemy;
 })(EscapeTheEdge || (EscapeTheEdge = {})); //close namespace

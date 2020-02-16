@@ -13,7 +13,6 @@ var EscapeTheEdge;
             this.update = (_event) => {
                 this.broadcastEvent(new CustomEvent("showNext"));
                 let timeFrame = f.Loop.timeFrameGame / 1000;
-                // this.speed.y += Bobo.gravity.y * timeFrame;
                 let distance = f.Vector3.SCALE(this.speed, timeFrame);
                 this.cmpTransform.local.translate(distance);
                 this.checkHit();
@@ -61,7 +60,7 @@ var EscapeTheEdge;
                 return;
             for (let child of this.getChildren())
                 child.activate(child.name == _status);
-        }
+        } //close show
         removeBullet() {
             EscapeTheEdge.removeNodeFromNode(this, EscapeTheEdge.items);
         } //close removeBullet
@@ -80,7 +79,6 @@ var EscapeTheEdge;
                     if (distance < 0.15) {
                         hitEnemy = true;
                         this.act(STATUS.EXPLODING);
-                        // window.setTimeout(this.kill, 2000, enemy);
                         this.kill(enemy);
                         f.Loop.removeEventListener("loopFrame" /* LOOP_FRAME */, this.update);
                         break;
@@ -102,7 +100,7 @@ var EscapeTheEdge;
             EscapeTheEdge.Sound.play("enemyDeath");
             EscapeTheEdge.characters.removeChild(_enemy);
             this.removeBullet();
-        }
+        } //close kill
     } //close class
     EscapeTheEdge.BoboBullet = BoboBullet;
 })(EscapeTheEdge || (EscapeTheEdge = {})); //close Namespace

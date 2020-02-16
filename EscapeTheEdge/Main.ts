@@ -66,7 +66,6 @@ namespace EscapeTheEdge {
         mover = new f.Node("Mover");
         items = new f.Node("Items");
         characters = new f.Node("Characters");
-        // crc2 = canvas.getContext("2d");
         let img: HTMLImageElement = document.querySelector("img");
         let txtFigures: f.TextureImage = new f.TextureImage();
         txtFigures.image = img;
@@ -90,7 +89,7 @@ namespace EscapeTheEdge {
         cmpCam.pivot.translateZ(5);
         cmpCam.pivot.lookAt(f.Vector3.ZERO());
         cmpCam.pivot.translateY(0.3);
-        cmpCam.backgroundColor = f.Color.CSS("grey");
+        cmpCam.backgroundColor = new f.Color(0.4, 0.4, 0.4, 1);
         mover.appendChild(camera);
 
         let cmpLightAmbient: f.ComponentLight = new f.ComponentLight(new f.LightAmbient(f.Color.CSS("WHITE")));
@@ -114,9 +113,7 @@ namespace EscapeTheEdge {
 
         f.Loop.addEventListener(f.EVENT.LOOP_FRAME, update);
         f.Loop.start(f.LOOP_MODE.TIME_GAME, 10);
-
     }//close startGame
-
 
 
     function update(): void {
@@ -128,7 +125,6 @@ namespace EscapeTheEdge {
         document.getElementById("mana").style.width = bobo.mana + "%";
         if (bobo.cmpTransform.local.translation.y >= level.height)
             win();
-
     }//close update
 
     function updateCamera(): void {

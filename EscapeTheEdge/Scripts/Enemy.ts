@@ -11,22 +11,18 @@ namespace EscapeTheEdge {
             super(_name);
             this.floor = _floor;
             this.addComponent(new f.ComponentTransform());
-
             this.fetchData();
             for (let sprite of Enemy.sprites) {
                 let nodeSprite: NodeSprite = new NodeSprite(sprite.name, sprite);
                 nodeSprite.activate(false);
-
                 nodeSprite.addEventListener(
                     "showNext",
                     (_event: Event) => { (<NodeSprite>_event.currentTarget).showFrameNext(); },
                     true
                 );
-
                 this.appendChild(nodeSprite);
             }
             this.speed.x = randNumb(0.1, Enemy.speedMax.x);
-
             if (randNumb(0, 1) < 0.5)
                 this.direction = DIRECTION.LEFT;
             else
@@ -36,16 +32,11 @@ namespace EscapeTheEdge {
         } //close constructor
 
 
-
         public static generateSprites(_txtImage: f.TextureImage): void {
             Enemy.sprites = [];
             let sprite: Sprite = new Sprite(ACTION.WALK);
             sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 54, 17, 13), 6, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
             Enemy.sprites.push(sprite);
-
-            sprite = new Sprite(ACTION.IDLE);
-            sprite.generateByGrid(_txtImage, f.Rectangle.GET(1, 54, 17, 13), 4, new f.Vector2(1, 1), 64, f.ORIGIN2D.BOTTOMCENTER);
-            Enemy.sprites.push(sprite); //(1, 68, 17, 14), 2
         } //close generateSprites
 
 
@@ -56,7 +47,6 @@ namespace EscapeTheEdge {
                 case DIRECTION.LEFT:
                     this.direction = DIRECTION.LEFT;
                     this.cmpTransform.local.rotation = f.Vector3.Y(90 - 90 * direction);
-                    // console.log(this.speed.x);
                     break;
                 case DIRECTION.RIGHT:
                     this.direction = DIRECTION.RIGHT;
@@ -65,6 +55,7 @@ namespace EscapeTheEdge {
             }
             this.show(_action);
         } //close act
+
 
         protected fetchData(): void {
             this.speedMax = new f.Vector2(data[0].enemy[0].speedMaxX, 2);
@@ -81,9 +72,8 @@ namespace EscapeTheEdge {
             this.checkCollision(distance);
             if (this.outOfWalkingRange())
                 this.changeDirection();
-
-            
         } //close update
+
 
         protected changeDirection(): void {
             if (this.direction == DIRECTION.LEFT)
@@ -91,6 +81,7 @@ namespace EscapeTheEdge {
             else if (this.direction == DIRECTION.RIGHT)
                 this.act(ACTION.WALK, DIRECTION.LEFT);
         } //close changedirection
+
 
         protected checkCollision(_distance: f.Vector3): boolean {
             let rect: f.Rectangle = this.floor.getRectWorld();
@@ -107,18 +98,15 @@ namespace EscapeTheEdge {
             return false;
         } //close checkCollision
 
+
         protected outOfWalkingRange(): boolean {
-            // let hitNothing: boolean = true;
             let rect: f.Rectangle = (this.floor).getTopRectWorld();
             let hit: boolean = rect.isInside(this.cmpTransform.local.translation.toVector2());
             if (hit) {
-                // hitNothing = false;
-
                 return false;
-
             }
-            // console.log("Out of walking range");
             return true;
-        }
+        } //close outofwalkingRange
+        
     } //close class
 } //close namespace

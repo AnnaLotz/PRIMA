@@ -2,17 +2,15 @@ namespace EscapeTheEdge {
     import f = FudgeCore;
 
     export class Level extends f.Node {
-        // static enemySpawnRateStatic: number;
+        level: Floor;
+        height: number; 
         enemySpawnRate: number = 0.2;
 
-        level: Floor;
-        height: number; //Durch json ändern?
 
         public constructor(_levelCount: number) {
             super("Level" + _levelCount);
             this.height = 40;
             this.createLevel();
-
         } //close Constructor
 
 
@@ -27,7 +25,6 @@ namespace EscapeTheEdge {
             floor.cmpTransform.local.translateY(0);
             floor.createMaterial(this.height);
             this.appendChild(floor);
-            // floor.createEnemy();
 
             wall = new Wall(-1);
             wall.cmpTransform.local.scaleY(this.height * 2);
@@ -53,7 +50,6 @@ namespace EscapeTheEdge {
                 floor.cmpTransform.local.translateY(randNumb(-0.2, 0.2) + i);
                 floor.createMaterial(this.height);
                 if (randNumb(0, 1) < this.enemySpawnRate && floor.cmpTransform.local.translation.y >= 0.6 && floor.cmpTransform.local.translation.y <= this.height - 0.2) {
-                    // if (i == 0.4) {
                     floor.createEnemy();
                 } else if (randNumb(0, 1) < 0.05) {
                     let collectable: Collectable = new Collectable(COLLECTABLETYPE.MANA);

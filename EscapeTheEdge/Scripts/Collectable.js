@@ -22,8 +22,6 @@ var EscapeTheEdge;
             }
             this.show();
             f.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, this.update);
-            // this.show(STATUS.FLYING);
-            // f.Loop.addEventListener(f.EVENT.LOOP_FRAME, this.update);
         } //close constructor
         static generateSprites(_txtImage) {
             Collectable.sprites = [];
@@ -32,13 +30,10 @@ var EscapeTheEdge;
             Collectable.sprites.push(sprite);
         } //close generate Sprites
         show() {
-            // if (_action == ACTION.JUMP)
-            //     return;
             for (let child of this.getChildren())
                 child.activate(child.name == "Collectable");
-            // this.action = _action;
         }
-    }
+    } //close class
     EscapeTheEdge.Collectable = Collectable;
-})(EscapeTheEdge || (EscapeTheEdge = {}));
+})(EscapeTheEdge || (EscapeTheEdge = {})); //close namespace
 //# sourceMappingURL=Collectable.js.map

@@ -6,9 +6,7 @@ var EscapeTheEdge;
         constructor() {
             super("Floor");
             this.addComponent(new f.ComponentTransform());
-            // this.addComponent(new f.ComponentMaterial(Floor.material));
             let cmpMesh = new f.ComponentMesh(Floor.mesh);
-            //cmpMesh.pivot.translateY(-0.5);
             cmpMesh.pivot = Floor.pivot;
             this.addComponent(cmpMesh);
         } //close constructor
@@ -29,7 +27,6 @@ var EscapeTheEdge;
             let rect = f.Rectangle.GET(0, 0, 100, 100);
             let topleft = new f.Vector3(-0.5, 0.5, 0);
             let bottomright = new f.Vector3(0.5, -0.5, 0);
-            //let pivot: f.Matrix4x4 = this.getComponent(f.ComponentMesh).pivot;
             let mtxResult = f.Matrix4x4.MULTIPLICATION(this.mtxWorld, Floor.pivot);
             topleft.transform(mtxResult, true);
             bottomright.transform(mtxResult, true);
@@ -42,7 +39,6 @@ var EscapeTheEdge;
             let rect = f.Rectangle.GET(0, 0, 100, 100);
             let topleft = new f.Vector3(-0.4, 1.5, 0);
             let bottomright = new f.Vector3(0.4, 0, 0);
-            //let pivot: f.Matrix4x4 = this.getComponent(f.ComponentMesh).pivot;
             let mtxResult = f.Matrix4x4.MULTIPLICATION(this.mtxWorld, Floor.pivot);
             topleft.transform(mtxResult, true);
             bottomright.transform(mtxResult, true);
@@ -53,7 +49,7 @@ var EscapeTheEdge;
         } //close getTopRectWorld
     } //close class
     Floor.mesh = new f.MeshSprite();
-    Floor.material = new f.Material("Floor", f.ShaderUniColor, new f.CoatColored(new f.Color(0.18, 0.18, 0.18, 1)));
+    Floor.material = new f.Material("Floor", f.ShaderUniColor, new f.CoatColored(new f.Color(0.1, 0.1, 0.1, 1)));
     Floor.goalMaterial = new f.Material("Floor", f.ShaderUniColor, new f.CoatColored(new f.Color(1, 0.9, 0.25, 0.8)));
     Floor.pivot = f.Matrix4x4.TRANSLATION(f.Vector3.Y(-0.5));
     EscapeTheEdge.Floor = Floor;

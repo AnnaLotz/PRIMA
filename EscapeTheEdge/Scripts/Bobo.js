@@ -34,7 +34,6 @@ var EscapeTheEdge;
                 let halfDist = new f.Vector3(distance.x / 2, distance.y / 2, distance.z / 2);
                 this.cmpTransform.local.translate(distance);
                 this.checkCollision(halfDist);
-                // console.log(distance.x, distance.y);
                 this.checkCollision(distance);
                 this.checkHit(EscapeTheEdge.characters);
                 this.checkHit(EscapeTheEdge.items);
@@ -69,12 +68,11 @@ var EscapeTheEdge;
                 case ACTION.WALK:
                     let direction = (_direction == DIRECTION.RIGHT ? 1 : -1);
                     if (this.cmpTransform.local.translation.x > -2.5 && this.cmpTransform.local.translation.x < 2.5)
-                        this.speed.x = this.speedMax.x; // * direction;
+                        this.speed.x = this.speedMax.x;
                     this.cmpTransform.local.rotation = f.Vector3.Y(90 - 90 * direction);
-                    // console.log(direction);
                     break;
                 case ACTION.JUMP:
-                    if (this.speed.y == 0) { //für kein doppelSprung 
+                    if (this.speed.y == 0) { //für keinen doppelSprung 
                         EscapeTheEdge.Sound.play("boboJump");
                         this.speed.y = this.speedMax.y;
                     }
@@ -87,7 +85,6 @@ var EscapeTheEdge;
                 _size = SIZE.MEDIUM;
             }
             this.size = _size;
-            // console.log(this.size);
             switch (_size) {
                 case SIZE.MEDIUM:
                     this.cmpTransform.local.scaling = new f.Vector3(1, 1, 1);
@@ -108,7 +105,6 @@ var EscapeTheEdge;
         shoot(_direction) {
             if (this.mana >= this.manaCostToShoot) {
                 EscapeTheEdge.Sound.play("boboShoot");
-                console.log("shoot " + _direction);
                 this.bullet = new EscapeTheEdge.BoboBullet(_direction);
                 EscapeTheEdge.items.appendChild(this.bullet);
                 this.mana -= this.manaCostToShoot;
@@ -126,14 +122,12 @@ var EscapeTheEdge;
                     let boboPos = this.cmpTransform.local.translation;
                     let dif = f.Vector3.DIFFERENCE(evilPos, boboPos);
                     let distance = Math.abs(Math.sqrt(dif.x * dif.x + dif.y * dif.y + dif.z * dif.z));
-                    // console.log(distance);
                     if (distance < 0.15) {
                         if (object instanceof EscapeTheEdge.Enemy) {
                             this.health -= this.enemyDamage;
                         }
                         else if (object instanceof EscapeTheEdge.Collectable) {
                             this.mana += 5;
-                            console.log(this.mana);
                             EscapeTheEdge.removeNodeFromNode(object, EscapeTheEdge.items);
                         }
                     }
