@@ -5,13 +5,6 @@ var EscapeTheEdge;
 (function (EscapeTheEdge) {
     var f = FudgeCore;
     let mover;
-    let crc2;
-    // enum GAMESTATE {
-    //     STARTSCREEN = "Startscreen",
-    //     RUNNING = "Running",
-    //     PAUSE = "Pause"
-    // }
-    // let gamestate: GAMESTATE = GAMESTATE.STARTSCREEN;
     EscapeTheEdge.musicMuted = true;
     EscapeTheEdge.soundMuted = false;
     let keysPressed = {};
@@ -30,17 +23,11 @@ var EscapeTheEdge;
         f.RenderManager.initialize(true, false);
     } //close init
     async function loadFilesWithResponse() {
-        let response = await fetch("data.json");
+        let response = await fetch("Scripts/data.json");
         let offer = await response.text();
         EscapeTheEdge.data = JSON.parse(offer);
-        // fetchData(data);
     } //close loadFiles
     EscapeTheEdge.loadFilesWithResponse = loadFilesWithResponse;
-    // function fetchData(_data: Object[]): void {
-    //     console.log(_data);
-    //     // console.log(data.enemy.spawnRate);
-    //     // console.log(data[0].enemy[0].speedMaxX);
-    // }
     function startGame() {
         EscapeTheEdge.Sound.init();
         document.getElementById("stats").style.width = EscapeTheEdge.canvas.width + "px";
@@ -50,7 +37,7 @@ var EscapeTheEdge;
         mover = new f.Node("Mover");
         EscapeTheEdge.items = new f.Node("Items");
         EscapeTheEdge.characters = new f.Node("Characters");
-        crc2 = EscapeTheEdge.canvas.getContext("2d");
+        // crc2 = canvas.getContext("2d");
         let img = document.querySelector("img");
         let txtFigures = new f.TextureImage();
         txtFigures.image = img;
@@ -82,8 +69,7 @@ var EscapeTheEdge;
         cmpLight.pivot.translate(new f.Vector3(0, 0, 10));
         cmpLight.pivot.lookAt(new f.Vector3(0, 0, 0));
         light.addComponent(cmpLight);
-        EscapeTheEdge.rootNode.appendChild(light);
-        // mover.appendChild(light);
+        mover.appendChild(light);
         EscapeTheEdge.viewport = new f.Viewport();
         EscapeTheEdge.viewport.initialize("Viewport", EscapeTheEdge.rootNode, camera.getComponent(f.ComponentCamera), EscapeTheEdge.canvas);
         //starting game
@@ -91,7 +77,6 @@ var EscapeTheEdge;
         EscapeTheEdge.viewport.draw();
         document.addEventListener("keydown", handleKeyboard);
         document.addEventListener("keyup", handleKeyboard);
-        // gamestate = GAMESTATE.RUNNING;
         f.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, update);
         f.Loop.start(f.LOOP_MODE.TIME_GAME, 10);
     } //close startGame
@@ -102,9 +87,8 @@ var EscapeTheEdge;
         f.RenderManager.update();
         document.getElementById("health").style.width = EscapeTheEdge.bobo.health + "%";
         document.getElementById("mana").style.width = EscapeTheEdge.bobo.mana + "%";
-        if (EscapeTheEdge.bobo.cmpTransform.local.translation.y >= EscapeTheEdge.level.height) {
+        if (EscapeTheEdge.bobo.cmpTransform.local.translation.y >= EscapeTheEdge.level.height)
             win();
-        }
     } //close update
     function updateCamera() {
         let cmpCam = mover.getChildrenByName("Camera")[0].getComponent(f.ComponentCamera);
@@ -127,39 +111,20 @@ var EscapeTheEdge;
             EscapeTheEdge.bobo.shoot(-1);
         if (_event.code == f.KEYBOARD_CODE.ARROW_RIGHT && _event.type == "keydown")
             EscapeTheEdge.bobo.shoot(1);
-        // if (_event.code == f.KEYBOARD_CODE.ESC && _event.type == "keydown") {
-        //     if (gamestate == GAMESTATE.RUNNING) {
-        //         f.Loop.stop();
-        //         gamestate = GAMESTATE.PAUSE;
-        //     } else {
-        //         //ERROR!!
-        //         f.Loop.start(f.LOOP_MODE.TIME_GAME, 10);
-        //         gamestate = GAMESTATE.RUNNING;
-        //     }
-        // }
-        // if (_event.code == f.KEYBOARD_CODE.R && _event.type == "keydown")
-        //     console.log("Restart");
-        // console.log(_event.code);
     } //close handleKeyboard
     function processInput() {
-        if (keysPressed[f.KEYBOARD_CODE.ARROW_DOWN]) {
+        if (keysPressed[f.KEYBOARD_CODE.ARROW_DOWN])
             EscapeTheEdge.bobo.toSize(EscapeTheEdge.SIZE.SMALL);
-        }
-        else if (keysPressed[f.KEYBOARD_CODE.ARROW_UP]) {
+        else if (keysPressed[f.KEYBOARD_CODE.ARROW_UP])
             EscapeTheEdge.bobo.toSize(EscapeTheEdge.SIZE.BIG);
-        }
-        else {
+        else
             EscapeTheEdge.bobo.toSize(EscapeTheEdge.SIZE.MEDIUM);
-        }
-        if (keysPressed[f.KEYBOARD_CODE.A]) {
+        if (keysPressed[f.KEYBOARD_CODE.A])
             EscapeTheEdge.bobo.act(EscapeTheEdge.ACTION.WALK, EscapeTheEdge.DIRECTION.LEFT);
-        }
-        else if (keysPressed[f.KEYBOARD_CODE.D]) {
+        else if (keysPressed[f.KEYBOARD_CODE.D])
             EscapeTheEdge.bobo.act(EscapeTheEdge.ACTION.WALK, EscapeTheEdge.DIRECTION.RIGHT);
-        }
-        else {
+        else
             EscapeTheEdge.bobo.act(EscapeTheEdge.ACTION.IDLE);
-        }
     } //close processInput
     function gameOver() {
         EscapeTheEdge.Sound.stopMusic();

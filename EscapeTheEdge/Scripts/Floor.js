@@ -22,6 +22,7 @@ var EscapeTheEdge;
             let enemy = new EscapeTheEdge.Enemy(this);
             this.enemy = enemy;
             enemy.cmpTransform.local.translation = this.cmpTransform.local.translation;
+            enemy.cmpTransform.local.translateX(0.2);
             EscapeTheEdge.characters.appendChild(enemy);
         } //close createEnemy
         getRectWorld() {

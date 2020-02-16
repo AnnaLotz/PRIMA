@@ -113,7 +113,6 @@ namespace EscapeTheEdge {
 
                         break;
                     }
-                    // console.log(enemy);
                 }
             }
             for (let floor of level.getChildren()) {

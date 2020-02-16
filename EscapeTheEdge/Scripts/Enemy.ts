@@ -67,7 +67,7 @@ namespace EscapeTheEdge {
         } //close act
 
         protected fetchData(): void {
-            this.speedMax = new f.Vector2(data[0].enemy[0].speedMaxX, 3);
+            this.speedMax = new f.Vector2(data[0].enemy[0].speedMaxX, 2);
         }
 
 
@@ -83,7 +83,6 @@ namespace EscapeTheEdge {
                 this.changeDirection();
 
             
-
         } //close update
 
         protected changeDirection(): void {

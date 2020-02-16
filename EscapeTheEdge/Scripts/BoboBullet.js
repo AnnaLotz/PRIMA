@@ -85,7 +85,6 @@ var EscapeTheEdge;
                         f.Loop.removeEventListener("loopFrame" /* LOOP_FRAME */, this.update);
                         break;
                     }
-                    // console.log(enemy);
                 }
             }
             for (let floor of EscapeTheEdge.level.getChildren()) {

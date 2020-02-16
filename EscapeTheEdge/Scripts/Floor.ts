@@ -31,6 +31,7 @@ namespace EscapeTheEdge {
             let enemy: Enemy = new Enemy(this);
             this.enemy = enemy;
             enemy.cmpTransform.local.translation = this.cmpTransform.local.translation;
+            enemy.cmpTransform.local.translateX(0.2);
             characters.appendChild(enemy);
         } //close createEnemy
 
